@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b24rs8h57wqg6"]
+
+[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_caldeirao.gd" id="1_jbh2c"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ilf4k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32uhq"]
+albedo_color = Color(0.521569, 0, 0.647059, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nnrc6"]
+
+[node name="StaticBody3D_Caldeirao" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.34221, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_jbh2c")
+
+[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_ilf4k")
+
+[node name="CSGCylinder3D_Caldeirao" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1.01261, 0, 0, 0, 1.01261, 0, 0, 0, 1.01261, 0, 0, 0)
+material = SubResource("StandardMaterial3D_32uhq")
+
+[node name="Area3D_monitor" type="Area3D" parent="." groups=["caldeirao"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_monitor"]
+transform = Transform3D(1.23729, 0, 0, 0, 2.47457, 0, 0, 0, 1.23729, 0, 2.92218, 0)
+shape = SubResource("CylinderShape3D_nnrc6")
+
+[connection signal="body_entered" from="Area3D_monitor" to="." method="_on_area_3d_monitor_body_entered"]

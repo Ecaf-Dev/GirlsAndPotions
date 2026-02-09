@@ -11,7 +11,7 @@ var forca_atual: float = 0.0
 const FORCA_MAXIMA = 100.0
 @export var velocidade_carga: float = 40.0
 @export var multiplicador_distancia :float = 0.15
-
+var podeCozinhar = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -68,7 +68,6 @@ func _on_area_3d_monitor_area_entered(area):
 	if(objeto_levantado == null && area.is_in_group("item_carregavel")):
 		print("é carregavel")
 		objeto_proximo = area
-
 func _on_area_3d_monitor_area_exited(area):
 	print("objeto fora da area:", area)
 	objeto_proximo = null
