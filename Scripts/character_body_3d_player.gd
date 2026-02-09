@@ -71,7 +71,7 @@ func _on_area_3d_monitor_area_entered(area):
 
 func _on_area_3d_monitor_area_exited(area):
 	print("objeto fora da area:", area)
-	objeto_proximo == null
+	objeto_proximo = null
 	
 func _levantaritem():
 	if(objeto_levantado == null && objeto_proximo != null):
@@ -84,7 +84,6 @@ func _levantaritem():
 		corpo.rotation = Vector3.ZERO
 		#meu caracterbody tem um filho chamado Marker3D_maoPos, para colocar o objeto a ser carregado, como faço isso?
 		print("item levantado e grudado")
-		objeto_proximo = null
 	
 func _soltaritem():
 	var corpo = objeto_levantado.get_parent()
@@ -141,5 +140,6 @@ func _jogaritem():
 	
 	# 6. Resetar estados
 	objeto_levantado = null
+	objeto_proximo = null
 	forca_atual = 0.0
 	print("Item lançado em linha reta com força: ", forca_final)
