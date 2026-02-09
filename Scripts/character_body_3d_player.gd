@@ -12,7 +12,7 @@ const FORCA_MAXIMA = 100.0
 @export var velocidade_carga: float = 40.0
 @export var multiplicador_distancia :float = 0.15
 var podeCozinhar = false
-
+var caldeirao = null
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -50,10 +50,16 @@ func _physics_process(delta):
 	var target_angle = atan2(direction.x,direction.z)
 	
 	if Input.is_action_just_pressed("tecla_z"):
-		if(objeto_levantado == null):
+		#preicos repensar esta logica aqui, pois to com problemas em  filtrar qual ação realizar
+		if(podeCozinhar == true && caldeirao != null && objeto_levantado == null):
+			if caldeirao.has_method("cozinhar"):
+				caldeirao.cozinhar()
+		elif(objeto_levantado == null):
 			_levantaritem()
 		elif(objeto_levantado != null):
 			_soltaritem()
+		#criaremos uma checagem que caso a tecla z seja prescionada enquanto proximo a um caldeirão, chamaremos o metodo do caldeirao de cozinhar
+		
 	if Input.is_action_pressed("tecla_x"):
 		forca_atual = min(forca_atual + velocidade_carga * delta, FORCA_MAXIMA)
 	if Input.is_action_just_released("tecla_x"):
@@ -68,10 +74,21 @@ func _on_area_3d_monitor_area_entered(area):
 	if(objeto_levantado == null && area.is_in_group("item_carregavel")):
 		print("é carregavel")
 		objeto_proximo = area
+	#verificaremos se o jogador está proximo de uma area 2d caldeirao, caso esteja alteraremos o boleano pdoe cozinhar para true
+	if area.is_in_group("caldeirao"):
+		podeCozinhar = true
+		caldeirao = area.get_parent()
+		print(caldeirao.name, podeCozinhar)
 func _on_area_3d_monitor_area_exited(area):
-	print("objeto fora da area:", area)
-	objeto_proximo = null
+	if area.is_in_group("caldeirao"):
+		podeCozinhar = false
+		caldeirao = null
 	
+	# Cuidado aqui: se você sair de perto de QUALQUER área, 
+	# ele limpa o objeto_proximo, mesmo que você ainda esteja perto do item.
+	if area == objeto_proximo:
+		objeto_proximo = null
+		
 func _levantaritem():
 	if(objeto_levantado == null && objeto_proximo != null):
 		objeto_levantado = objeto_proximo
