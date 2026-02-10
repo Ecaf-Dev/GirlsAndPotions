@@ -2,6 +2,7 @@ extends StaticBody3D
 
 @export var pedidos = []
 @export var max_pedidos = 3
+@export var objeto_visual : Node3D
 
 const POCOES_POSSIVEIS = ["Poção De Cura"]
 
@@ -46,6 +47,7 @@ func _checarentrega(objeto):
 		
 func _recompensa():
 	# Aqui você pode adicionar moedas, XP ou apenas um efeito sonoro/partícula
+	elastico()
 	print("RECOMPENSA: Você ganhou 10 moedas de ouro!")
 	
 func _rejeitar_item(item):
@@ -53,4 +55,24 @@ func _rejeitar_item(item):
 		# Empurra o item para longe do balcão (em arco)
 		var direcao = (item.global_position - global_position).normalized()
 		item.apply_central_impulse(direcao * 4.0 + Vector3.UP * 3.0)
+	elastico()
 		
+func elastico():
+	if objeto_visual == null:
+		print("Aviso: objeto_visual não definido no Inspector!")
+		return
+
+	# Criamos o Tween para manipulação estética
+	var tween = create_tween()
+	
+	# 1. ESTICAR (Squash): Fica fino e alto
+	# Vector3(X, Y, Z) -> Diminuímos X e Z, aumentamos Y
+	tween.tween_property(objeto_visual, "scale", Vector3(0.8, 1.3, 0.8), 0.1)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_OUT)
+	
+	# 2. VOLTAR (Stretch): Volta ao normal com um balanço elástico
+	tween.tween_property(objeto_visual, "scale", Vector3(1.0, 1.0, 1.0), 0.3)\
+		.set_trans(Tween.TRANS_ELASTIC)\
+		.set_ease(Tween.EASE_OUT)
+

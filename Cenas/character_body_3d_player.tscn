@@ -36,6 +36,7 @@ shape = SubResource("BoxShape3D_6n2qw")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Area3D_monitor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.76629, 0, 0, -0.131322)
+visible = false
 material = SubResource("StandardMaterial3D_nlgle")
 
 [connection signal="area_entered" from="Area3D_monitor" to="." method="_on_area_3d_monitor_area_entered"]

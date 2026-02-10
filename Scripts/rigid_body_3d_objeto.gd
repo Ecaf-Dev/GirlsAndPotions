@@ -36,3 +36,4 @@ func _carregar_visual_automatico():
 			print("Sucesso: Visual de '", nome_item, "' carregado de ", caminho_modelo)
 	else:
 		print("Aviso: Modelo para '", nome_item, "' não encontrado em ", caminho_modelo, ". Mantendo caixa rosa.")
+

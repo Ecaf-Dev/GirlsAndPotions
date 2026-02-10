@@ -3,6 +3,7 @@ extends StaticBody3D
 # Lista que servirá como nossos slots
 var slots = [] 
 @export var MAX_SLOTS = 2
+@export var objeto_visual : Node3D
 
 # Dicionário com todas as receitas possíveis
 const RECEITAS = {
@@ -19,7 +20,9 @@ func _on_area_3d_monitor_body_entered(body):
 			print("Item adicionado ao slot: ", body.nome_item)
 			print("Estado atual dos slots: ", slots)
 			body.queue_free()
+			elastico()
 		else:
+			elastico()
 			print("Caldeirão cheio!")
 
 func cozinhar():
@@ -57,6 +60,7 @@ func cozinhar():
 	slots.clear()
 
 func _instanciarobjeto(nome_do_item):
+	elastico()
 	if cena_base_item == null: return
 
 	var novo_item = cena_base_item.instantiate()
@@ -97,3 +101,25 @@ func _instanciarobjeto(nome_do_item):
 			area_detecao.collision_layer = 1 # Ou a camada que você usa
 			area_detecao.collision_mask = 1
 		print("Objeto '", nome_do_item, "' agora é sólido e coletável!")
+
+func elastico():
+	if objeto_visual == null:
+		print("Aviso: objeto_visual não definido no Inspector!")
+		return
+
+	# Criamos o Tween para manipulação estética
+	var tween = create_tween()
+	
+	# 1. ESTICAR (Squash): Fica fino e alto
+	# Vector3(X, Y, Z) -> Diminuímos X e Z, aumentamos Y
+	tween.tween_property(objeto_visual, "scale", Vector3(0.8, 1.3, 0.8), 0.1)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_OUT)
+	
+	# 2. VOLTAR (Stretch): Volta ao normal com um balanço elástico
+	tween.tween_property(objeto_visual, "scale", Vector3(1.0, 1.0, 1.0), 0.3)\
+		.set_trans(Tween.TRANS_ELASTIC)\
+		.set_ease(Tween.EASE_OUT)
+		
+	
+	
