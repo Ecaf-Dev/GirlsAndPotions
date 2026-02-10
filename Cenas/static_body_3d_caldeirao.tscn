@@ -29,7 +29,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
-transform = Transform3D(1.23729, 0, 0, 0, 2.47457, 0, 0, 0, 1.23729, 0, 2.92218, 0)
+transform = Transform3D(1.23729, 0, 0, 0, 2.47457, 0, 0, 0, 0.989832, 0, 2.92218, 0)
 shape = SubResource("CylinderShape3D_nnrc6")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
