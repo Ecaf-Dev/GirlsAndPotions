@@ -18,6 +18,8 @@ script = ExtResource("1_a872q")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_lq4py")
 
+[node name="Node3D_Aparencia" type="Node3D" parent="."]
+
 [node name="CSGBox3D_ObjetoVisual" type="CSGBox3D" parent="."]
 material = SubResource("StandardMaterial3D_dub3b")
 

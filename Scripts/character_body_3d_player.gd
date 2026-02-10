@@ -60,11 +60,8 @@ func _physics_process(delta):
 			_soltaritem()
 		#criaremos uma checagem que caso a tecla z seja prescionada enquanto proximo a um caldeirão, chamaremos o metodo do caldeirao de cozinhar
 		
-	if Input.is_action_pressed("tecla_x"):
-		forca_atual = min(forca_atual + velocidade_carga * delta, FORCA_MAXIMA)
-	if Input.is_action_just_released("tecla_x"):
+	if Input.is_action_just_pressed("tecla_x"):
 		_jogaritem()
-		forca_atual = 0.0
 	
 	move_and_slide()
 
@@ -135,27 +132,28 @@ func _jogaritem():
 	
 	var corpo = objeto_levantado.get_parent()
 	
-	# 1. Direção horizontal pura
+	# 1. Direção para onde o player está olhando
 	var direcao_frente = -Vector3.FORWARD.rotated(Vector3.UP, rotation.y).normalized()
 	
-	# 2. Cálculo do Impulso (removido o Vector3.UP)
-	var forca_final = forca_atual * multiplicador_distancia
-	if(forca_final < 4.0):
-		forca_final = 4
-	var impulso = direcao_frente * forca_final
+	# 2. Definição de Força Fixa (Ajuste esses valores ao seu gosto!)
+	var forca_horizontal = 8.0 
+	var forca_vertical = 2.0  # Um pequeno pulinho para o arco ficar bonito
+	
+	var impulso = (direcao_frente * forca_horizontal) + (Vector3.UP * forca_vertical)
 	
 	# 3. Soltar no mundo
-	corpo.reparent(get_tree().root.get_child(0))
+	corpo.reparent(get_tree().root) # Melhor soltar direto na root ou no seu nó de Level
 	
 	# 4. Reativar física
 	corpo.freeze = false
 	corpo.get_node("CollisionShape3D").disabled = false
 	
-	# 5. Aplicar o impulso linear
+	# 5. Aplicar o impulso
 	corpo.apply_central_impulse(impulso)
+	
+	# Adiciona um giro aleatório para o item parecer que foi "jogado" de verdade
+	corpo.apply_torque_impulse(Vector3(randf(), randf(), randf()) * 2.0)
 	
 	# 6. Resetar estados
 	objeto_levantado = null
-	objeto_proximo = null
-	forca_atual = 0.0
-	print("Item lançado em linha reta com força: ", forca_final)
+	print("Item lançado instantaneamente!")
