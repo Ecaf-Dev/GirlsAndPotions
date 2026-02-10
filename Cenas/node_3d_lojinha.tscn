@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bonfi6ckgtc8l"]
+[gd_scene load_steps=6 format=3 uid="uid://bonfi6ckgtc8l"]
 
 [ext_resource type="PackedScene" uid="uid://7uqrentjh088" path="res://GirlsAndPotions/Cenas/character_body_3d_player.tscn" id="1_ibour"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_t26us"]
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/Camera3D.gd" id="3_057y4"]
 [ext_resource type="PackedScene" uid="uid://b24rs8h57wqg6" path="res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn" id="4_ahm42"]
+[ext_resource type="PackedScene" uid="uid://bjw4dhmf2enhd" path="res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn" id="5_2bddq"]
 
 [node name="Node3D_Lojinha" type="Node3D"]
 
@@ -36,3 +37,6 @@ nome_item = "Flor Da Vida"
 
 [node name="StaticBody3D_Caldeirao" parent="." instance=ExtResource("4_ahm42")]
 transform = Transform3D(1, 0, 0, 0, 0.34221, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="StaticBody3D_Balcao" parent="." instance=ExtResource("5_2bddq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -5)

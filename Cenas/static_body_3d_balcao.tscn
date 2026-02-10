@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjw4dhmf2enhd"]
+
+[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_balcao.gd" id="1_20lu7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6ltmu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jc4qw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8sp1"]
+albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
+
+[node name="StaticBody3D_Balcao" type="StaticBody3D"]
+script = ExtResource("1_20lu7")
+
+[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6ltmu")
+
+[node name="Area3D_Monitor" type="Area3D" parent="."]
+
+[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
+transform = Transform3D(1.54159, 0, 0, 0, 1.54159, 0, 0, 0, 1.54159, 0, 0, 0)
+shape = SubResource("BoxShape3D_jc4qw")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material = SubResource("StandardMaterial3D_l8sp1")
