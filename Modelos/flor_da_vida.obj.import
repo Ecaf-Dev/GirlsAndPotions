@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bcs7it5erlsn2"
+path="res://.godot/imported/flor_da_vida.obj-791058424a9d0e57f0a986b49254d220.mesh"
+
+[deps]
+
+files=["res://.godot/imported/flor_da_vida.obj-791058424a9d0e57f0a986b49254d220.mesh"]
+
+source_file="res://GirlsAndPotions/Modelos/flor_da_vida.obj"
+dest_files=["res://.godot/imported/flor_da_vida.obj-791058424a9d0e57f0a986b49254d220.mesh", "res://.godot/imported/flor_da_vida.obj-791058424a9d0e57f0a986b49254d220.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
