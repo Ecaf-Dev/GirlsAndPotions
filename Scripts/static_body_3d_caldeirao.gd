@@ -112,12 +112,12 @@ func elastico():
 	
 	# 1. ESTICAR (Squash): Fica fino e alto
 	# Vector3(X, Y, Z) -> Diminuímos X e Z, aumentamos Y
-	tween.tween_property(objeto_visual, "scale", Vector3(0.8, 1.3, 0.8), 0.1)\
+	tween.tween_property(objeto_visual, "scale", Vector3(0.6, 2.6, 0.8), 0.1)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_OUT)
 	
 	# 2. VOLTAR (Stretch): Volta ao normal com um balanço elástico
-	tween.tween_property(objeto_visual, "scale", Vector3(1.0, 1.0, 1.0), 0.3)\
+	tween.tween_property(objeto_visual, "scale", Vector3(0.8, 2.9, 1.0), 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC)\
 		.set_ease(Tween.EASE_OUT)
 		

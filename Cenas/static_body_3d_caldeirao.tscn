@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b24rs8h57wqg6"]
+[gd_scene load_steps=9 format=3 uid="uid://b24rs8h57wqg6"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_caldeirao.gd" id="1_jbh2c"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_2gnie"]
+[ext_resource type="ArrayMesh" uid="uid://mt6ylx6fmrr7" path="res://GirlsAndPotions/Modelos/Caldeirão.obj" id="3_am17p"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ilf4k"]
 
@@ -10,12 +11,19 @@ albedo_color = Color(0.521569, 0, 0.647059, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nnrc6"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpr1n"]
+albedo_color = Color(0.235294, 0.235294, 0.235294, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5snf5"]
+transparency = 1
+albedo_color = Color(0.211765, 0.670588, 1, 0.231373)
+
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual")]
 transform = Transform3D(1, 0, 0, 0, 0.34221, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jbh2c")
-objeto_visual = NodePath("CSGCylinder3D_Caldeirao")
+objeto_visual = NodePath("Caldeirão")
 cena_base_item = ExtResource("2_2gnie")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
@@ -23,6 +31,7 @@ shape = SubResource("CylinderShape3D_ilf4k")
 
 [node name="CSGCylinder3D_Caldeirao" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1.01261, 0, 0, 0, 1.01261, 0, 0, 0, 1.01261, 0, 0, 0)
+visible = false
 material = SubResource("StandardMaterial3D_32uhq")
 
 [node name="Area3D_Monitor" type="Area3D" parent="." groups=["caldeirao"]]
@@ -32,5 +41,11 @@ collision_mask = 3
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
 transform = Transform3D(1.23729, 0, 0, 0, 2.47457, 0, 0, 0, 0.989832, 0, 2.92218, 0)
 shape = SubResource("CylinderShape3D_nnrc6")
+
+[node name="Caldeirão" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 2.921, 0, 0, 0, 0.88264, 0, 0, 0)
+mesh = ExtResource("3_am17p")
+surface_material_override/0 = SubResource("StandardMaterial3D_vpr1n")
+surface_material_override/1 = SubResource("StandardMaterial3D_5snf5")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
