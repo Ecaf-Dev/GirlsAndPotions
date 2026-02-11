@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjw4dhmf2enhd"]
+[gd_scene load_steps=7 format=3 uid="uid://bjw4dhmf2enhd"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_balcao.gd" id="1_20lu7"]
+[ext_resource type="ArrayMesh" uid="uid://dfsfgbm6qxoac" path="res://GirlsAndPotions/Modelos/Balcão.obj" id="2_7keit"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ltmu"]
 
@@ -9,14 +10,20 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8sp1"]
 albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_es03u"]
+albedo_color = Color(0.333333, 0.121569, 0, 1)
+metallic = 0.19
+
 [node name="StaticBody3D_Balcao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual")]
 script = ExtResource("1_20lu7")
-objeto_visual = NodePath("CSGBox3D_Visual")
+objeto_visual = NodePath("Balcão")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
+transform = Transform3D(2.35083, 0, 0, 0, 1, 0, 0, 0, 1.30518, 0, 0, 0)
 shape = SubResource("BoxShape3D_6ltmu")
 
 [node name="Area3D_Monitor" type="Area3D" parent="."]
+transform = Transform3D(1.975, 0, 0, 0, 0.755601, 0, 0, 0, 1.23202, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 
@@ -25,6 +32,12 @@ transform = Transform3D(1.23327, 0, 0, 0, 1.54159, 0, 0, 0, 1.07911, 0, 0, 0)
 shape = SubResource("BoxShape3D_jc4qw")
 
 [node name="CSGBox3D_Visual" type="CSGBox3D" parent="."]
+visible = false
 material = SubResource("StandardMaterial3D_l8sp1")
+
+[node name="Balcão" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = ExtResource("2_7keit")
+surface_material_override/0 = SubResource("StandardMaterial3D_es03u")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

@@ -15,11 +15,10 @@ albedo_color = Color(0.521569, 0, 0.647059, 1)
 albedo_color = Color(0.235294, 0.235294, 0.235294, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5snf5"]
-transparency = 1
-albedo_color = Color(0.211765, 0.670588, 1, 0.231373)
+albedo_color = Color(0, 0.290196, 0.47451, 0.74902)
 
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual")]
-transform = Transform3D(1, 0, 0, 0, 0.34221, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jbh2c")

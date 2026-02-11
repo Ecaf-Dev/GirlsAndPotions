@@ -9,7 +9,7 @@
 [node name="Node3D_Lojinha" type="Node3D"]
 
 [node name="CSGBox3D_Chao" type="CSGBox3D" parent="."]
-transform = Transform3D(0.864521, 0, 0.502597, 0, 1, 0, -0.502597, 0, 0.864521, 0, 0, 0)
+transform = Transform3D(0.941578, 0, 0.633844, 0, 1.5, 0, -0.547395, 0, 1.09028, 0, 0, 0)
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -36,7 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 2.66171)
 nome_item = "Flor Da Vida"
 
 [node name="StaticBody3D_Caldeirao" parent="." instance=ExtResource("4_ahm42")]
-transform = Transform3D(1, 0, 0, 0, 0.34221, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 0, 1.2, 0)
 
 [node name="StaticBody3D_Balcao" parent="." instance=ExtResource("5_2bddq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -5)
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 1, 1, -5)
