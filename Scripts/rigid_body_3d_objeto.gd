@@ -4,15 +4,15 @@ extends RigidBody3D
 
 # Chamamos no _ready para que o visual mude assim que o item nascer no mundo
 func _ready():
-	if nome_item != "":
-		_carregar_visual_automatico()
+	await get_tree().create_timer(0.01).timeout
+	_carregar_visual_automatico()
 
 func _carregar_visual_automatico():
 	# 1. Padroniza o nome para o formato de arquivo (ex: "Flor Da Vida" -> "flor_da_vida")
 	var nome_arquivo = nome_item.to_lower().replace(" ", "_")
-	
+	print(nome_arquivo)
 	# 2. Define os caminhos possíveis (você pode adicionar .glb ou .tscn)
-	var caminho_modelo = "res://Modelos/" + nome_arquivo + ".tscn"
+	var caminho_modelo = "res://GirlsAndPotions/Modelos/" + nome_arquivo + ".tscn"
 	
 	# 3. Verifica se o arquivo realmente existe na pasta
 	if FileAccess.file_exists(caminho_modelo):
