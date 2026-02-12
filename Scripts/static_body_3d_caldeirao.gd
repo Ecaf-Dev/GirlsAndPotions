@@ -28,6 +28,7 @@ func _on_area_3d_monitor_body_entered(body):
 func cozinhar():
 	if slots.is_empty():
 		print("O caldeirão está vazio!")
+		elastico()
 		return
 	
 	# Variável para controlar se achamos uma receita válida

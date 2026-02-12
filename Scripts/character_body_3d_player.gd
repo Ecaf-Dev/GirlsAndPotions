@@ -91,6 +91,7 @@ func _levantaritem():
 		
 		objeto_levantado = objeto_proximo
 		var corpo = objeto_levantado.get_parent()
+		corpo.aplicar_elastico_externo()
 		corpo.freeze = true
 		corpo.get_node("CollisionShape3D").disabled = true
 		corpo.reparent($Marker3D_MaoPos)

@@ -39,30 +39,13 @@ func _carregar_visual_automatico():
 			# Armazenamos a escala que o artista definiu na cena .tscn
 			escala_base_modelo = instancia.scale
 			# Disparamos o efeito passando a nova instância
-			_efeito_elastico_dinamico(instancia)
+			aplicar_elastico_externo(instancia)
 			
 			print("Sucesso: Visual de '", nome_item, "' carregado. Qtd: ", quantidade_atual)
 	else:
 		print("Aviso: Modelo não encontrado para ", nome_item)
 
 # FUNÇÃO QUE VOCÊ PEDIU: Identifica e ajusta proporções automaticamente
-func _efeito_elastico_dinamico(alvo: Node3D):
-	if alvo == null: return
-
-	var tween = create_tween()
-	
-	# Cálculo proporcional:
-	# Squash (Esmagar): 70% da largura, 140% da altura
-	var squash = Vector3(escala_base_modelo.x * 0.7, escala_base_modelo.y * 1.4, escala_base_modelo.z * 0.7)
-	# Stretch (Esticar): 110% da largura, 90% da altura
-	var stretch = Vector3(escala_base_modelo.x * 1.1, escala_base_modelo.y * 0.9, escala_base_modelo.z * 1.1)
-	
-	# Fase 1: Impacto/Nascimento (Rápido)
-	tween.tween_property(alvo, "scale", squash, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	
-	# Fase 2: Volta elástica para a escala original exata da cena
-	tween.tween_property(alvo, "scale", escala_base_modelo, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-
 func _on_area_3d_monitor_body_entered(body):
 	if body.get("nome_item") == self.nome_item:
 		if "quantidade_atual" in body:
@@ -92,3 +75,25 @@ func _diminuirquantidade():
 	elif quantidade_atual == 1:
 		return "LEVAR_INTEIRO"
 	return ""
+
+func aplicar_elastico_externo(alvo: Node3D = null):
+	var visual = alvo
+	
+	# Se ninguém passou um alvo, vamos caçar o modelo atual dele
+	if visual == null:
+		for child in get_children():
+			# Procura o primeiro nó que não seja colisão ou área (o seu modelo)
+			if child is Node3D and child.name != "CollisionShape3D" and child.name != "Area3D_Monitor" and child.name != "CSGBox3D_ObjetoVisual" :
+				visual = child
+				break
+	
+	if visual == null: return
+
+	# Criamos o tween (se houver um antigo rodando no mesmo objeto, o Godot mata o anterior)
+	var tween = create_tween()
+	
+	# Usamos a escala_base_modelo que salvamos no carregamento
+	var squash = Vector3(escala_base_modelo.x * 0.7, escala_base_modelo.y * 1.4, escala_base_modelo.z * 0.7)
+	
+	tween.tween_property(visual, "scale", squash, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(visual, "scale", escala_base_modelo, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
