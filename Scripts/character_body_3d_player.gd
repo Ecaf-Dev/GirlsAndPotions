@@ -79,6 +79,7 @@ func _on_area_3d_monitor_area_entered(area):
 		podeCozinhar = true
 		caldeirao = area.get_parent()
 		print(caldeirao.name, podeCozinhar)
+		
 func _on_area_3d_monitor_area_exited(area):
 	if area.is_in_group("caldeirao"):
 		podeCozinhar = false

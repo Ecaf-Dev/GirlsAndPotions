@@ -14,13 +14,16 @@ const RECEITAS = {
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
 	
-	if "nome_item" in body:
-		if slots.size() < MAX_SLOTS:
+	if "nome_item" in body :
+		if slots.size() < MAX_SLOTS && body.quantidade_atual == 1:
 			slots.append(body.nome_item)
 			print("Item adicionado ao slot: ", body.nome_item)
 			print("Estado atual dos slots: ", slots)
 			body.queue_free()
 			elastico()
+		elif (body.quantidade_atual >= 2):
+			_rejeitar_item(body)
+			print("Isso n é ingrediente")
 		else:
 			_rejeitar_item(body)
 			print("Caldeirão cheio!")
@@ -55,6 +58,7 @@ func cozinhar():
 		_instanciarobjeto(nome_da_receita_feita)
 		print("SUCESSO! Você criou uma Poção!")
 	else:
+		elastico()
 		print("ERRO! A mistura falhou e virou lixo.")
 	
 	# Limpa os slots após a tentativa conforme você pediu
@@ -66,52 +70,59 @@ func _instanciarobjeto(nome_do_item):
 
 	var novo_item = cena_base_item.instantiate()
 	
-	# 1. Guardamos as camadas originais
-	var camada_original = 1 # Geralmente 1, ou pegue do seu projeto
-	var mascara_original = 1 
+	# --- PASSO 1: CAPTURAR A IDENTIDADE ORIGINAL ---
+	# Guardamos os layers do RigidBody (O objeto em si)
+	var corpo_layer = novo_item.collision_layer
+	var corpo_mask = novo_item.collision_mask
 	
-	# Deixamos ele "fantasma" inicialmente
+	# Guardamos os layers da Area3D (O monitor de proximidade)
+	var area_monitor = novo_item.get_node_or_null("Area3D_Monitor")
+	var area_layer = 0
+	var area_mask = 0
+	
+	if area_monitor:
+		area_layer = area_monitor.collision_layer
+		area_mask = area_monitor.collision_mask
+		# Desativamos a área para ela não ser "engolida" de volta
+		area_monitor.collision_layer = 0
+		area_monitor.collision_mask = 0
+
+	# Desativamos o corpo para ele não colidir com a borda do caldeirão ao sair
 	novo_item.collision_layer = 0
 	novo_item.collision_mask = 0
 	
-	var area_detecao = novo_item.get_node_or_null("Area3D_Monitor")
-	if area_detecao:
-		area_detecao.collision_layer = 0
-		area_detecao.collision_mask = 0
-
+	# --- PASSO 2: NASCIMENTO E IMPULSO ---
 	get_tree().root.add_child(novo_item)
-	
 	novo_item.nome_item = nome_do_item
-	# Nasce um pouco mais alto para garantir que não prenda no fundo
 	novo_item.global_position = global_position + Vector3(0, 1.8, 0)
 	
 	if novo_item is RigidBody3D:
-		# Um impulso lateral mais garantido para tirar ele de cima do caldeirão
 		var direcao = Vector3(randf_range(-1, 1), 1.5, randf_range(-1, 1)).normalized()
 		novo_item.apply_central_impulse(direcao * 7.0)
 
-	# 2. A MÁGICA: Em vez de um Timer fixo, vamos monitorar a distância
-	_esperar_saida_segura(novo_item, camada_original, mascara_original)
+	# --- PASSO 3: A ESPERA SEGURA ---
+	# Passamos todos os dados originais para a função de espera
+	_esperar_saida_segura(novo_item, corpo_layer, corpo_mask, area_layer, area_mask)
 
-# Nova função auxiliar para monitorar a saída
-func _esperar_saida_segura(item, camada, mascara):
-	var distancia_minima = 2.0 # Se estiver a mais de 2 metros, é seguro
+func _esperar_saida_segura(item, c_layer, c_mask, a_layer, a_mask):
+	var distancia_minima = 2.0 
 	
-	# Criamos um loop que roda enquanto o item estiver muito perto
 	while is_instance_valid(item) and item.global_position.distance_to(self.global_position) < distancia_minima:
-		# Espera um frame do servidor de física (muito eficiente)
 		await get_tree().physics_frame
 	
-	# 3. Agora que ele se afastou, devolvemos a física
+	# --- PASSO 4: RESTAURAR TUDO AO ORIGINAL ---
 	if is_instance_valid(item):
-		item.collision_layer = camada
-		item.collision_mask = mascara
+		# Restaura o corpo (RigidBody)
+		item.collision_layer = c_layer
+		item.collision_mask = c_mask
+		
+		# Restaura a área (Area3D)
 		var area = item.get_node_or_null("Area3D_Monitor")
 		if area:
-			area.collision_layer = 1
-			area.collision_mask = 1
-		print("Poção liberada: Longe o suficiente do caldeirão!")
+			area.collision_layer = a_layer
+			area.collision_mask = a_mask
 		
+		print("Poção liberada com camadas originais: Corpo(", c_layer, ") Area(", a_layer, ")")	
 func elastico():
 	if objeto_visual == null:
 		print("Aviso: objeto_visual não definido no Inspector!")
