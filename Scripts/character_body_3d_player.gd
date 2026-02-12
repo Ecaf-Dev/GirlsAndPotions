@@ -55,7 +55,7 @@ func _physics_process(delta):
 			if caldeirao.has_method("cozinhar"):
 				caldeirao.cozinhar()
 		elif(objeto_levantado == null):
-			_levantaritem()
+			_interagir_com_item()
 		elif(objeto_levantado != null):
 			_soltaritem()
 		#criaremos uma checagem que caso a tecla z seja prescionada enquanto proximo a um caldeirão, chamaremos o metodo do caldeirao de cozinhar
@@ -88,6 +88,7 @@ func _on_area_3d_monitor_area_exited(area):
 		
 func _levantaritem():
 	if(objeto_levantado == null && objeto_proximo != null):
+		
 		objeto_levantado = objeto_proximo
 		var corpo = objeto_levantado.get_parent()
 		corpo.freeze = true
@@ -157,3 +158,41 @@ func _jogaritem():
 	# 6. Resetar estados
 	objeto_levantado = null
 	print("Item lançado instantaneamente!")
+
+func _interagir_com_item():
+	if objeto_levantado != null or objeto_proximo == null:
+		return
+
+	var item_alvo = objeto_proximo.get_parent()
+	var resultado = item_alvo._diminuirquantidade()
+
+	if resultado == "LEVAR_INTEIRO":
+		# Caso seja um item único, usa sua função de levantar que já funciona
+		_levantaritem() 
+		
+	elif resultado != "":
+		# CASO DA CAIXA: Instancia um novo item direto na mão
+		_instanciar_na_mao(resultado)
+		print("Retirado 1 ", resultado, " da caixa.")
+
+func _instanciar_na_mao(nome):
+	# 1. Carrega a cena base do item
+	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
+	var novo_item = cena_item.instantiate()
+	
+	# 2. Configura os dados do novo item
+	novo_item.nome_item = nome
+	novo_item.quantidade_atual = 1
+	
+	# 3. Gruda no Marker3D da mão
+	$Marker3D_MaoPos.add_child(novo_item)
+	novo_item.position = Vector3.ZERO
+	novo_item.rotation = Vector3.ZERO
+	
+	# 4. Desativa física enquanto estiver na mão
+	novo_item.freeze = true
+	if novo_item.has_node("CollisionShape3D"):
+		novo_item.get_node("CollisionShape3D").disabled = true
+	
+	# 5. Define como o objeto levantado (pegando a Area3D para manter seu padrão)
+	objeto_levantado = novo_item.get_node("Area3D_Monitor")

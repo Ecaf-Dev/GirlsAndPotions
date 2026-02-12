@@ -71,7 +71,12 @@ func _aumentarquantidade(outro_item):
 	queue_free()
 
 func _diminuirquantidade():
-	if(quantidade_atual != 1):
-		quantidade_atual = quantidade_atual -1
-	if(quantidade_atual == 1):
-		_carregar_visual_automatico()
+	if quantidade_atual > 1:
+		quantidade_atual -= 1
+		_carregar_visual_automatico() # Atualiza para o modelo de unidade se sobrar 1
+		return nome_item
+	elif quantidade_atual == 1:
+		# Se só tem 1, o player vai levar o objeto inteiro, não precisa instanciar novo
+		return "LEVAR_INTEIRO"
+	return ""
+
