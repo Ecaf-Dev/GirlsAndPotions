@@ -22,7 +22,7 @@ func _on_area_3d_monitor_body_entered(body):
 			body.queue_free()
 			elastico()
 		else:
-			elastico()
+			_rejeitar_item(body)
 			print("Caldeirão cheio!")
 
 func cozinhar():
@@ -132,4 +132,9 @@ func elastico():
 		.set_ease(Tween.EASE_OUT)
 		
 	
-	
+func _rejeitar_item(item):
+	if item is RigidBody3D:
+		# Empurra o item para longe do balcão (em arco)
+		var direcao = (item.global_position - global_position).normalized()
+		item.apply_central_impulse(direcao * 4.0 + Vector3.UP * 3.0)
+	elastico()

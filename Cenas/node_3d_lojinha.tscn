@@ -44,6 +44,7 @@ offset = Vector3(0, 6, 5)
 [node name="RigidBody3D_Objeto2" parent="." instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 2.66171)
 nome_item = "Flor Da Vida"
+quantidade_atual = 10
 
 [node name="StaticBody3D_Caldeirao" parent="." instance=ExtResource("4_ahm42")]
 transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 0, 1.2, 0)
