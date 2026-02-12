@@ -10,6 +10,7 @@
 albedo_color = Color(0.521569, 0, 0.647059, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nnrc6"]
+height = 2.15791
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpr1n"]
 albedo_color = Color(0.235294, 0.235294, 0.235294, 1)
@@ -38,7 +39,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
-transform = Transform3D(1.23729, 0, 0, 0, 2.47457, 0, 0, 0, 0.989832, 0, 2.92218, 0)
+transform = Transform3D(1.05734, 0, 0, 0, 1.2563, 0, 0, 0, 0.989831, 0, 0.127148, 0)
 shape = SubResource("CylinderShape3D_nnrc6")
 
 [node name="Caldeirão" type="MeshInstance3D" parent="."]

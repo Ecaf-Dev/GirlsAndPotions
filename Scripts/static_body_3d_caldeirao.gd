@@ -66,43 +66,52 @@ func _instanciarobjeto(nome_do_item):
 
 	var novo_item = cena_base_item.instantiate()
 	
-	# 1. Antes de adicionar ao mundo, limpamos as camadas de colisão
-	# Isso faz com que ele não seja detectado por NENHUMA Area3D ou Raycast
-	var camada_original = novo_item.collision_layer
-	var mascara_original = novo_item.collision_mask
+	# 1. Guardamos as camadas originais
+	var camada_original = 1 # Geralmente 1, ou pegue do seu projeto
+	var mascara_original = 1 
 	
+	# Deixamos ele "fantasma" inicialmente
 	novo_item.collision_layer = 0
 	novo_item.collision_mask = 0
 	
-	# Se tiver a Area3D_Monitor, limpamos a dela também por segurança
 	var area_detecao = novo_item.get_node_or_null("Area3D_Monitor")
 	if area_detecao:
 		area_detecao.collision_layer = 0
 		area_detecao.collision_mask = 0
 
-	# 2. Agora adicionamos ao mundo (ele está "fantasma" agora)
 	get_tree().root.add_child(novo_item)
 	
 	novo_item.nome_item = nome_do_item
-	novo_item.global_position = global_position + Vector3(0, 1.5, 0)
+	# Nasce um pouco mais alto para garantir que não prenda no fundo
+	novo_item.global_position = global_position + Vector3(0, 1.8, 0)
 	
-	# 3. Aplicamos o impulso (mesmo sem colisão, a física de movimento funciona)
 	if novo_item is RigidBody3D:
-		var direcao = Vector3(randf_range(-1, 1), 2.0, randf_range(-1, 1)).normalized()
-		novo_item.apply_central_impulse(direcao * 6.0) # Aumentei um pouco a força
+		# Um impulso lateral mais garantido para tirar ele de cima do caldeirão
+		var direcao = Vector3(randf_range(-1, 1), 1.5, randf_range(-1, 1)).normalized()
+		novo_item.apply_central_impulse(direcao * 7.0)
 
-	# 4. Esperamos o objeto sair de perto do caldeirão
-	await get_tree().create_timer(1.2).timeout
+	# 2. A MÁGICA: Em vez de um Timer fixo, vamos monitorar a distância
+	_esperar_saida_segura(novo_item, camada_original, mascara_original)
+
+# Nova função auxiliar para monitorar a saída
+func _esperar_saida_segura(item, camada, mascara):
+	var distancia_minima = 2.0 # Se estiver a mais de 2 metros, é seguro
 	
-	# 5. Devolvemos a existência física ao objeto
-	if is_instance_valid(novo_item):
-		novo_item.collision_layer = camada_original
-		novo_item.collision_mask = mascara_original
-		if area_detecao:
-			area_detecao.collision_layer = 1 # Ou a camada que você usa
-			area_detecao.collision_mask = 1
-		print("Objeto '", nome_do_item, "' agora é sólido e coletável!")
-
+	# Criamos um loop que roda enquanto o item estiver muito perto
+	while is_instance_valid(item) and item.global_position.distance_to(self.global_position) < distancia_minima:
+		# Espera um frame do servidor de física (muito eficiente)
+		await get_tree().physics_frame
+	
+	# 3. Agora que ele se afastou, devolvemos a física
+	if is_instance_valid(item):
+		item.collision_layer = camada
+		item.collision_mask = mascara
+		var area = item.get_node_or_null("Area3D_Monitor")
+		if area:
+			area.collision_layer = 1
+			area.collision_mask = 1
+		print("Poção liberada: Longe o suficiente do caldeirão!")
+		
 func elastico():
 	if objeto_visual == null:
 		print("Aviso: objeto_visual não definido no Inspector!")
