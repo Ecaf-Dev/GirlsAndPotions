@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://blsv00axiamw4"]
+
+[ext_resource type="ArrayMesh" uid="uid://bqupt6vrgb0sg" path="res://GirlsAndPotions/Modelos/Caixa.obj" id="1_0kvtc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_idtxg"]
+albedo_color = Color(0.6, 0.321569, 0.101961, 1)
+roughness = 0.42
+
+[node name="caixa" type="Node3D"]
+
+[node name="Caixa" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.56, 0, 0, 0, 0.56, 0, 0, 0, 0.56, 0, 0.5, 0)
+mesh = ExtResource("1_0kvtc")
+surface_material_override/0 = SubResource("StandardMaterial3D_idtxg")

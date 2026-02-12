@@ -30,3 +30,5 @@ collision_mask = 3
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
 transform = Transform3D(1.08081, 0, 0, 0, 1.08081, 0, 0, 0, 1.08081, 0, 0, 0)
 shape = SubResource("BoxShape3D_igvkj")
+
+[connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

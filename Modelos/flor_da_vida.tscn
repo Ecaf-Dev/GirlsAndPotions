@@ -7,6 +7,7 @@ albedo_color = Color(0.180392, 0.596078, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v3yjd"]
 albedo_color = Color(1, 0.105882, 0.0823529, 1)
+roughness = 0.0
 
 [node name="flor_da_vida" type="Node3D"]
 
