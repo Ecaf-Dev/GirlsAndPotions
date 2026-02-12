@@ -61,7 +61,10 @@ func _physics_process(delta):
 		#criaremos uma checagem que caso a tecla z seja prescionada enquanto proximo a um caldeirão, chamaremos o metodo do caldeirao de cozinhar
 		
 	if Input.is_action_just_pressed("tecla_x"):
-		_jogaritem()
+		if(objeto_levantado == null):
+			_levantaritem()
+		elif (objeto_levantado != null) :
+			_jogaritem()
 	
 	move_and_slide()
 
