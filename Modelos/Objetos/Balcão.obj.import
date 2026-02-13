@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dfsfgbm6qxoac"
+path="res://.godot/imported/Balcão.obj-42f6cd6010bcccba604040a5f91c6820.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Balcão.obj-42f6cd6010bcccba604040a5f91c6820.mesh"]
+
+source_file="res://GirlsAndPotions/Modelos/Objetos/Balcão.obj"
+dest_files=["res://.godot/imported/Balcão.obj-42f6cd6010bcccba604040a5f91c6820.mesh", "res://.godot/imported/Balcão.obj-42f6cd6010bcccba604040a5f91c6820.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

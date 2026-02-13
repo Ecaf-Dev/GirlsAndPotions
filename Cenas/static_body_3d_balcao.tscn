@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bjw4dhmf2enhd"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_balcao.gd" id="1_20lu7"]
-[ext_resource type="ArrayMesh" uid="uid://dfsfgbm6qxoac" path="res://GirlsAndPotions/Modelos/Balcão.obj" id="2_7keit"]
+[ext_resource type="ArrayMesh" uid="uid://dfsfgbm6qxoac" path="res://GirlsAndPotions/Modelos/Objetos/Balcão.obj" id="2_wwvc4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ltmu"]
 
@@ -10,9 +10,8 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8sp1"]
 albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_es03u"]
-albedo_color = Color(0.333333, 0.121569, 0, 1)
-metallic = 0.19
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jd77c"]
+albedo_color = Color(0.505882, 0.2, 0.0117647, 1)
 
 [node name="StaticBody3D_Balcao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual")]
 script = ExtResource("1_20lu7")
@@ -37,7 +36,7 @@ material = SubResource("StandardMaterial3D_l8sp1")
 
 [node name="Balcão" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = ExtResource("2_7keit")
-surface_material_override/0 = SubResource("StandardMaterial3D_es03u")
+mesh = ExtResource("2_wwvc4")
+surface_material_override/0 = SubResource("StandardMaterial3D_jd77c")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

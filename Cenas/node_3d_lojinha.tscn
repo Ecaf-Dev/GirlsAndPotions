@@ -51,3 +51,8 @@ transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 0, 1.2, 0)
 
 [node name="StaticBody3D_Balcao" parent="." instance=ExtResource("5_2bddq")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 1, 1, -5)
+
+[node name="RigidBody3D_Objeto3" parent="." instance=ExtResource("2_t26us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
+nome_item = "Flor Magica"
+quantidade_atual = 5

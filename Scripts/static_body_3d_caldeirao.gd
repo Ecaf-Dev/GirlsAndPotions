@@ -7,7 +7,11 @@ var slots = []
 
 # Dicionário com todas as receitas possíveis
 const RECEITAS = {
-	"Poção De Cura": ["Flor Da Vida", "Flor Da Vida"]
+	"Poção De Cura": ["Flor Da Vida", "Flor Da Vida"],
+	"Poção Da Determinação" : ["Flor Da Vida", "Poção De Cura"],
+	"Poção De Cura Maior" : ["Poção De Cura", "Poção De Cura"],
+	"Poção De Mana" : ["Flor Magica", "Flor Magica"],
+	
 }
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector

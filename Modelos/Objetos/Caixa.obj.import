@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bqupt6vrgb0sg"
+path="res://.godot/imported/Caixa.obj-e3b1ad2a308fcb8ce5c6147da8910429.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Caixa.obj-e3b1ad2a308fcb8ce5c6147da8910429.mesh"]
+
+source_file="res://GirlsAndPotions/Modelos/Objetos/Caixa.obj"
+dest_files=["res://.godot/imported/Caixa.obj-e3b1ad2a308fcb8ce5c6147da8910429.mesh", "res://.godot/imported/Caixa.obj-e3b1ad2a308fcb8ce5c6147da8910429.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ctivqiv5kpsvx"]
 
-[ext_resource type="ArrayMesh" uid="uid://c0pk0u8uauewp" path="res://GirlsAndPotions/Modelos/Pocao.obj" id="1_tumel"]
+[ext_resource type="ArrayMesh" uid="uid://c0pk0u8uauewp" path="res://GirlsAndPotions/Modelos/Objetos/Pocao.obj" id="1_tumel"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hfwg"]
 transparency = 1
@@ -14,7 +14,7 @@ albedo_color = Color(0.694118, 0.282353, 0, 1)
 albedo_color = Color(0.933333, 0, 0.203922, 1)
 roughness = 0.0
 
-[node name="pocao_de_cura" type="Node3D"]
+[node name="poção_de_cura" type="Node3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="Pocao" type="MeshInstance3D" parent="."]

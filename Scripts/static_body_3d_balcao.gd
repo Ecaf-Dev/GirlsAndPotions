@@ -21,8 +21,6 @@ func _gerarpedidos():
 		pedidos.append(nova_pocao)
 		print("NOVO PEDIDO ADICIONADO: ", nova_pocao)
 		print("PEDIDOS PENDENTES: ", pedidos)
-	
-
 
 func _on_area_3d_monitor_body_entered(body):
 	if "nome_item" in body:

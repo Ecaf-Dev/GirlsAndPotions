@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://crhgyxpt0ebby"]
+
+[ext_resource type="PackedScene" uid="uid://ctivqiv5kpsvx" path="res://GirlsAndPotions/Modelos/poção_de_cura.tscn" id="1_ud83w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tivtm"]
+albedo_color = Color(0, 1, 1, 1)
+
+[node name="poção_de_mana" instance=ExtResource("1_ud83w")]
+
+[node name="Pocao" parent="." index="0"]
+surface_material_override/2 = SubResource("StandardMaterial3D_tivtm")
