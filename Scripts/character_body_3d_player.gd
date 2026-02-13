@@ -71,6 +71,7 @@ func _physics_process(delta):
 
 func _on_area_3d_monitor_area_entered(area):
 	print("objeto dentro da area:", area)
+	_falaronomedoitem(area.name)
 	if(objeto_levantado == null && area.is_in_group("item_carregavel")):
 		print("é carregavel")
 		objeto_proximo = area
@@ -201,3 +202,6 @@ func _instanciar_na_mao(nome):
 	
 	# 5. Define como o objeto levantado (pegando a Area3D para manter seu padrão)
 	objeto_levantado = novo_item.get_node("Area3D_Monitor")
+
+func _falaronomedoitem(body):
+	pass
