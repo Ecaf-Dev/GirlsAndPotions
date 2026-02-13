@@ -39,6 +39,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.76629, 0, 0, -0.131322)
 visible = false
 material = SubResource("StandardMaterial3D_nlgle")
 
+[node name="Marker3D_PosicaoFala" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.967381, 0.484307)
+
 [connection signal="area_entered" from="Area3D_monitor" to="." method="_on_area_3d_monitor_area_entered"]
 [connection signal="area_exited" from="Area3D_monitor" to="." method="_on_area_3d_monitor_area_exited"]
 [connection signal="body_entered" from="Area3D_monitor" to="." method="_on_area_3d_monitor_body_entered"]

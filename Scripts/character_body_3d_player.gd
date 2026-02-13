@@ -16,6 +16,7 @@ var caldeirao = null
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+var pode_falar = true
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -71,8 +72,9 @@ func _physics_process(delta):
 
 func _on_area_3d_monitor_area_entered(area):
 	print("objeto dentro da area:", area)
-	_falaronomedoitem(area.name)
+	var corpo = area.get_parent()
 	if(objeto_levantado == null && area.is_in_group("item_carregavel")):
+		_falaronomedoitem(corpo.nome_item)
 		print("é carregavel")
 		objeto_proximo = area
 	#verificaremos se o jogador está proximo de uma area 2d caldeirao, caso esteja alteraremos o boleano pdoe cozinhar para true
@@ -128,7 +130,7 @@ func _soltaritem():
 	# 4. Reativamos a física
 	corpo.freeze = false
 	corpo.get_node("CollisionShape3D").disabled = false
-	
+	corpo.aplicar_elastico_externo()
 	# 5. Limpamos a referência
 	objeto_levantado = null
 	
@@ -203,5 +205,37 @@ func _instanciar_na_mao(nome):
 	# 5. Define como o objeto levantado (pegando a Area3D para manter seu padrão)
 	objeto_levantado = novo_item.get_node("Area3D_Monitor")
 
-func _falaronomedoitem(body):
-	pass
+func _falaronomedoitem(nome_do_item):
+	if not pode_falar: return
+	pode_falar = false
+	# 1. Criamos o Label3D dinamicamente
+	var balao = Label3D.new()
+	balao.text = nome_do_item
+	
+	# 2. Configurações visuais básicas
+	balao.billboard = StandardMaterial3D.BILLBOARD_ENABLED # Faz o texto sempre olhar para a câmera
+	balao.no_depth_test = true # Garante que o texto apareça na frente de tudo
+	balao.font_size = 48
+	balao.outline_size = 12
+	balao.modulate = Color.WHITE # Ou a cor que preferir para destacar
+	
+	# 3. Posicionamento
+	# Se você criou o Marker3D chamado "PosicaoFala"
+	var posicao_base = get_node("Marker3D_PosicaoFala").global_position
+	get_tree().root.add_child(balao) # Adicionamos ao mundo para não girar com o player
+	balao.global_position = posicao_base
+	
+	# 4. A Animação (O "Pulo" e o Sumiço)
+	var tween = create_tween()
+	# Faz o balão subir 1 metro em 0.8 segundos
+	tween.tween_property(balao, "global_position", posicao_base + Vector3(0, 1.5, 0), 2)\
+		.set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+	
+	# Faz o balão ficar transparente ao mesmo tempo
+	tween.parallel().tween_property(balao, "modulate:a", 0.0, 2)
+	
+	# 5. Autodestruição
+	tween.tween_callback(balao.queue_free)
+	
+	await get_tree().create_timer(0.5).timeout # Espera meio segundo
+	pode_falar = true
