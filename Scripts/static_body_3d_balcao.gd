@@ -13,7 +13,7 @@ const MODELOS_POCOES = {
 	"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn"
 }
 
-const POCOES_POSSIVEIS = ["Poção De Cura", "Poção De Mana", "Poção Da Determinação", "Poção De Cura Maior"]
+@export var POCOES_POSSIVEIS = ["Poção De Cura", "Poção De Mana", "Poção Da Determinação", "Poção De Cura Maior"]
 
 @onready var posicoes = [$Marker3D_Esquerda, $Marker3D_Centro, $Marker3D_Direita]
 var itens_exibidos = [] 
