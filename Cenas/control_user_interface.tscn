@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://b75oeoxyp6f54"]
+
+[ext_resource type="Texture2D" uid="uid://dvcsnrkqj2mqh" path="res://GirlsAndPotions/Arts/Icones/Moedas_De_Ouro.png" id="1_eefoj"]
+[ext_resource type="Texture2D" uid="uid://b38tfn3m6lp54" path="res://GirlsAndPotions/Arts/Icones/Livro_De_Alquimia.png" id="2_iklui"]
+
+[node name="Control_UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control_HUD_Principal" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer_Contador_Moedas" type="HBoxContainer" parent="CanvasLayer/Control_HUD_Principal"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture = ExtResource("1_eefoj")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas"]
+layout_mode = 2
+text = "0000"
+
+[node name="TextureButton_Livro" type="TextureButton" parent="CanvasLayer/Control_HUD_Principal"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(-3.61866, -3.73184)
+texture_normal = ExtResource("2_iklui")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="Control_Painel_Livro" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
