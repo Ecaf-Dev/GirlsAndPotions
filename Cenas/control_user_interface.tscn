@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b75oeoxyp6f54"]
+[gd_scene load_steps=4 format=3 uid="uid://b75oeoxyp6f54"]
 
 [ext_resource type="Texture2D" uid="uid://dvcsnrkqj2mqh" path="res://GirlsAndPotions/Arts/Icones/Moedas_De_Ouro.png" id="1_eefoj"]
 [ext_resource type="Texture2D" uid="uid://b38tfn3m6lp54" path="res://GirlsAndPotions/Arts/Icones/Livro_De_Alquimia.png" id="2_iklui"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_brxqh"]
+font_color = Color(1, 1, 0, 1)
 
 [node name="Control_UserInterface" type="Control"]
 layout_mode = 3
@@ -33,6 +36,9 @@ expand_mode = 1
 [node name="Label" type="Label" parent="CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas"]
 layout_mode = 2
 text = "0000"
+label_settings = SubResource("LabelSettings_brxqh")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TextureButton_Livro" type="TextureButton" parent="CanvasLayer/Control_HUD_Principal"]
 layout_mode = 1
@@ -43,6 +49,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -40.0
 offset_top = -40.0
+offset_right = 9.0
+offset_bottom = 7.0
 grow_horizontal = 0
 grow_vertical = 0
 scale = Vector2(-3.61866, -3.73184)
