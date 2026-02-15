@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bonfi6ckgtc8l"]
+[gd_scene load_steps=9 format=3 uid="uid://bonfi6ckgtc8l"]
 
 [ext_resource type="PackedScene" uid="uid://7uqrentjh088" path="res://GirlsAndPotions/Cenas/character_body_3d_player.tscn" id="1_ibour"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_t26us"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b24rs8h57wqg6" path="res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn" id="4_ahm42"]
 [ext_resource type="PackedScene" uid="uid://bjw4dhmf2enhd" path="res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn" id="5_2bddq"]
 [ext_resource type="PackedScene" uid="uid://b75oeoxyp6f54" path="res://GirlsAndPotions/Cenas/control_user_interface.tscn" id="6_hwnuv"]
+[ext_resource type="PackedScene" uid="uid://cn8y2wi0gx2vd" path="res://GirlsAndPotions/Modelos/static_body_3d_caixa_de_correio.tscn" id="7_ymw0s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_valfg"]
 albedo_color = Color(1, 0.8, 0.627451, 1)
@@ -63,3 +64,6 @@ offset_left = 886.636
 offset_top = 408.723
 offset_right = 926.636
 offset_bottom = 448.723
+
+[node name="StaticBody3D_CaixaDeCorreio" parent="." instance=ExtResource("7_ymw0s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 5)
