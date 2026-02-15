@@ -110,32 +110,32 @@ func _levantaritem():
 func _soltaritem():
 	var corpo = objeto_levantado.get_parent()
 	
-	# 1. Antes de soltar, calculamos a posição à frente
-	# Pegamos a direção "frente" baseada na rotação do personagem
-	# No Godot, o eixo -Z costuma ser a frente, mas como usamos o atan2,
-	# vamos usar o Vector3.FORWARD rotacionado:
-	var direcao_frente = Vector3.FORWARD.rotated(Vector3.UP, rotation.y)
-	var distancia = -1.5 # Distância à frente para não colidir com o pé da bruxinha
+	# 1. Reparent primeiro (sempre para a cena atual)
+	corpo.reparent(get_tree().current_scene)
 	
-	# 2. Fazemos o reparent para o mundo
-	corpo.reparent(get_tree().root.get_child(0)) 
+	# 2. Posicionamento (ajustando a distância para positiva)
+	var direcao_frente = global_transform.basis.z
+	corpo.global_position = global_position + (direcao_frente * 1.5) + Vector3.UP * 0.5
 	
-	# 3. Posicionamos o objeto no mundo à frente do player
-	# Usamos global_position do player + a direção calculada
-	corpo.global_position = global_position + (direcao_frente * distancia)
+	# 3. O SEGREDO: Descongelar de forma diferida
+	# Isso garante que a física só ligue DEPOIS que ele mudou de pai e posição
+	corpo.set_deferred("freeze", false)
+	corpo.set_deferred("sleeping", false)
 	
-	# Opcional: Ajuste a altura para ele não "nascer" dentro do chão
-	corpo.global_position.y = global_position.y + 0.5 
+	# 4. Forçar a colisão a voltar
+	var collision = corpo.get_node("CollisionShape3D")
+	collision.set_deferred("disabled", false)
+
+	# 5. Impulso de "Acorda!" (chamado um tiquinho depois)
+	get_tree().create_timer(0.05).timeout.connect(func(): 
+		if is_instance_valid(corpo):
+			corpo.apply_central_impulse(Vector3.DOWN * 2.0)
+	)
 	
-	# 4. Reativamos a física
-	corpo.freeze = false
-	corpo.get_node("CollisionShape3D").disabled = false
+	# 6. Limpeza
 	corpo.aplicar_elastico_externo()
-	# 5. Limpamos a referência
 	objeto_levantado = null
 	
-	print("Item deixado à frente!")
-
 func _jogaritem():
 	if objeto_levantado == null: return
 	

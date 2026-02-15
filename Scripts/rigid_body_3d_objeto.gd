@@ -45,6 +45,16 @@ func _carregar_visual_automatico():
 	else:
 		print("Aviso: Modelo não encontrado para ", nome_item)
 
+func _physics_process(_delta):
+	# Se o item estiver parado no ar (freeze falso) mas não estiver caindo (linear_velocity baixa)
+	# e não tiver ninguém segurando ele (pai é a cena principal)
+	if not freeze and linear_velocity.length() < 0.1 and get_parent() == get_tree().current_scene:
+		# Verificamos se ele está longe do chão (opcional, mas ajuda)
+		# Se ele estiver 'dormindo', nós acordamos ele na marra
+		if sleeping:
+			sleeping = false
+			apply_central_impulse(Vector3.DOWN * 5.0) # Um 'puxão' da gravidade
+
 # FUNÇÃO QUE VOCÊ PEDIU: Identifica e ajusta proporções automaticamente
 func _on_area_3d_monitor_body_entered(body):
 	if body.get("nome_item") == self.nome_item:
