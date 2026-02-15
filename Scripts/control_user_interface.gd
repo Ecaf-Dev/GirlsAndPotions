@@ -1,0 +1,48 @@
+extends Control
+
+@onready var painel_livro = $CanvasLayer/Control_Painel_Livro
+@onready var label_moedas = $CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas/Label
+
+var livro_aberto = false
+var moedas_atuais = 0
+
+func _ready():
+	# Inicializa o painel invisível e pequeno para o efeito
+	painel_livro.visible = false
+	painel_livro.scale = Vector2.ZERO
+	# Centraliza o pivot para o efeito de escala sair do meio do livro
+	painel_livro.pivot_offset = painel_livro.size / 2
+	
+	atualizar_ui_moedas()
+
+# Esta função será chamada pelo botão do livro (via sinal)
+func _on_texture_button_livro_pressed():
+	if not livro_aberto:
+		_abrir_livro()
+	else:
+		_fechar_livro()
+
+func _abrir_livro():
+	livro_aberto = true
+	painel_livro.visible = true # Isso agora mostra o painel e o ColorRect junto
+	
+	var tw = create_tween()
+	# O Pivot Offset que ajustamos garante que o ColorRect cresça do centro
+	tw.tween_property(painel_livro, "scale", Vector2.ONE, 0.5)\
+		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func _fechar_livro():
+	var tw = create_tween()
+	tw.tween_property(painel_livro, "scale", Vector2.ZERO, 0.3)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	tw.finished.connect(func(): 
+		painel_livro.visible = false
+		livro_aberto = false
+	)
+
+func adicionar_moedas(quantidade):
+	moedas_atuais += quantidade
+	atualizar_ui_moedas()
+
+func atualizar_ui_moedas():
+	label_moedas.text = str(moedas_atuais).pad_zeros(4)

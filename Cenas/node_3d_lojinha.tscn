@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bonfi6ckgtc8l"]
+[gd_scene load_steps=8 format=3 uid="uid://bonfi6ckgtc8l"]
 
 [ext_resource type="PackedScene" uid="uid://7uqrentjh088" path="res://GirlsAndPotions/Cenas/character_body_3d_player.tscn" id="1_ibour"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_t26us"]
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/Camera3D.gd" id="3_057y4"]
 [ext_resource type="PackedScene" uid="uid://b24rs8h57wqg6" path="res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn" id="4_ahm42"]
 [ext_resource type="PackedScene" uid="uid://bjw4dhmf2enhd" path="res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn" id="5_2bddq"]
+[ext_resource type="PackedScene" uid="uid://b75oeoxyp6f54" path="res://GirlsAndPotions/Cenas/control_user_interface.tscn" id="6_hwnuv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_valfg"]
 albedo_color = Color(1, 0.8, 0.627451, 1)
@@ -18,7 +19,7 @@ proximity_fade_distance = 1984.33
 [node name="Node3D_Lojinha" type="Node3D"]
 
 [node name="CSGBox3D_Chao" type="CSGBox3D" parent="."]
-transform = Transform3D(0.941578, 0, 0.633844, 0, 1.5, 0, -0.547395, 0, 1.09028, 0, 0, 0)
+transform = Transform3D(1.08909, 0.00636371, -0.0102848, -0.00454973, 1.49994, 0.0100693, 0.00891857, -0.0119249, 1.26106, 0, 0, 0)
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -56,3 +57,9 @@ transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 1, 1, -5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
 nome_item = "Flor Magica"
 quantidade_atual = 5
+
+[node name="Control_UserInterface" parent="." instance=ExtResource("6_hwnuv")]
+offset_left = 886.636
+offset_top = 408.723
+offset_right = 926.636
+offset_bottom = 448.723
