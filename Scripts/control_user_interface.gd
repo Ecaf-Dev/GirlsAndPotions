@@ -23,6 +23,7 @@ func _ready():
 	atualizar_ui_moedas(Global.moedas)
 	atualizar_ui_prestigio(Global.prestigio)
 	trocar_de_tela('Glossário')
+	_adicionar_items_a_loja()
 
 # Esta função será chamada pelo botão do livro (via sinal)
 func _on_texture_button_livro_pressed():
@@ -106,3 +107,35 @@ func _on_button_voltar_pressed():
 
 func _on_button_comprar_pressed():
 	pass # Replace with function body.
+
+func _adicionar_items_a_loja():
+	# 1. Referências aos Grids e a Cena do Item
+	var grid_esquerda = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda
+	var grid_direita = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita
+	var cena_item = preload("res://GirlsAndPotions/Cenas/v_box_container_item.tscn") # Ajuste o caminho!
+	
+	# Limpa os grids para não duplicar se chamar a função duas vezes
+	for n in grid_esquerda.get_children(): n.queue_free()
+	for n in grid_direita.get_children(): n.queue_free()
+	
+	var contador = 0
+	
+	# 2. Loop pelo dicionário global
+	for id in Items.itens:
+		print(id)
+		var dados = Items.itens[id]
+		var novo_item = cena_item.instantiate()
+		
+		# Configura o item com os dados do Global
+		novo_item.configurar(id, dados)
+		
+		# 3. Lógica de distribuição (4 por grid)
+		if contador < 4:
+			grid_esquerda.add_child(novo_item)
+		elif contador < 8:
+			grid_direita.add_child(novo_item)
+		else:
+			print("Loja cheia! Item não adicionado: ", id)
+			break
+			
+		contador += 1

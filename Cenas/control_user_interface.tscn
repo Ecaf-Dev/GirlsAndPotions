@@ -234,6 +234,7 @@ theme_override_constants/v_separation = 10
 columns = 2
 
 [node name="VBoxContainer_Item" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
+visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item"]
@@ -248,6 +249,7 @@ text = "Flor Da Vida"
 layout_mode = 2
 
 [node name="VBoxContainer_Item2" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
+visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item2"]
