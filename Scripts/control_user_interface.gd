@@ -2,10 +2,9 @@ extends Control
 
 @onready var painel_livro = $CanvasLayer/Control_Painel_Livro
 @onready var label_moedas = $CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas/Label
-@onready var label_pedidosentregues = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_PedidosEntregues"
-@onready var label_ourofaturado = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_OuroFaturado"
-@onready var abas_do_livro = $CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas
-@onready var label_prestigio = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_Prestigio"
+@onready var label_pedidosentregues = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_PedidosEntregues"
+@onready var label_ourofaturado = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_OuroFaturado"
+@onready var label_prestigio = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_Prestigio"
 
 var livro_aberto = false
 var moedas_atuais = 0
@@ -61,19 +60,17 @@ func atualizar_ui_prestigio(novo_valor):
 	label_prestigio.text = str(novo_valor).pad_zeros(4)
 
 func _on_button_receitas_pressed():
-	abas_do_livro.current_tab = 1 # Replace with function body.
+	pass
 
 func _on_button_loja_pressed():
-	# A segunda aba é o índice 1
-	abas_do_livro.current_tab = 2
+	pass
 
 func _on_button_2_sair_pressed():
 	_fechar_livro()
 
 
 func _on_button_3_tutoriais_pressed():
-	abas_do_livro.current_tab = 3 # Replace with function body.
-
+	pass
 
 func _on_button_configurações_pressed():
-	abas_do_livro.current_tab = 4# Replace with function body.
+	pass# Replace with function body.
