@@ -130,23 +130,36 @@ func _limpar_exibicao():
 # --- RESTANTE DA SUA LÓGICA ---
 func _checarentrega(objeto):
 	if objeto.nome_item in pedidos:
-		pedidos.erase(objeto.nome_item)
+		var nome_entregue = objeto.nome_item # Guardamos o nome
+		pedidos.erase(nome_entregue)
 		objeto.queue_free()
-		_recompensa()
+		
+		# Passamos o nome para a função de recompensa
+		_recompensa(nome_entregue) 
+		
 		_gerarpedidos()
 		if _player_esta_perto:
 			_exibir_pedidos_magicos()
 	else:
 		_rejeitar_item(objeto)
-
-func _recompensa():
+func _recompensa(nome_da_pocao):
 	elastico()
-	# Procura a UI na cena e adiciona moedas
-	# (Considerando que sua UI está na árvore principal)
-	Global.adicionar_moedas(10)
+	
+	# Buscamos os dados do item no seu script global Items
+	if Items.itens.has(nome_da_pocao):
+		var dados = Items.itens[nome_da_pocao]
+		var valor = dados.valor_venda # Ex: 12 para Cura Maior
+		
+		# Adicionamos o valor real ao Global
+		Global.adicionar_moedas(valor)
+		print("RECOMPENSA: Você vendeu ", nome_da_pocao, " por ", valor, " G!")
+	else:
+		# Fallback caso o nome não esteja no dicionário
+		Global.adicionar_moedas(5) 
+		print("Aviso: Item não encontrado no catálogo, pago valor base de 5G")
+
 	Global.registrar_pedido()
 	Global.alterar_prestigio(1)
-	print("RECOMPENSA: Você ganhou 10 moedas de ouro! e Pedido concluido")
 
 func _rejeitar_item(item):
 	if item is RigidBody3D:
