@@ -1,0 +1,166 @@
+[gd_scene load_steps=5 format=3 uid="uid://b75oeoxyp6f54"]
+
+[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/control_user_interface.gd" id="1_8iyej"]
+[ext_resource type="Texture2D" uid="uid://dvcsnrkqj2mqh" path="res://GirlsAndPotions/Arts/Icones/Moedas_De_Ouro.png" id="1_eefoj"]
+[ext_resource type="Texture2D" uid="uid://b38tfn3m6lp54" path="res://GirlsAndPotions/Arts/Icones/Livro_De_Alquimia.png" id="2_iklui"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_brxqh"]
+font_color = Color(1, 1, 0, 1)
+
+[node name="Control_UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_8iyej")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control_HUD_Principal" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer_Contador_Moedas" type="HBoxContainer" parent="CanvasLayer/Control_HUD_Principal"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture = ExtResource("1_eefoj")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas"]
+layout_mode = 2
+text = "0000"
+label_settings = SubResource("LabelSettings_brxqh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureButton_Livro" type="TextureButton" parent="CanvasLayer/Control_HUD_Principal"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 9.0
+offset_bottom = 7.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(-3.61866, -3.73184)
+texture_normal = ExtResource("2_iklui")
+ignore_texture_size = true
+stretch_mode = 0
+flip_v = true
+
+[node name="Control_Painel_Livro" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control_Painel_Livro"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.286275, 0.286275, 0, 0.490196)
+
+[node name="TabContainer_ControleDeAbas" type="TabContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tabs_visible = false
+
+[node name="Control_Glossário" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
+layout_mode = 2
+
+[node name="VBoxContainer_PaginaDireita" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Button_rECEITAS" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
+layout_mode = 2
+text = "RECEITAS"
+
+[node name="Button_Loja" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
+layout_mode = 2
+text = "LOJA"
+
+[node name="Button3_Tutoriais" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
+layout_mode = 2
+text = "TUTORIAIS"
+
+[node name="Button_Configurações" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
+layout_mode = 2
+text = "CONFIGURAÇÕES"
+
+[node name="Button2_Sair" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
+layout_mode = 2
+text = "SAIR"
+
+[node name="VBoxContainer_PaginaEsquerda" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.4
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label_PedidosEntregues" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda"]
+layout_mode = 2
+text = "Pedidos entregues: 0"
+
+[node name="Label_OuroFaturado" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda"]
+layout_mode = 2
+text = "Ouro faturado: 0"
+
+[node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
+visible = false
+layout_mode = 2
+
+[node name="Control_Receitas" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
+visible = false
+layout_mode = 2
+
+[node name="Control_Tutoriais" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
+visible = false
+layout_mode = 2
+
+[node name="Control_Configurações" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="CanvasLayer/Control_HUD_Principal/TextureButton_Livro" to="." method="_on_texture_button_livro_pressed"]

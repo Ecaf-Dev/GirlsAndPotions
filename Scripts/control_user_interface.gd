@@ -7,13 +7,14 @@ var livro_aberto = false
 var moedas_atuais = 0
 
 func _ready():
+	Global.moedas_alteradas.connect(atualizar_ui_moedas)
 	# Inicializa o painel invisível e pequeno para o efeito
 	painel_livro.visible = false
 	painel_livro.scale = Vector2.ZERO
 	# Centraliza o pivot para o efeito de escala sair do meio do livro
 	painel_livro.pivot_offset = painel_livro.size / 2
 	
-	atualizar_ui_moedas()
+	atualizar_ui_moedas(Global.moedas)
 
 # Esta função será chamada pelo botão do livro (via sinal)
 func _on_texture_button_livro_pressed():
@@ -42,7 +43,7 @@ func _fechar_livro():
 
 func adicionar_moedas(quantidade):
 	moedas_atuais += quantidade
-	atualizar_ui_moedas()
+	atualizar_ui_moedas(quantidade)
 
-func atualizar_ui_moedas():
-	label_moedas.text = str(moedas_atuais).pad_zeros(4)
+func atualizar_ui_moedas(novo_valor):
+	label_moedas.text = str(novo_valor).pad_zeros(4)

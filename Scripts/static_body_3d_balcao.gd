@@ -143,10 +143,9 @@ func _recompensa():
 	elastico()
 	# Procura a UI na cena e adiciona moedas
 	# (Considerando que sua UI está na árvore principal)
-	var hud = get_tree().root.find_child("Control_UserInterface", true, false)
-	if hud:
-		hud.adicionar_moedas(10) 
-	print("RECOMPENSA: Você ganhou 10 moedas de ouro!")
+	Global.adicionar_moedas(10)
+	Global.registrar_pedido()
+	print("RECOMPENSA: Você ganhou 10 moedas de ouro! e Pedido concluido")
 
 func _rejeitar_item(item):
 	if item is RigidBody3D:
