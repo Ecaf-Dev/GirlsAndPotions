@@ -16,12 +16,5 @@ var itens = {
 		"valor_compra": 2,
 		"valor_venda": 0,
 		"icon": ""
-	},
-	"frasco_vazio": {
-		"nome": "Frasco de Vidro",
-		"descricao": "Um frasco limpo pronto para receber poções.",
-		"valor_compra": 2,
-		"valor_venda": 0,
-		"icon": ""
 	}
 }

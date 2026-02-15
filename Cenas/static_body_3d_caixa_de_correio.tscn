@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cn8y2wi0gx2vd"]
+[gd_scene load_steps=9 format=3 uid="uid://bcwkg3g4bglte"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_caixa_de_correio.gd" id="1_ickm8"]
 [ext_resource type="ArrayMesh" uid="uid://pp5uu54nt1jj" path="res://GirlsAndPotions/Modelos/Objetos/CaixaDeCorreio.obj" id="1_lw8jh"]

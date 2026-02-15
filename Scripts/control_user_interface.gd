@@ -104,9 +104,45 @@ func trocar_de_tela(nome_alvo: String):
 func _on_button_voltar_pressed():
 	trocar_de_tela('Glossário')
 
-
 func _on_button_comprar_pressed():
-	pass # Replace with function body.
+	var grids = [
+		$CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda,
+		$CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita
+	]
+	
+	var valor_total_da_compra = 0
+	var lista_de_itens_validados = [] 
+	
+	for grid in grids:
+		for item_ui in grid.get_children():
+			var spinbox = item_ui.get_node("SpinBox_Quantidade")
+			var qtd = spinbox.value
+			
+			if qtd > 0:
+				var preco_unitario = item_ui.get_node("Label_Preco").text.to_int()
+				valor_total_da_compra += (preco_unitario * qtd)
+				
+				lista_de_itens_validados.append({
+					"item_no": item_ui,
+					"nome": item_ui.get_node("Label_Nome").text,
+					"qtd": qtd
+				})
+
+	if valor_total_da_compra == 0:
+		print("Carrinho vazio!")
+		return
+
+	# CHAMADA DA GLOBAL: Enviamos e recebemos um "true" ou "false"
+	var compra_foi_feita = await Global.realizar_entrega_correio(lista_de_itens_validados, valor_total_da_compra)
+
+	if compra_foi_feita:
+		# --- SUCESSO NA COMPRA (O Global já tirou o ouro) ---
+		print("HUD: Compra autorizada. Zerando quantidades.")
+		for pedido in lista_de_itens_validados:
+			pedido.item_no.get_node("SpinBox_Quantidade").value = 0
+	
+	# Atualiza o contador de moedas na tela
+	atualizar_ui_moedas(Global.moedas)
 
 func _adicionar_items_a_loja():
 	# 1. Referências aos Grids e a Cena do Item
