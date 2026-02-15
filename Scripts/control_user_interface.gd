@@ -2,6 +2,9 @@ extends Control
 
 @onready var painel_livro = $CanvasLayer/Control_Painel_Livro
 @onready var label_moedas = $CanvasLayer/Control_HUD_Principal/HBoxContainer_Contador_Moedas/Label
+@onready var label_pedidosentregues = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_PedidosEntregues"
+@onready var label_ourofaturado = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_OuroFaturado"
+
 
 var livro_aberto = false
 var moedas_atuais = 0
@@ -31,6 +34,9 @@ func _abrir_livro():
 	# O Pivot Offset que ajustamos garante que o ColorRect cresça do centro
 	tw.tween_property(painel_livro, "scale", Vector2.ONE, 0.5)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+	label_pedidosentregues.text = "Pedidos entregues: " + str(Global.total_pedidos)
+	label_ourofaturado.text = "Ouro faturado: " + str(Global.moedas)
 
 func _fechar_livro():
 	var tw = create_tween()
