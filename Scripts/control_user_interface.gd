@@ -5,6 +5,7 @@ extends Control
 @onready var label_pedidosentregues = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_PedidosEntregues"
 @onready var label_ourofaturado = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_OuroFaturado"
 @onready var abas_do_livro = $CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas
+@onready var label_prestigio = $"CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda/Label_Prestigio"
 
 var livro_aberto = false
 var moedas_atuais = 0
@@ -18,6 +19,7 @@ func _ready():
 	painel_livro.pivot_offset = painel_livro.size / 2
 	
 	atualizar_ui_moedas(Global.moedas)
+	atualizar_ui_prestigio(Global.prestigio)
 
 # Esta função será chamada pelo botão do livro (via sinal)
 func _on_texture_button_livro_pressed():
@@ -37,6 +39,7 @@ func _abrir_livro():
 
 	label_pedidosentregues.text = "Pedidos entregues: " + str(Global.total_pedidos)
 	label_ourofaturado.text = "Ouro faturado: " + str(Global.moedas)
+	label_prestigio.text = "Prestigio: "+ str(Global.prestigio)
 
 func _fechar_livro():
 	var tw = create_tween()
@@ -54,6 +57,8 @@ func adicionar_moedas(quantidade):
 func atualizar_ui_moedas(novo_valor):
 	label_moedas.text = str(novo_valor).pad_zeros(4)
 
+func atualizar_ui_prestigio(novo_valor):
+	label_prestigio.text = str(novo_valor).pad_zeros(4)
 
 func _on_button_receitas_pressed():
 	abas_do_livro.current_tab = 1 # Replace with function body.

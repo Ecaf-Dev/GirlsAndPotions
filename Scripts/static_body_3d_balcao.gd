@@ -145,6 +145,7 @@ func _recompensa():
 	# (Considerando que sua UI está na árvore principal)
 	Global.adicionar_moedas(10)
 	Global.registrar_pedido()
+	Global.alterar_prestigio(1)
 	print("RECOMPENSA: Você ganhou 10 moedas de ouro! e Pedido concluido")
 
 func _rejeitar_item(item):

@@ -147,6 +147,10 @@ text = "Pedidos entregues: 0"
 layout_mode = 2
 text = "Ouro faturado: 0"
 
+[node name="Label_Prestigio" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaEsquerda"]
+layout_mode = 2
+text = "Prestigio: 0"
+
 [node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
 visible = false
 layout_mode = 2
