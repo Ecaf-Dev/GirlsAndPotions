@@ -77,46 +77,51 @@ func _exibir_pedidos_magicos():
 			if cena_modelo:
 				var instancia = cena_modelo.instantiate()
 				container.add_child(instancia)
-				
-				# --- AJUSTE DE ESCALA AQUI ---
-				# Se as poções estiverem gigantes, diminua esse valor (ex: 0.2)
-				# Se estiverem pequenas, aumente (ex: 1.5 ou 2.0)
 				instancia.scale = Vector3(0.3, 0.3, 0.3) 
-				
-				# Opcional: Se o modelo estiver "enterrado" no balcão,
-				# você pode ajustar a posição local dele aqui também:
-				instancia.position.y = 0.0 # Ajuste conforme necessário
+				instancia.position.y = 0.0 
 				
 				if instancia is RigidBody3D: 
 					instancia.freeze = true
 		
-		# 3. Criar o Label acima do modelo
-		var label = Label3D.new()
-		label.text = nome_da_pocao
-		label.position.y = 1 # Altura acima da garrafinha
-		label.billboard = StandardMaterial3D.BILLBOARD_ENABLED
-		label.no_depth_test = true
-		label.font_size = 40
-		label.outline_size = 10
-		container.add_child(label)
+		# 3. Criar o Label ACIMA do modelo (Nome)
+		var label_nome = Label3D.new()
+		label_nome.text = nome_da_pocao
+		label_nome.position.y = 0.8 # Ajustado para ficar logo acima
+		label_nome.billboard = StandardMaterial3D.BILLBOARD_ENABLED
+		label_nome.no_depth_test = true
+		label_nome.font_size = 35
+		label_nome.outline_size = 8
+		container.add_child(label_nome)
+		
+		# 4. Criar o Label ABAIXO do modelo (Preço)
+		var label_preco = Label3D.new()
+		
+		# Busca o valor no dicionário Items
+		var valor = 0
+		if Items.itens.has(nome_da_pocao):
+			valor = Items.itens[nome_da_pocao].valor_venda
+			
+		label_preco.text = str(valor) + " G"
+		label_preco.position.y = -0.5 # Posicionado abaixo do modelo
+		label_preco.billboard = StandardMaterial3D.BILLBOARD_ENABLED
+		label_preco.no_depth_test = true
+		label_preco.font_size = 45 # Preço um pouco maior para dar destaque
+		label_preco.outline_size = 12
+		label_preco.modulate = Color(1, 0.84, 0) # Cor Dourada para o ouro!
+		container.add_child(label_preco)
 		
 		# --- ANIMAÇÃO MÁGICA ---
-		# Começa no centro do balcão e invisível
 		container.global_position = global_position + Vector3(0, 1, 0)
 		container.scale = Vector3.ZERO
 		
-		var tw = create_tween().set_parallel(true) # Roda as animações juntas
-		
-		# Move do centro para a posição do Marker correspondente
+		var tw = create_tween().set_parallel(true)
 		tw.tween_property(container, "global_position", posicoes[i].global_position, 0.6)\
 			.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		
-		# Cresce com efeito elástico
 		tw.tween_property(container, "scale", Vector3.ONE, 0.8)\
 			.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 		
 		itens_exibidos.append(container)
-
 func _limpar_exibicao():
 	for item in itens_exibidos:
 		if is_instance_valid(item):
