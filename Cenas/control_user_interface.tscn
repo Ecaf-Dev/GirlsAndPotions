@@ -96,6 +96,7 @@ grow_vertical = 2
 tabs_visible = false
 
 [node name="Control_Glossário" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas"]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer_PaginaDireita" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário"]
