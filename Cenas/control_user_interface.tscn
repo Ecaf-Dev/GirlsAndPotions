@@ -109,7 +109,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="Button_rECEITAS" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
+[node name="Button_Receitas" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita"]
 layout_mode = 2
 text = "RECEITAS"
 
@@ -164,3 +164,8 @@ visible = false
 layout_mode = 2
 
 [connection signal="pressed" from="CanvasLayer/Control_HUD_Principal/TextureButton_Livro" to="." method="_on_texture_button_livro_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita/Button_Receitas" to="." method="_on_button_receitas_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita/Button_Loja" to="." method="_on_button_loja_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita/Button3_Tutoriais" to="." method="_on_button_3_tutoriais_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita/Button_Configurações" to="." method="_on_button_configurações_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/TabContainer_ControleDeAbas/Control_Glossário/VBoxContainer_PaginaDireita/Button2_Sair" to="." method="_on_button_2_sair_pressed"]
