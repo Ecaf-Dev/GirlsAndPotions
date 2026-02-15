@@ -148,9 +148,8 @@ func _adicionar_items_a_loja():
 	# 1. Referências aos Grids e a Cena do Item
 	var grid_esquerda = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda
 	var grid_direita = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita
-	var cena_item = preload("res://GirlsAndPotions/Cenas/v_box_container_item.tscn") # Ajuste o caminho!
+	var cena_item = preload("res://GirlsAndPotions/Cenas/v_box_container_item.tscn")
 	
-	# Limpa os grids para não duplicar se chamar a função duas vezes
 	for n in grid_esquerda.get_children(): n.queue_free()
 	for n in grid_direita.get_children(): n.queue_free()
 	
@@ -158,8 +157,14 @@ func _adicionar_items_a_loja():
 	
 	# 2. Loop pelo dicionário global
 	for id in Items.itens:
-		print(id)
 		var dados = Items.itens[id]
+		
+		# --- O FILTRO DE COMPRAVÉL ---
+		# Se o item não tiver a chave 'compravel' ou se ela for 'false', pulamos ele.
+		if dados.has("compravel") and dados.compravel == false:
+			print("Item ignorado (não é comprável): ", id)
+			continue # Vai direto para o próximo 'id' do loop
+		
 		var novo_item = cena_item.instantiate()
 		
 		# Configura o item com os dados do Global
