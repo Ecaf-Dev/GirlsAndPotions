@@ -79,20 +79,18 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 0
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 color = Color(0.286275, 0.286275, 0, 0.490196)
 
-[node name="Control_Glossário" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect"]
+[node name="Control_Glossário" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+visible = false
 layout_mode = 2
-anchors_preset = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
 
-[node name="VBoxContainer_PaginaDireita" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário"]
+[node name="VBoxContainer_PaginaDireita" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.6
@@ -103,27 +101,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="Button_Receitas" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita"]
+[node name="Button_Receitas" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita"]
 layout_mode = 2
 text = "RECEITAS"
 
-[node name="Button_Loja" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita"]
+[node name="Button_Loja" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita"]
 layout_mode = 2
 text = "LOJA"
 
-[node name="Button3_Tutoriais" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita"]
+[node name="Button3_Tutoriais" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita"]
 layout_mode = 2
 text = "TUTORIAIS"
 
-[node name="Button_Configurações" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita"]
+[node name="Button_Configurações" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita"]
 layout_mode = 2
 text = "CONFIGURAÇÕES"
 
-[node name="Button2_Sair" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita"]
+[node name="Button2_Sair" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita"]
 layout_mode = 2
 text = "SAIR"
 
-[node name="VBoxContainer_PaginaEsquerda" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário"]
+[node name="VBoxContainer_PaginaEsquerda" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
@@ -133,41 +131,207 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label_PedidosEntregues" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaEsquerda"]
+[node name="Label_PedidosEntregues" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
 text = "Pedidos entregues: 0"
 
-[node name="Label_OuroFaturado" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaEsquerda"]
+[node name="Label_OuroFaturado" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
 text = "Ouro faturado: 0"
 
-[node name="Label_Prestigio" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaEsquerda"]
+[node name="Label_Prestigio" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
 text = "Prestigio: 0"
 
-[node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect"]
+[node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
 visible = false
 layout_mode = 2
-anchors_preset = 0
 
-[node name="Control_Receitas" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect"]
-visible = false
-layout_mode = 2
-anchors_preset = 0
+[node name="GridContainer_PaginaDireita" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 10
+columns = 2
 
-[node name="Control_Tutoriais" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect"]
+[node name="VBoxContainer_Item" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
 visible = false
 layout_mode = 2
-anchors_preset = 0
 
-[node name="Control_Configurações" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect"]
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item"]
+layout_mode = 2
+
+[node name="VBoxContainer_Item2" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
 visible = false
 layout_mode = 2
-anchors_preset = 0
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item2"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item2"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item2"]
+layout_mode = 2
+
+[node name="VBoxContainer_Item3" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
+visible = false
+layout_mode = 2
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item3"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item3"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item3"]
+layout_mode = 2
+
+[node name="VBoxContainer_Item4" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
+visible = false
+layout_mode = 2
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item4"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item4"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item4"]
+layout_mode = 2
+
+[node name="GridContainer_PaginaEsquerda" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.4
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="VBoxContainer_Item" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
+layout_mode = 2
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item"]
+layout_mode = 2
+
+[node name="VBoxContainer_Item2" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
+layout_mode = 2
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item2"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item2"]
+layout_mode = 2
+text = "Flor Magica"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item2"]
+layout_mode = 2
+
+[node name="VBoxContainer_Item3" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
+visible = false
+layout_mode = 2
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item3"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item3"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item3"]
+layout_mode = 2
+
+[node name="VBoxContainer_Item4" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
+visible = false
+layout_mode = 2
+
+[node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item4"]
+custom_minimum_size = Vector2(50, 75)
+layout_mode = 2
+
+[node name="Label_Nome" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item4"]
+layout_mode = 2
+text = "Flor Da Vida"
+
+[node name="SpinBox_Quantidade" type="SpinBox" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item4"]
+layout_mode = 2
+
+[node name="Button_Voltar" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 47.8
+offset_top = -44.8
+offset_right = 102.8
+offset_bottom = -13.8
+grow_vertical = 0
+text = "Voltar"
+
+[node name="Button_Comprar" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 288.8
+offset_top = -45.8
+offset_right = 365.8
+offset_bottom = -14.8
+grow_vertical = 0
+text = "Comprar"
+
+[node name="Control_Receitas" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Control_Tutoriais" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Control_Configurações" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+visible = false
+layout_mode = 2
 
 [connection signal="pressed" from="CanvasLayer/Control_HUD_Principal/TextureButton_Livro" to="." method="_on_texture_button_livro_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita/Button_Receitas" to="." method="_on_button_receitas_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita/Button_Loja" to="." method="_on_button_loja_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita/Button3_Tutoriais" to="." method="_on_button_3_tutoriais_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita/Button_Configurações" to="." method="_on_button_configurações_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/ColorRect/Control_Glossário/VBoxContainer_PaginaDireita/Button2_Sair" to="." method="_on_button_2_sair_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita/Button_Receitas" to="." method="_on_button_receitas_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita/Button_Loja" to="." method="_on_button_loja_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita/Button3_Tutoriais" to="." method="_on_button_3_tutoriais_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita/Button_Configurações" to="." method="_on_button_configurações_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita/Button2_Sair" to="." method="_on_button_2_sair_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/Button_Voltar" to="." method="_on_button_voltar_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/Button_Comprar" to="." method="_on_button_comprar_pressed"]
