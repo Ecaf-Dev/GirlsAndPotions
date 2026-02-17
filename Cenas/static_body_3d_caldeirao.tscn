@@ -16,7 +16,8 @@ height = 2.15791
 albedo_color = Color(0.156863, 0.156863, 0.156863, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mfi5"]
-albedo_color = Color(0, 0.392157, 0.568627, 1)
+transparency = 1
+albedo_color = Color(0, 0.392157, 0.568627, 0.45098)
 
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)

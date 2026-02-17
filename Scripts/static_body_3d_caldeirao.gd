@@ -12,10 +12,13 @@ var holograma_atual : Node3D = null # Para podermos apagar depois
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
 
+@onready var malha_caldeirao = $"Caldeirão"
+var cor_original = Color(0.0, 0.4, 0.9)
+
 var tempo_da_receita = 1
 var receita_validada = false
 
-# Dicionário com todas as receitas possíveis
+# Dicionário com todas as receitas possíveis, está obsoleto!
 const RECEITAS = {
 	"Poção De Cura": ["Flor Da Vida", "Flor Da Vida"],
 	"Poção Da Determinação" : ["Flor Da Vida", "Poção De Cura"],
@@ -70,6 +73,7 @@ func cozinhar():
 	# Resultado do cozimento baseado na busca acima
 	if sucesso:
 		print("RECEITA CRIADA: ", nome_da_receita_feita)
+		alterar_cor_liquido(Color(0.0, 0.4, 0.9))
 		_instanciarobjeto(nome_da_receita_feita)
 		print("SUCESSO! Você criou uma Poção!")
 	else:
@@ -189,7 +193,7 @@ func _ready():
 
 func _receita_compativel(itens: Array):
 	print("--- Caldeirão está analisando os itens atuais ---")
-	
+	alterar_cor_liquido()
 	if itens.is_empty():
 		print("Estado: Vazio")
 		return null
@@ -351,3 +355,33 @@ func _gerenciar_barra_visual(porcentagem: float):
 	barra_progresso.scale.x = porcentagem
 	# Ajustamos a posição X para que ela cresça da esquerda para a direita, não do centro
 	barra_progresso.position.x = -0.6 * (1.0 - porcentagem)
+
+func alterar_cor_liquido(cor_especifica = null):
+	if malha_caldeirao == null: return
+
+	# 1. Pegar ou criar o material único no Slot 1
+	var material_atual = malha_caldeirao.get_surface_override_material(1)
+	if material_atual == null:
+		material_atual = malha_caldeirao.mesh.surface_get_material(1).duplicate()
+		malha_caldeirao.set_surface_override_material(1, material_atual)
+	
+	# 2. Capturar o Alpha (transparência) original do material
+	var alpha_original = material_atual.albedo_color.a
+	
+	var cor_alvo: Color
+	
+	if cor_especifica != null:
+		cor_alvo = cor_especifica
+	else:
+		# Gerar cor aleatória, mas FORÇAR o alpha original nela
+		cor_alvo = Color(randf(), randf(), randf(), alpha_original)
+	
+	# Caso a cor_especifica tenha sido passada (ex: Color.BLUE), 
+	# garantimos que ela também respeite o alpha original
+	cor_alvo.a = alpha_original
+
+	# 3. Tween para a transição suave
+	var tween = create_tween()
+	tween.tween_property(material_atual, "albedo_color", cor_alvo, 0.6)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_IN_OUT)

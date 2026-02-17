@@ -24,7 +24,7 @@ var receitas = {
 		"nome" : "Poção Da Determinação",
 		"item1" : "Flor Da Vida",
 		"item2" : "Poção De Cura",
-		"pode_fabricar" : true,
+		"pode_fabricar" : false,
 		"tempo_de_cozinha" : 8
 	},
 	"Poção De Cura Maior" : {
