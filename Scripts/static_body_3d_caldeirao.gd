@@ -5,6 +5,8 @@ var slots = []
 @export var MAX_SLOTS = 2
 @export var objeto_visual : Node3D
 
+var tempo_da_receita = 5
+
 # Dicionário com todas as receitas possíveis
 const RECEITAS = {
 	"Poção De Cura": ["Flor Da Vida", "Flor Da Vida"],
@@ -218,6 +220,7 @@ func _receita_compativel(itens: Array):
 	if receita_encontrada != null:
 		if receita_encontrada["pode_fabricar"] == true:
 			print("SUCESSO: Receita compatível e liberada! -> ", receita_encontrada["nome"])
+			tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
 			return receita_encontrada
 		else:
 			print("BLOQUEADO: Você conhece os itens para ", receita_encontrada["nome"], ", mas ainda não pode fabricá-la!")
@@ -228,3 +231,22 @@ func _receita_compativel(itens: Array):
 		else:
 			print("AGUARDANDO: Itens insuficientes para uma receita.")
 		return null
+
+func cozinhando_pocao():
+	print("--- INICIANDO PREPARO ---")
+	print("Tempo total estimado: ", tempo_da_receita, " segundos.")
+	
+	# Usamos um loop simples para mostrar o progresso no terminal
+	# range(tempo_da_receita) vai contar de 0 até o tempo da poção
+	for segundo in range(tempo_da_receita):
+		var tempo_restante = tempo_da_receita - segundo
+		print("Preparando... Faltam ", tempo_restante, "s")
+		
+		# A mágica do 'await': o código para aqui por 1 segundo, 
+		# mas o jogo continua rodando normalmente.
+		await get_tree().create_timer(1.0).timeout
+	
+	print("--- PREPARO FINALIZADO! ---")
+	cozinhar()
+	# Só depois que o tempo acaba, chamamos a criação física do objeto
+	# (Mas vamos deixar a integração total para o próximo passo)
