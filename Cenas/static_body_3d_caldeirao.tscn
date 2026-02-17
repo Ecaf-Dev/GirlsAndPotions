@@ -48,4 +48,7 @@ mesh = ExtResource("3_nr5xr")
 surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
 surface_material_override/1 = SubResource("StandardMaterial3D_5mfi5")
 
+[node name="Marker3D_Holograma" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2721, 0)
+
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
