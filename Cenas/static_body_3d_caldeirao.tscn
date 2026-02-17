@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b24rs8h57wqg6"]
+[gd_scene load_steps=15 format=3 uid="uid://b24rs8h57wqg6"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_caldeirao.gd" id="1_jbh2c"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_2gnie"]
@@ -36,6 +36,25 @@ albedo_color = Color(0, 0.494118, 1, 0.184314)
 material = SubResource("StandardMaterial3D_0bjgm")
 radius = 0.05
 height = 0.1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gdpqk"]
+emission_shape = 2
+emission_sphere_radius = 4.0
+direction = Vector3(1, 1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+color = Color(0, 0.960784, 0.960784, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5suae"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.686275, 0, 0.619608)
+billboard_mode = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_h0vqa"]
+material = SubResource("StandardMaterial3D_5suae")
+size = Vector3(0.08, 0.2, 0.02)
 
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
@@ -81,5 +100,16 @@ amount = 12
 lifetime = 3.0
 process_material = SubResource("ParticleProcessMaterial_jbp8p")
 draw_pass_1 = SubResource("SphereMesh_qut8x")
+
+[node name="GPUParticles3D_Fogareu" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.130803, 0, 0, 0, 0.130803, 0, 0, 0, 0.130803, 0, -1.10292, 0)
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_gdpqk")
+draw_pass_1 = SubResource("BoxMesh_h0vqa")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="GPUParticles3D_Fogareu"]
+transform = Transform3D(7.8559, 0, 0, 0, 22.9564, 0, 0, 0, 7.8559, 0, 0, 0)
+light_color = Color(1, 0.698039, 0, 1)
+shadow_enabled = true
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
