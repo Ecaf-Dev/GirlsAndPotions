@@ -153,3 +153,24 @@ func _rejeitar_item(item):
 		var direcao = (item.global_position - global_position).normalized()
 		item.apply_central_impulse(direcao * 4.0 + Vector3.UP * 3.0)
 	elastico()
+
+func _conectar_as_receitas():
+	print("--- INICIANDO LEITURA DE RECEITAS ---")
+	
+	# Assumindo que seu AutoLoad se chama 'Receitas' e a variável lá dentro é 'receitas'
+	var todas_as_receitas = Receitas.receitas 
+	
+	for nome_pocao in todas_as_receitas:
+		var dados = todas_as_receitas[nome_pocao]
+		
+		# Pegamos os ingredientes e as condições
+		var item1 = dados["item1"]
+		var item2 = dados["item2"]
+		var prestigio = dados["prestigio_minimo"]
+		
+		print("Poção: ", nome_pocao, " | Ingredientes: [", item1, ", ", item2, "] | Prestígio: ", prestigio)
+	
+	print("--- FIM DA LEITURA ---")
+
+func _ready():
+	_conectar_as_receitas()
