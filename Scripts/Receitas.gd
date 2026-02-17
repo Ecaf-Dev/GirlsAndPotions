@@ -22,8 +22,8 @@ var receitas = {
 	"Poção Da Determinação" : {
 		"prestigio_minimo" : 5,
 		"nome" : "Poção Da Determinação",
-		"item1" : "Poção De Cura",
-		"item2" : "Flor Da Vida",
+		"item1" : "Flor Da Vida",
+		"item2" : "Poção De Cura",
 		"pode_fabricar" : false,
 		"tempo_de_cozinha" : 8
 	},

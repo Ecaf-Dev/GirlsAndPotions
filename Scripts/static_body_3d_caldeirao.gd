@@ -6,6 +6,7 @@ var slots = []
 @export var objeto_visual : Node3D
 
 var tempo_da_receita = 1
+var receita_validada = false
 
 # Dicionário com todas as receitas possíveis
 const RECEITAS = {
@@ -186,7 +187,7 @@ func _receita_compativel(itens: Array):
 		print("Estado: Vazio")
 		return null
 
-	# 1. Monitoramento dos Slots
+	# 1. Monitoramento dos Slots (Mantido)
 	for i in range(itens.size()):
 		if i < MAX_SLOTS:
 			print("Slot ", i, ": ", itens[i])
@@ -195,43 +196,48 @@ func _receita_compativel(itens: Array):
 	
 	print("Total de itens: ", itens.size(), "/", MAX_SLOTS)
 	
-	# 2. Checagem de Transbordamento
+	# 2. Checagem de Transbordamento (Mantido)
 	if itens.size() > MAX_SLOTS:
 		print("AVISO: Caldeirão transbordando!")
 		return null 
 
-	# 3. COMPARATIVO COM O GLOBAL
-	var itens_atuais = itens.duplicate()
-	itens_atuais.sort()
+	# 3. COMPARATIVO COM O GLOBAL (Ajustado para ORDEM RÍGIDA)
+	# Não usamos mais o .sort(), pois a ordem importa!
+	var itens_atuais = itens.duplicate() 
 	
 	var todas_as_receitas = Receitas.receitas
 	var receita_encontrada = null
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
+		# Criamos a lista da receita na ordem exata definida no Global
 		var ingredientes_receita = [dados["item1"], dados["item2"]]
-		ingredientes_receita.sort()
 		
+		# A comparação agora só é verdadeira se os itens entrarem na mesma sequência
 		if itens_atuais == ingredientes_receita:
 			receita_encontrada = dados
 			break
 	
-	# 4. VALIDAÇÃO DE PERMISSÃO (Nova Regra)
+	# 4. VALIDAÇÃO DE PERMISSÃO E TEMPO
 	if receita_encontrada != null:
 		if receita_encontrada["pode_fabricar"] == true:
-			print("SUCESSO: Receita compatível e liberada! -> ", receita_encontrada["nome"])
+			print("SUCESSO: Ordem correta e receita liberada! -> ", receita_encontrada["nome"])
 			tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
+			receita_validada = true
 			return receita_encontrada
 		else:
-			print("BLOQUEADO: Você conhece os itens para ", receita_encontrada["nome"], ", mas ainda não pode fabricá-la!")
-			return null # Retornamos null porque, embora os itens batam, a fabricação é proibida
+			print("BLOQUEADO: Ordem correta para ", receita_encontrada["nome"], ", mas fabricação não permitida!")
+			receita_validada = false
+			return null
+			
 	else:
 		if itens.size() == MAX_SLOTS:
-			print("ERRO: Ingredientes não formam nenhuma receita conhecida.")
+			print("ERRO: Ingredientes na ordem errada ou receita inexistente.")
+			receita_validada = false
 		else:
-			print("AGUARDANDO: Itens insuficientes para uma receita.")
+			print("AGUARDANDO: Continue a sequência de ingredientes...")
 		return null
-
+		
 func cozinhando_pocao():
 	print("--- INICIANDO PREPARO ---")
 	print("Tempo total estimado: ", tempo_da_receita, " segundos.")
@@ -247,6 +253,8 @@ func cozinhando_pocao():
 		await get_tree().create_timer(1.0).timeout
 	
 	print("--- PREPARO FINALIZADO! ---")
-	cozinhar()
+	if receita_validada == true:
+		cozinhar()
+	slots.clear()
 	# Só depois que o tempo acaba, chamamos a criação física do objeto
 	# (Mas vamos deixar a integração total para o próximo passo)
