@@ -23,6 +23,7 @@ func _on_area_3d_monitor_body_entered(body):
 			slots.append(body.nome_item)
 			print("Item adicionado ao slot: ", body.nome_item)
 			print("Estado atual dos slots: ", slots)
+			_receita_compativel(slots)
 			body.queue_free()
 			elastico()
 		elif (body.quantidade_atual >= 2):
@@ -127,6 +128,7 @@ func _esperar_saida_segura(item, c_layer, c_mask, a_layer, a_mask):
 			area.collision_mask = a_mask
 		
 		print("Poção liberada com camadas originais: Corpo(", c_layer, ") Area(", a_layer, ")")	
+
 func elastico():
 	if objeto_visual == null:
 		print("Aviso: objeto_visual não definido no Inspector!")
@@ -174,3 +176,18 @@ func _conectar_as_receitas():
 
 func _ready():
 	_conectar_as_receitas()
+
+func _receita_compativel(itens: Array):
+	# Por enquanto, essa função só vai nos dizer o que ela está vendo
+	print("--- Caldeirão está analisando os itens atuais ---")
+	
+	if itens.is_empty():
+		print("Estado: Vazio")
+		return
+
+	# Vamos listar cada item que está guardado nos slots
+	for i in range(itens.size()):
+		print("Slot ", i, ": ", itens[i])
+	
+	print("Total de itens: ", itens.size(), "/", MAX_SLOTS)
+	print("-----------------------------------------------")
