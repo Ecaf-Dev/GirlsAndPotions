@@ -184,7 +184,7 @@ func _receita_compativel(itens: Array):
 		print("Estado: Vazio")
 		return null
 
-	# 1. Monitoramento dos Slots (Mantendo o que fizemos)
+	# 1. Monitoramento dos Slots
 	for i in range(itens.size()):
 		if i < MAX_SLOTS:
 			print("Slot ", i, ": ", itens[i])
@@ -196,33 +196,35 @@ func _receita_compativel(itens: Array):
 	# 2. Checagem de Transbordamento
 	if itens.size() > MAX_SLOTS:
 		print("AVISO: Caldeirão transbordando!")
-		return null # Se tem item demais, nem precisa checar receita
+		return null 
 
-	# 3. COMPARATIVO COM O GLOBAL (A nova inteligência)
+	# 3. COMPARATIVO COM O GLOBAL
 	var itens_atuais = itens.duplicate()
+	itens_atuais.sort()
 	
 	var todas_as_receitas = Receitas.receitas
 	var receita_encontrada = null
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
-		
-		# Criamos a lista de ingredientes da receita (item1 e item2 por enquanto)
 		var ingredientes_receita = [dados["item1"], dados["item2"]]
 		ingredientes_receita.sort()
 		
-		# Se os itens batem exatamente
 		if itens_atuais == ingredientes_receita:
 			receita_encontrada = dados
 			break
 	
-	# 4. Resultado Final da Análise
+	# 4. VALIDAÇÃO DE PERMISSÃO (Nova Regra)
 	if receita_encontrada != null:
-		print("SUCESSO: Receita compatível encontrada -> ", receita_encontrada["nome"])
-		return receita_encontrada
+		if receita_encontrada["pode_fabricar"] == true:
+			print("SUCESSO: Receita compatível e liberada! -> ", receita_encontrada["nome"])
+			return receita_encontrada
+		else:
+			print("BLOQUEADO: Você conhece os itens para ", receita_encontrada["nome"], ", mas ainda não pode fabricá-la!")
+			return null # Retornamos null porque, embora os itens batam, a fabricação é proibida
 	else:
 		if itens.size() == MAX_SLOTS:
-			print("ERRO: Caldeirão cheio, mas os ingredientes não formam nenhuma receita.")
+			print("ERRO: Ingredientes não formam nenhuma receita conhecida.")
 		else:
-			print("AGUARDANDO: Ainda não há nenhuma receita compatível com esses itens.")
+			print("AGUARDANDO: Itens insuficientes para uma receita.")
 		return null
