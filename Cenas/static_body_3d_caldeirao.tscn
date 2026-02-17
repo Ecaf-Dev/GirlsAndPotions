@@ -18,13 +18,14 @@ albedo_color = Color(0.156863, 0.156863, 0.156863, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mfi5"]
 albedo_color = Color(0, 0.392157, 0.568627, 1)
 
-[node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual", "marker_holograma")]
+[node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jbh2c")
 objeto_visual = NodePath("Caldeirão")
 marker_holograma = NodePath("Marker3D_Holograma")
+marker_barra = NodePath("Marker3D_BarraDeProgresso")
 cena_base_item = ExtResource("2_2gnie")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
@@ -51,5 +52,8 @@ surface_material_override/1 = SubResource("StandardMaterial3D_5mfi5")
 
 [node name="Marker3D_Holograma" type="Marker3D" parent="."]
 transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 1, 0)
+
+[node name="Marker3D_BarraDeProgresso" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.00277, 0)
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

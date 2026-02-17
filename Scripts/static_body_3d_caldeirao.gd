@@ -8,6 +8,10 @@ var slots = []
 @export var marker_holograma : Marker3D
 var holograma_atual : Node3D = null # Para podermos apagar depois
 
+@export var marker_barra : Marker3D
+var barra_fundo : MeshInstance3D = null
+var barra_progresso : MeshInstance3D = null
+
 var tempo_da_receita = 1
 var receita_validada = false
 
@@ -244,29 +248,31 @@ func _receita_compativel(itens: Array):
 		
 func cozinhando_pocao():
 	print("--- INICIANDO PREPARO ---")
-	print("Tempo total estimado: ", tempo_da_receita, " segundos.")
 	
-	# Usamos um loop simples para mostrar o progresso no terminal
-	# range(tempo_da_receita) vai contar de 0 até o tempo da poção
-	for segundo in range(tempo_da_receita):
-		var tempo_restante = tempo_da_receita - segundo
-		print("Preparando... Faltam ", tempo_restante, "s")
+	for segundo in range(tempo_da_receita + 1): # +1 para chegar no 100%
+		# Calcula a porcentagem atual (ex: 0.5 para metade do tempo)
+		var progresso = float(segundo) / float(tempo_da_receita)
 		
-		# A mágica do 'await': o código para aqui por 1 segundo, 
-		# mas o jogo continua rodando normalmente.
-		await get_tree().create_timer(1.0).timeout
+		# Atualiza a barra visual
+		_gerenciar_barra_visual(progresso)
+		
+		print("Preparando... ", int(progresso * 100), "%")
+		
+		if segundo < tempo_da_receita:
+			await get_tree().create_timer(1.0).timeout
 	
+	# Finalização
 	print("--- PREPARO FINALIZADO! ---")
+	_gerenciar_barra_visual(0) # Remove a barra
 	
 	if holograma_atual != null:
 		holograma_atual.queue_free()
 		holograma_atual = null
-	
+
 	if receita_validada == true:
 		cozinhar()
+	
 	slots.clear()
-	# Só depois que o tempo acaba, chamamos a criação física do objeto
-	# (Mas vamos deixar a integração total para o próximo passo)
 
 func _mostrarHolograma(nome_do_item):
 	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
@@ -305,3 +311,43 @@ func _mostrarHolograma(nome_do_item):
 
 	
 	print("Holograma de ", nome_do_item, " projetado!")
+
+func _gerenciar_barra_visual(porcentagem: float):
+	# Se a porcentagem for 0 ou menor, e a barra existir, limpamos ela (fim do processo)
+	if porcentagem <= 0 or porcentagem >= 1.0:
+		if barra_fundo: barra_fundo.queue_free()
+		if barra_progresso: barra_progresso.queue_free()
+		barra_fundo = null
+		barra_progresso = null
+		return
+
+	# Criar as barras se ainda não existirem
+	if barra_fundo == null:
+		# Criando o fundo (Branco)
+		barra_fundo = MeshInstance3D.new()
+		barra_fundo.mesh = BoxMesh.new()
+		barra_fundo.mesh.size = Vector3(1.2, 0.1, 0.05) # Tamanho da barra
+		var mat_fundo = StandardMaterial3D.new()
+		mat_fundo.albedo_color = Color.WHITE
+		mat_fundo.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED # Brilha no escuro
+		barra_fundo.material_override = mat_fundo
+		marker_barra.add_child(barra_fundo)
+
+		# Criando o progresso (Verde)
+		barra_progresso = MeshInstance3D.new()
+		barra_progresso.mesh = BoxMesh.new()
+		barra_progresso.mesh.size = Vector3(1.2, 0.1, 0.05)
+		var mat_prog = StandardMaterial3D.new()
+		mat_prog.albedo_color = Color.GREEN
+		mat_prog.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+		barra_progresso.material_override = mat_prog
+		marker_barra.add_child(barra_progresso)
+		
+		# Ajuste leve de posição para o verde ficar na frente do branco
+		barra_progresso.position.z = 0.01
+
+	# ATUALIZAÇÃO DO TAMANHO (O "pulo do gato")
+	# Mudamos a escala X do verde baseado na porcentagem (0.0 a 1.0)
+	barra_progresso.scale.x = porcentagem
+	# Ajustamos a posição X para que ela cresça da esquerda para a direita, não do centro
+	barra_progresso.position.x = -0.6 * (1.0 - porcentagem)
