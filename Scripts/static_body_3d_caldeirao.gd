@@ -359,29 +359,34 @@ func _gerenciar_barra_visual(porcentagem: float):
 func alterar_cor_liquido(cor_especifica = null):
 	if malha_caldeirao == null: return
 
-	# 1. Pegar ou criar o material único no Slot 1
-	var material_atual = malha_caldeirao.get_surface_override_material(1)
-	if material_atual == null:
-		material_atual = malha_caldeirao.mesh.surface_get_material(1).duplicate()
-		malha_caldeirao.set_surface_override_material(1, material_atual)
+	# 1. Definir a cor alvo (mantendo sua lógica anterior)
+	var material_liquido = malha_caldeirao.get_surface_override_material(1)
+	if material_liquido == null:
+		material_liquido = malha_caldeirao.mesh.surface_get_material(1).duplicate()
+		malha_caldeirao.set_surface_override_material(1, material_liquido)
 	
-	# 2. Capturar o Alpha (transparência) original do material
-	var alpha_original = material_atual.albedo_color.a
-	
+	var alpha_original = material_liquido.albedo_color.a
 	var cor_alvo: Color
 	
 	if cor_especifica != null:
 		cor_alvo = cor_especifica
 	else:
-		# Gerar cor aleatória, mas FORÇAR o alpha original nela
 		cor_alvo = Color(randf(), randf(), randf(), alpha_original)
 	
-	# Caso a cor_especifica tenha sido passada (ex: Color.BLUE), 
-	# garantimos que ela também respeite o alpha original
 	cor_alvo.a = alpha_original
 
-	# 3. Tween para a transição suave
-	var tween = create_tween()
-	tween.tween_property(material_atual, "albedo_color", cor_alvo, 0.6)\
-		.set_trans(Tween.TRANS_SINE)\
-		.set_ease(Tween.EASE_IN_OUT)
+	# 2. TWEEN para o Líquido
+	var tween = create_tween().set_parallel(true) # .set_parallel faz as duas cores mudarem juntas
+	tween.tween_property(material_liquido, "albedo_color", cor_alvo, 0.6)
+
+	# 3. SINCRONIZAR AS BOLHAS
+	var particles = $GPUParticles3D_Bolhas # Certifique-se que o nome está correto
+	if particles:
+		# Acessamos o material da esfera que está no Draw Pass 1
+		# No Godot 4, precisamos pegar o material da malha do pass
+		var material_bolha = particles.draw_pass_1.surface_get_material(0)
+		
+		# Se o material não for único, vamos torná-lo único para não afetar outros caldeirões
+		if material_bolha:
+			# Criamos um tween para a cor da bolha acompanhar
+			tween.tween_property(material_bolha, "albedo_color", cor_alvo, 0.6)

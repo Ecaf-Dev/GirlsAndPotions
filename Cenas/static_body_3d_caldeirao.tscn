@@ -30,7 +30,7 @@ turbulence_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bjgm"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.184314)
+albedo_color = Color(0, 0.494118, 1, 0.184314)
 
 [sub_resource type="SphereMesh" id="SphereMesh_qut8x"]
 material = SubResource("StandardMaterial3D_0bjgm")
