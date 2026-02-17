@@ -182,25 +182,47 @@ func _receita_compativel(itens: Array):
 	
 	if itens.is_empty():
 		print("Estado: Vazio")
-		return
+		return null
 
-	# 1. Listar os itens presentes
+	# 1. Monitoramento dos Slots (Mantendo o que fizemos)
 	for i in range(itens.size()):
-		# Se o índice for maior ou igual ao MAX_SLOTS, avisamos que está fora do limite
 		if i < MAX_SLOTS:
 			print("Slot ", i, ": ", itens[i])
 		else:
-			print("ITEM EXCEDENTE (Fora de slot): ", itens[i])
+			print("ITEM EXCEDENTE: ", itens[i])
 	
-	# 2. Demonstrar o estado de ocupação
 	print("Total de itens: ", itens.size(), "/", MAX_SLOTS)
 	
-	# 3. Mensagem de Alerta caso ultrapasse
+	# 2. Checagem de Transbordamento
 	if itens.size() > MAX_SLOTS:
-		print("AVISO: Caldeirão transbordando! Remova itens ou limpe os slots.")
-	elif itens.size() == MAX_SLOTS:
-		print("Estado: Caldeirão cheio. Pronto para cozinhar!")
-	else:
-		print("Estado: Aguardando mais ingredientes...")
+		print("AVISO: Caldeirão transbordando!")
+		return null # Se tem item demais, nem precisa checar receita
+
+	# 3. COMPARATIVO COM O GLOBAL (A nova inteligência)
+	var itens_atuais = itens.duplicate()
+	
+	var todas_as_receitas = Receitas.receitas
+	var receita_encontrada = null
+
+	for nome_id in todas_as_receitas:
+		var dados = todas_as_receitas[nome_id]
 		
-	print("-----------------------------------------------")
+		# Criamos a lista de ingredientes da receita (item1 e item2 por enquanto)
+		var ingredientes_receita = [dados["item1"], dados["item2"]]
+		ingredientes_receita.sort()
+		
+		# Se os itens batem exatamente
+		if itens_atuais == ingredientes_receita:
+			receita_encontrada = dados
+			break
+	
+	# 4. Resultado Final da Análise
+	if receita_encontrada != null:
+		print("SUCESSO: Receita compatível encontrada -> ", receita_encontrada["nome"])
+		return receita_encontrada
+	else:
+		if itens.size() == MAX_SLOTS:
+			print("ERRO: Caldeirão cheio, mas os ingredientes não formam nenhuma receita.")
+		else:
+			print("AGUARDANDO: Ainda não há nenhuma receita compatível com esses itens.")
+		return null
