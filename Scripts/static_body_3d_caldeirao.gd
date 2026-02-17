@@ -5,6 +5,9 @@ var slots = []
 @export var MAX_SLOTS = 2
 @export var objeto_visual : Node3D
 
+@export var marker_holograma : Marker3D
+var holograma_atual : Node3D = null # Para podermos apagar depois
+
 var tempo_da_receita = 1
 var receita_validada = false
 
@@ -224,6 +227,7 @@ func _receita_compativel(itens: Array):
 			print("SUCESSO: Ordem correta e receita liberada! -> ", receita_encontrada["nome"])
 			tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
 			receita_validada = true
+			_mostrarHolograma(receita_encontrada["nome"])
 			return receita_encontrada
 		else:
 			print("BLOQUEADO: Ordem correta para ", receita_encontrada["nome"], ", mas fabricação não permitida!")
@@ -253,8 +257,51 @@ func cozinhando_pocao():
 		await get_tree().create_timer(1.0).timeout
 	
 	print("--- PREPARO FINALIZADO! ---")
+	
+	if holograma_atual != null:
+		holograma_atual.queue_free()
+		holograma_atual = null
+	
 	if receita_validada == true:
 		cozinhar()
 	slots.clear()
 	# Só depois que o tempo acaba, chamamos a criação física do objeto
 	# (Mas vamos deixar a integração total para o próximo passo)
+
+func _mostrarHolograma(nome_do_item):
+	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
+	if holograma_atual != null:
+		holograma_atual.queue_free()
+
+	if cena_base_item == null or marker_holograma == null: return
+
+	# Instanciamos a base
+	var holo = cena_base_item.instantiate()
+	holograma_atual = holo
+	
+	# Aqui você define o tamanho (ex: 0.5 é metade do tamanho original)
+	var escala_desejada = 0.6
+	holo.scale = Vector3(escala_desejada, 1.3, escala_desejada)
+	
+	# Adicionamos ao Marker
+	marker_holograma.add_child(holo)
+	
+	# Definimos a identidade para carregar a malha/modelo correto
+	holo.nome_item = nome_do_item
+	holo.quantidade_atual = 1
+	
+	# --- TORNANDO-O UM HOLOGRAMA (VISUAL APENAS) ---
+	# 1. Desativa a gravidade e colisões se for RigidBody
+	if holo is RigidBody3D:
+		holo.freeze = true # Congela no lugar
+		holo.collision_layer = 0
+		holo.collision_mask = 0
+	
+	# 2. Desativa o monitor de proximidade dele
+	var area = holo.get_node_or_null("Area3D_Monitor")
+	if area:
+		area.collision_layer = 0
+		area.collision_mask = 0
+
+	
+	print("Holograma de ", nome_do_item, " projetado!")
