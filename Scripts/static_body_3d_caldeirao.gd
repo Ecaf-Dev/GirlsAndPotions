@@ -178,16 +178,29 @@ func _ready():
 	_conectar_as_receitas()
 
 func _receita_compativel(itens: Array):
-	# Por enquanto, essa função só vai nos dizer o que ela está vendo
 	print("--- Caldeirão está analisando os itens atuais ---")
 	
 	if itens.is_empty():
 		print("Estado: Vazio")
 		return
 
-	# Vamos listar cada item que está guardado nos slots
+	# 1. Listar os itens presentes
 	for i in range(itens.size()):
-		print("Slot ", i, ": ", itens[i])
+		# Se o índice for maior ou igual ao MAX_SLOTS, avisamos que está fora do limite
+		if i < MAX_SLOTS:
+			print("Slot ", i, ": ", itens[i])
+		else:
+			print("ITEM EXCEDENTE (Fora de slot): ", itens[i])
 	
+	# 2. Demonstrar o estado de ocupação
 	print("Total de itens: ", itens.size(), "/", MAX_SLOTS)
+	
+	# 3. Mensagem de Alerta caso ultrapasse
+	if itens.size() > MAX_SLOTS:
+		print("AVISO: Caldeirão transbordando! Remova itens ou limpe os slots.")
+	elif itens.size() == MAX_SLOTS:
+		print("Estado: Caldeirão cheio. Pronto para cozinhar!")
+	else:
+		print("Estado: Aguardando mais ingredientes...")
+		
 	print("-----------------------------------------------")
