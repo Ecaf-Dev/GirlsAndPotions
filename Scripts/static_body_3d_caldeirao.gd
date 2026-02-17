@@ -5,7 +5,7 @@ var slots = []
 @export var MAX_SLOTS = 2
 @export var objeto_visual : Node3D
 
-var tempo_da_receita = 5
+var tempo_da_receita = 1
 
 # Dicionário com todas as receitas possíveis
 const RECEITAS = {

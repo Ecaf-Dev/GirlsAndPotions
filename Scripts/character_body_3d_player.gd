@@ -53,8 +53,8 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("tecla_z"):
 		#preicos repensar esta logica aqui, pois to com problemas em  filtrar qual ação realizar
 		if(podeCozinhar == true && caldeirao != null && objeto_levantado == null):
-			if caldeirao.has_method("cozinhar"):
-				caldeirao.cozinhar()
+			if caldeirao.has_method("cozinhando_pocao"):
+				caldeirao.cozinhando_pocao()
 		elif(objeto_levantado == null):
 			_interagir_com_item()
 		elif(objeto_levantado != null):
