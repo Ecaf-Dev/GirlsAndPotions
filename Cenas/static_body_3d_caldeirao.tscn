@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b24rs8h57wqg6"]
+[gd_scene load_steps=12 format=3 uid="uid://b24rs8h57wqg6"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_caldeirao.gd" id="1_jbh2c"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_2gnie"]
@@ -18,6 +18,24 @@ albedo_color = Color(0.156863, 0.156863, 0.156863, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mfi5"]
 transparency = 1
 albedo_color = Color(0, 0.392157, 0.568627, 0.45098)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jbp8p"]
+emission_shape = 2
+emission_sphere_radius = 2.0
+direction = Vector3(0, 4, 0)
+gravity = Vector3(0, 0.5, 0)
+initial_velocity_min = 0.2
+initial_velocity_max = 1.0
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bjgm"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.184314)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qut8x"]
+material = SubResource("StandardMaterial3D_0bjgm")
+radius = 0.05
+height = 0.1
 
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
@@ -56,5 +74,12 @@ transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 1, 0)
 
 [node name="Marker3D_BarraDeProgresso" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.00277, 0)
+
+[node name="GPUParticles3D_Bolhas" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.103006, 0, 0, 0, 0.103006, 0, 0, 0, 0.103006, 0, 0.67502, 0)
+amount = 12
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_jbp8p")
+draw_pass_1 = SubResource("SphereMesh_qut8x")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
