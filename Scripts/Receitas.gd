@@ -9,7 +9,8 @@ var receitas = {
 		"item1" : "Flor Da Vida",
 		"item2" : "Flor Da Vida",
 		"pode_fabricar" : true,
-		"tempo_de_cozinha" : 4
+		"tempo_de_cozinha" : 4,
+		"Poção De Cura": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
 	},
 	"Poção De Mana" : {
 		"prestigio_minimo" : 0,
@@ -17,7 +18,8 @@ var receitas = {
 		"item1" : "Flor Magica",
 		"item2" : "Flor Magica",
 		"pode_fabricar" : true,
-		"tempo_de_cozinha" : 4
+		"tempo_de_cozinha" : 4,
+		"Poção De Mana": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
 	},
 	"Poção Da Determinação" : {
 		"prestigio_minimo" : 5,
@@ -25,7 +27,8 @@ var receitas = {
 		"item1" : "Flor Da Vida",
 		"item2" : "Poção De Cura",
 		"pode_fabricar" : false,
-		"tempo_de_cozinha" : 8
+		"tempo_de_cozinha" : 8,
+		"Poção Da Determinação": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
 	},
 	"Poção De Cura Maior" : {
 		"prestigio_minimo" : 15,
@@ -33,7 +36,8 @@ var receitas = {
 		"item1" : "Poção De Cura",
 		"item2" : "Poção De Cura",
 		"pode_fabricar" : false,
-		"tempo_de_cozinha" : 10
+		"tempo_de_cozinha" : 10,
+		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn"
 	},
 	
 	

@@ -122,6 +122,7 @@ func _exibir_pedidos_magicos():
 			.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 		
 		itens_exibidos.append(container)
+		
 func _limpar_exibicao():
 	for item in itens_exibidos:
 		if is_instance_valid(item):
@@ -147,6 +148,7 @@ func _checarentrega(objeto):
 			_exibir_pedidos_magicos()
 	else:
 		_rejeitar_item(objeto)
+		
 func _recompensa(nome_da_pocao):
 	elastico()
 	
@@ -179,3 +181,7 @@ func elastico():
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(objeto_visual, "scale", Vector3(0.5, 0.5, 0.5), 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func _filtrarpedidos():
+	#Aqui iremos filtrar quais pedidos estão elegiveis para serem gerados!
+	pass
