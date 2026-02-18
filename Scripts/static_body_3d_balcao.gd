@@ -29,13 +29,6 @@ func _process(delta):
 			# 1.5 é a velocidade, você pode aumentar ou diminuir
 			item.rotate_y(delta * 1.5)
 
-func _gerarpedidos():
-	if pedidos.size() < max_pedidos:
-		var nova_pocao = POCOES_POSSIVEIS.pick_random()
-		pedidos.append(nova_pocao)
-		if _player_esta_perto: 
-			_exibir_pedidos_magicos()
-
 func _on_area_3d_monitor_body_entered(body):
 	if body.is_in_group("player"):
 		_player_esta_perto = true
