@@ -216,7 +216,7 @@ func _gerar_pedidos_por_populacao():
 
 	# 2. Calcula a demanda total do dia baseada na população
 	var total_pessoas = Populacao.get_total_populacao()
-	var quantidade_total_dia = ceil(total_pessoas * 0.03) 
+	var quantidade_total_dia = ceil(total_pessoas * 0.05) 
 	
 	# 3. Preenche a FILA DE ESPERA primeiro
 	fila_de_espera.clear()
