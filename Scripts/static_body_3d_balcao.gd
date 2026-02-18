@@ -10,9 +10,6 @@ var fila_de_espera = [] # Pedidos que aguardam vaga no balcão
 
 # --- CONFIGURAÇÃO DE MODELOS ---
 
-
-@export var POCOES_POSSIVEIS = ["Poção De Cura", "Poção De Mana", "Poção Da Determinação", "Poção De Cura Maior"]
-
 @onready var posicoes = [$Marker3D_Esquerda, $Marker3D_Centro, $Marker3D_Direita]
 var itens_exibidos = [] 
 var _player_esta_perto = false
