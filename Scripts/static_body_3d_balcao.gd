@@ -8,6 +8,7 @@ var pedidos_viaveis = []
 var pedidos_ativos = []
 var fila_de_espera = [] # Pedidos que aguardam vaga no balcão
 
+@export var pedidos_por_dia = 0.05
 # --- CONFIGURAÇÃO DE MODELOS ---
 
 @onready var posicoes = [$Marker3D_Esquerda, $Marker3D_Centro, $Marker3D_Direita]
@@ -179,31 +180,6 @@ func elastico():
 	tween.tween_property(objeto_visual, "scale", Vector3(0.5, 0.5, 0.5), 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
-func _filtrarpedidos():
-	var todas_as_receitas = Receitas.receitas
-	pedidos_viaveis.clear() # Limpamos a lista anterior para atualizar
-	
-	print("--- Filtrando Poções Disponíveis ---")
-	
-	for nome_da_pocao in todas_as_receitas:
-		var dados = todas_as_receitas[nome_da_pocao]
-		
-		# FILTRO: Só adicionamos se 'pode_fabricar' for true
-		if dados["pode_fabricar"] == true:
-			pedidos_viaveis.append(dados)
-			print("Adicionado ao Balcão: ", nome_da_pocao)
-	
-	print("Total de pedidos possíveis hoje: ", pedidos_viaveis.size())
-	
-	# Se a lista não estiver vazia, podemos sortear um pedido
-	if pedidos_viaveis.size() > 0:
-		_gerar_novo_pedido()
-
-func _gerar_novo_pedido():
-	# Sorteia um índice aleatório da nossa lista de viáveis
-	var pedido_sorteado = pedidos_viaveis.pick_random()
-	print(">>> NOVO PEDIDO RECEBIDO: ", pedido_sorteado["nome"])
-
 func _gerar_pedidos_por_populacao():
 	# 1. Filtra poções viáveis
 	var todas_as_receitas = Receitas.receitas
@@ -216,7 +192,7 @@ func _gerar_pedidos_por_populacao():
 
 	# 2. Calcula a demanda total do dia baseada na população
 	var total_pessoas = Populacao.get_total_populacao()
-	var quantidade_total_dia = ceil(total_pessoas * 0.05) 
+	var quantidade_total_dia = ceil(total_pessoas * pedidos_por_dia) 
 	
 	# 3. Preenche a FILA DE ESPERA primeiro
 	fila_de_espera.clear()
