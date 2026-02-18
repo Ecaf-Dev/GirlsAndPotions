@@ -9,13 +9,7 @@ var pedidos_ativos = []
 var fila_de_espera = [] # Pedidos que aguardam vaga no balcão
 
 # --- CONFIGURAÇÃO DE MODELOS ---
-# Ajuste os caminhos abaixo para as suas cenas .tscn reais dentro da pasta Modelos
-const MODELOS_POCOES = {
-	"Poção De Cura": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
-	"Poção De Mana": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
-	"Poção Da Determinação": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
-	"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn"
-}
+
 
 @export var POCOES_POSSIVEIS = ["Poção De Cura", "Poção De Mana", "Poção Da Determinação", "Poção De Cura Maior"]
 
@@ -74,22 +68,29 @@ func _exibir_pedidos_magicos():
 		var container = Node3D.new()
 		add_child(container)
 		
-		# 2. Carregar e Instanciar o Modelo 3D
-		if MODELOS_POCOES.has(nome_da_pocao):
-			var cena_modelo = load(MODELOS_POCOES[nome_da_pocao])
-			if cena_modelo:
-				var instancia = cena_modelo.instantiate()
-				container.add_child(instancia)
-				instancia.scale = Vector3(0.3, 0.3, 0.3) 
-				instancia.position.y = 0.0 
-				
-				if instancia is RigidBody3D: 
-					instancia.freeze = true
+		# 2. Carregar e Instanciar o Modelo 3D via Receitas Global
+		if Receitas.receitas.has(nome_da_pocao):
+			var dados_receita = Receitas.receitas[nome_da_pocao]
+			
+			# Pegamos o caminho usando o próprio nome da poção como chave
+			# como está definido no seu script Global
+			var caminho_modelo = dados_receita.get(nome_da_pocao) 
+			
+			if caminho_modelo:
+				var cena_modelo = load(caminho_modelo)
+				if cena_modelo:
+					var instancia = cena_modelo.instantiate()
+					container.add_child(instancia)
+					instancia.scale = Vector3(0.3, 0.3, 0.3) 
+					instancia.position.y = 0.0 
+					
+					if instancia is RigidBody3D: 
+						instancia.freeze = true
 		
 		# 3. Criar o Label ACIMA do modelo (Nome)
 		var label_nome = Label3D.new()
 		label_nome.text = nome_da_pocao
-		label_nome.position.y = 0.8 # Ajustado para ficar logo acima
+		label_nome.position.y = 0.8 
 		label_nome.billboard = StandardMaterial3D.BILLBOARD_ENABLED
 		label_nome.no_depth_test = true
 		label_nome.font_size = 35
@@ -99,21 +100,21 @@ func _exibir_pedidos_magicos():
 		# 4. Criar o Label ABAIXO do modelo (Preço)
 		var label_preco = Label3D.new()
 		
-		# Busca o valor no dicionário Items
+		# Busca o valor no dicionário Items (Mantive como estava)
 		var valor = 0
 		if Items.itens.has(nome_da_pocao):
 			valor = Items.itens[nome_da_pocao].valor_venda
 			
 		label_preco.text = str(valor) + " G"
-		label_preco.position.y = -0.5 # Posicionado abaixo do modelo
+		label_preco.position.y = -0.5 
 		label_preco.billboard = StandardMaterial3D.BILLBOARD_ENABLED
 		label_preco.no_depth_test = true
-		label_preco.font_size = 45 # Preço um pouco maior para dar destaque
+		label_preco.font_size = 45 
 		label_preco.outline_size = 12
-		label_preco.modulate = Color(1, 0.84, 0) # Cor Dourada para o ouro!
+		label_preco.modulate = Color(1, 0.84, 0) 
 		container.add_child(label_preco)
 		
-		# --- ANIMAÇÃO MÁGICA ---
+		# --- ANIMAÇÃO MÁGICA (Recuperada com os detalhes!) ---
 		container.global_position = global_position + Vector3(0, 1, 0)
 		container.scale = Vector3.ZERO
 		
@@ -124,7 +125,7 @@ func _exibir_pedidos_magicos():
 		tw.tween_property(container, "scale", Vector3.ONE, 0.8)\
 			.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 		
-		itens_exibidos.append(container)
+		itens_exibidos.append(container)		
 		
 func _limpar_exibicao():
 	for item in itens_exibidos:
