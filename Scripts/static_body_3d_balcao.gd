@@ -4,6 +4,10 @@ extends StaticBody3D
 @export var max_pedidos = 3
 @export var objeto_visual : Node3D
 
+var pedidos_viaveis = []
+var pedidos_ativos = []
+var fila_de_espera = [] # Pedidos que aguardam vaga no balcão
+
 # --- CONFIGURAÇÃO DE MODELOS ---
 # Ajuste os caminhos abaixo para as suas cenas .tscn reais dentro da pasta Modelos
 const MODELOS_POCOES = {
@@ -21,8 +25,7 @@ var _player_esta_perto = false
 
 func _ready():
 	# Limpa qualquer resquício e gera os primeiros pedidos
-	for i in range(max_pedidos):
-		_gerarpedidos()
+	_gerar_pedidos_por_populacao()
 		
 func _process(delta):
 	# Percorre todos os hologramas que estão no balcão no momento
@@ -136,14 +139,17 @@ func _limpar_exibicao():
 # --- RESTANTE DA SUA LÓGICA ---
 func _checarentrega(objeto):
 	if objeto.nome_item in pedidos:
-		var nome_entregue = objeto.nome_item # Guardamos o nome
+		var nome_entregue = objeto.nome_item
 		pedidos.erase(nome_entregue)
 		objeto.queue_free()
 		
-		# Passamos o nome para a função de recompensa
 		_recompensa(nome_entregue) 
 		
-		_gerarpedidos()
+		# Tenta puxar o próximo da fila automaticamente
+		_repor_balcao()
+		
+		# (Opcional) Se você quiser que o balcão atualize visualmente 
+		# mesmo sem reposição (caso a fila acabe), mantenha isso:
 		if _player_esta_perto:
 			_exibir_pedidos_magicos()
 	else:
@@ -183,5 +189,64 @@ func elastico():
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 func _filtrarpedidos():
-	#Aqui iremos filtrar quais pedidos estão elegiveis para serem gerados!
-	pass
+	var todas_as_receitas = Receitas.receitas
+	pedidos_viaveis.clear() # Limpamos a lista anterior para atualizar
+	
+	print("--- Filtrando Poções Disponíveis ---")
+	
+	for nome_da_pocao in todas_as_receitas:
+		var dados = todas_as_receitas[nome_da_pocao]
+		
+		# FILTRO: Só adicionamos se 'pode_fabricar' for true
+		if dados["pode_fabricar"] == true:
+			pedidos_viaveis.append(dados)
+			print("Adicionado ao Balcão: ", nome_da_pocao)
+	
+	print("Total de pedidos possíveis hoje: ", pedidos_viaveis.size())
+	
+	# Se a lista não estiver vazia, podemos sortear um pedido
+	if pedidos_viaveis.size() > 0:
+		_gerar_novo_pedido()
+
+func _gerar_novo_pedido():
+	# Sorteia um índice aleatório da nossa lista de viáveis
+	var pedido_sorteado = pedidos_viaveis.pick_random()
+	print(">>> NOVO PEDIDO RECEBIDO: ", pedido_sorteado["nome"])
+
+func _gerar_pedidos_por_populacao():
+	# 1. Filtra poções viáveis
+	var todas_as_receitas = Receitas.receitas
+	pedidos_viaveis.clear()
+	for nome in todas_as_receitas:
+		if todas_as_receitas[nome]["pode_fabricar"] == true:
+			pedidos_viaveis.append(nome)
+
+	if pedidos_viaveis.is_empty(): return
+
+	# 2. Calcula a demanda total do dia baseada na população
+	var total_pessoas = Populacao.get_total_populacao()
+	var quantidade_total_dia = ceil(total_pessoas * 0.03) 
+	
+	# 3. Preenche a FILA DE ESPERA primeiro
+	fila_de_espera.clear()
+	for i in range(quantidade_total_dia):
+		fila_de_espera.append(pedidos_viaveis.pick_random())
+	
+	print("Pedidos totais gerados para hoje: ", fila_de_espera.size())
+
+	# 4. Transfere da fila para o balcão (até o limite de 3)
+	_repor_balcao()
+
+func _repor_balcao():
+	var mudou = false
+	# Enquanto o balcão tiver espaço E a fila tiver pedidos...
+	while pedidos.size() < max_pedidos and fila_de_espera.size() > 0:
+		# Remove o primeiro da fila e coloca no balcão
+		var proximo_pedido = fila_de_espera.pop_front() 
+		pedidos.append(proximo_pedido)
+		mudou = true
+	
+	# Se algo mudou e o player está vendo, atualiza os hologramas
+	if mudou and _player_esta_perto:
+		_exibir_pedidos_magicos()
+
