@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bp66t70uateqy"]
+[gd_scene load_steps=3 format=3 uid="uid://bp66t70uateqy"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/v_box_container_item.gd" id="1_xpvmc"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7ppfg"]
 
 [node name="VBoxContainer_Item" type="VBoxContainer"]
 custom_minimum_size = Vector2(40, 50)
@@ -8,9 +10,11 @@ offset_right = 93.0
 offset_bottom = 167.0
 script = ExtResource("1_xpvmc")
 
-[node name="ColorRect_Imagem" type="ColorRect" parent="."]
-custom_minimum_size = Vector2(100, 75)
+[node name="TextureRect_Imagem" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(50, 75)
 layout_mode = 2
+texture = SubResource("ViewportTexture_7ppfg")
+expand_mode = 1
 
 [node name="Label_Nome" type="Label" parent="."]
 layout_mode = 2
