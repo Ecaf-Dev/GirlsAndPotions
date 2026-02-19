@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://b62ec68wbc0fo"]
+[gd_scene load_steps=2 format=3 uid="uid://b62ec68wbc0fo"]
+
+[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/h_box_container_nome_do_item.gd" id="1_124rc"]
 
 [node name="HBoxContainer_NomeDoItem" type="HBoxContainer"]
 anchors_preset = 15
@@ -8,3 +10,4 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_124rc")
