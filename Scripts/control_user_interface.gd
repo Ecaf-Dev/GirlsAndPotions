@@ -12,6 +12,8 @@ var moedas_atuais = 0
 @onready var container_paginas = $CanvasLayer/Control_Painel_Livro/MarginContainer
 @onready var tela_atual = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossario
 
+var pagina_atual = 0
+
 func _ready():
 	Global.moedas_alteradas.connect(atualizar_ui_moedas)
 	# Inicializa o painel invisível e pequeno para o efeito
@@ -187,30 +189,37 @@ func _adicionar_receitas():
 	var grid_direita = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas/GridContainer_PaginaDireita
 	var cena_hbox = preload("res://GirlsAndPotions/Cenas/h_box_container_nome_do_item.tscn")
 	
-	# 1. Limpa as páginas antes de preencher (evita duplicatas ao reabrir o livro)
+	# 1. Limpeza total antes de renderizar o folheto atual
 	for child in grid_esquerda.get_children(): child.queue_free()
 	for child in grid_direita.get_children(): child.queue_free()
 	
 	var todas_receitas = Receitas.receitas.keys()
-	var receitas_por_pagina = 4 # Ajuste conforme o tamanho do seu layout
 	
-	for i in range(todas_receitas.size()):
-		var nome_da_pocao = todas_receitas[i]
+	# 2. Definição matemática do Folheto
+	var receitas_por_pagina = 3
+	var receitas_por_folheto = receitas_por_pagina * 2 # Total 6
+	
+	# Onde começamos a ler no dicionário Global
+	var indice_inicio = pagina_atual * receitas_por_folheto
+	
+	# 3. Loop que percorre apenas as 6 vagas do folheto atual
+	for i in range(receitas_por_folheto):
+		var indice_real = indice_inicio + i
 		
-		# 2. Instancia a cena da linha (HBox)
-		var nova_linha = cena_hbox.instantiate()
-		
-		# 3. RENOMEIA o nó para o formato que o script do HBox espera
-		# O script que fizemos usa: name.replace("HBoxContainer_", "")
-		nova_linha.name = "HBoxContainer_" + nome_da_pocao
-		
-		# 4. Distribui entre a página esquerda e direita
-		if i < receitas_por_pagina:
-			grid_esquerda.add_child(nova_linha)
-		elif i < (receitas_por_pagina * 2):
-			grid_direita.add_child(nova_linha)
-		else:
-			# Aqui entraria a lógica de "Próximas Páginas" (esconder por enquanto)
-			print("Receita ", nome_da_pocao, " guardada para as próximas páginas.")
-
-	print("Grimório preenchido com sucesso!")
+		# Verifica se ainda existem receitas no dicionário para preencher esta vaga
+		if indice_real < todas_receitas.size():
+			var nome_da_pocao = todas_receitas[indice_real]
+			var nova_linha = cena_hbox.instantiate()
+			
+			# O nome do nó é o que o script interno do HBox usa para se configurar
+			nova_linha.name = "HBoxContainer_" + nome_da_pocao
+			
+			# 4. Distribuição entre as páginas do folheto
+			if i < receitas_por_pagina:
+				# As primeiras 3 (0, 1, 2) vão para a esquerda
+				grid_esquerda.add_child(nova_linha)
+			else:
+				# As próximas 3 (3, 4, 5) vão para a direita
+				grid_direita.add_child(nova_linha)
+				
+	print("Folheto ", pagina_atual + 1, " exibindo receitas de ", indice_inicio + 1, " a ", indice_inicio + 6)

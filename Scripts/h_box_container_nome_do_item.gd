@@ -1,7 +1,7 @@
 extends HBoxContainer
 
 # Caminho para uma imagem de interrogação quando o item for secreto
-const ICONE_DESCONHECIDO = "res://GirlsAndPotions/Artes/Icons/shadow_icon.png"
+const ICONE_DESCONHECIDO = "res://GirlsAndPotions/Arts/Icones/shadow_icon.png"
 
 func _ready():
 	# Chamamos a configuração assim que o objeto entra na cena
@@ -67,7 +67,7 @@ func _criar_texture_rect(nome_item: String, liberado: bool, eh_resultado: bool =
 	else:
 		# Se estiver bloqueado, mostra o ícone de desconhecido ou silhueta
 		tex_rect.texture = load(ICONE_DESCONHECIDO)
-		tex_rect.modulate = Color(0.1, 0.1, 0.1) # Bem escuro
+		tex_rect.modulate = Color(0.4, 0.4, 0.4) # Bem escuro
 		tex_rect.tooltip_text = "???"
 
 	if eh_resultado:
@@ -80,6 +80,14 @@ func _criar_label_simbolo(texto: String):
 	label.text = texto
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	# Aqui você pode carregar um tema ou ajustar o tamanho da fonte
-	label.add_theme_font_size_override("font_size", 24)
+	
+	# Alterando a cor para um Marrom Café (combina com o estilo antigo/grimório)
+	# Você pode usar Color.BLACK, Color.BROWN ou um código Hexadecimal
+	label.add_theme_color_override("font_color", Color("4b2c20")) 
+	
+	# Se quiser um contorno para destacar mais:
+	# label.add_theme_color_override("font_outline_color", Color.WHITE)
+	# label.add_theme_constant_override("outline_size", 4)
+
+	label.add_theme_font_size_override("font_size", 40)
 	add_child(label)
