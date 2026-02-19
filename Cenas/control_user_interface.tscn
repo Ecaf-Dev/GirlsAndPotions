@@ -334,6 +334,7 @@ grow_vertical = 0
 text = "Comprar"
 
 [node name="Control_Receitas" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="GridContainer_PaginaEsquerda" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas"]

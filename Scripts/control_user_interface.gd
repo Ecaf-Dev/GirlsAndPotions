@@ -24,6 +24,7 @@ func _ready():
 	atualizar_ui_prestigio(Global.prestigio)
 	trocar_de_tela('Glossário')
 	_adicionar_items_a_loja()
+	_adicionar_receitas()
 
 # Esta função será chamada pelo botão do livro (via sinal)
 func _on_texture_button_livro_pressed():
@@ -65,7 +66,7 @@ func atualizar_ui_prestigio(novo_valor):
 	label_prestigio.text = str(novo_valor).pad_zeros(4)
 
 func _on_button_receitas_pressed():
-	pass
+	trocar_de_tela("Receitas")
 
 func _on_button_loja_pressed():
 	trocar_de_tela("Loja")
@@ -180,3 +181,36 @@ func _adicionar_items_a_loja():
 			break
 			
 		contador += 1
+
+func _adicionar_receitas():
+	var grid_esquerda = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas/GridContainer_PaginaEsquerda
+	var grid_direita = $CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas/GridContainer_PaginaDireita
+	var cena_hbox = preload("res://GirlsAndPotions/Cenas/h_box_container_nome_do_item.tscn")
+	
+	# 1. Limpa as páginas antes de preencher (evita duplicatas ao reabrir o livro)
+	for child in grid_esquerda.get_children(): child.queue_free()
+	for child in grid_direita.get_children(): child.queue_free()
+	
+	var todas_receitas = Receitas.receitas.keys()
+	var receitas_por_pagina = 4 # Ajuste conforme o tamanho do seu layout
+	
+	for i in range(todas_receitas.size()):
+		var nome_da_pocao = todas_receitas[i]
+		
+		# 2. Instancia a cena da linha (HBox)
+		var nova_linha = cena_hbox.instantiate()
+		
+		# 3. RENOMEIA o nó para o formato que o script do HBox espera
+		# O script que fizemos usa: name.replace("HBoxContainer_", "")
+		nova_linha.name = "HBoxContainer_" + nome_da_pocao
+		
+		# 4. Distribui entre a página esquerda e direita
+		if i < receitas_por_pagina:
+			grid_esquerda.add_child(nova_linha)
+		elif i < (receitas_por_pagina * 2):
+			grid_direita.add_child(nova_linha)
+		else:
+			# Aqui entraria a lógica de "Próximas Páginas" (esconder por enquanto)
+			print("Receita ", nome_da_pocao, " guardada para as próximas páginas.")
+
+	print("Grimório preenchido com sucesso!")

@@ -3,12 +3,12 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 var itens = {
-	"flor_da_vida": {
+	"Flor Da Vida": {
 		"nome": "Flor Da Vida",
 		"descricao": "Uma flor vibrante que pulsa com energia vital.",
 		"valor_compra": 2,
 		"valor_venda": 0,
-		"icon": "",
+		"icon": "res://GirlsAndPotions/Arts/Icones/flor_da_vida.png",
 		"compravel": true
 	},
 	"Flor Magica": {
@@ -24,7 +24,7 @@ var itens = {
 		"descricao": "Uma poção que cura pequenos ferimentos e doenças corriqueiras",
 		"valor_compra": 0,
 		"valor_venda": 6,
-		"icon": "",
+		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura.png",
 		"compravel": false
 	},
 	"Poção Da Determinação": {
