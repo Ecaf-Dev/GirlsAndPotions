@@ -145,14 +145,17 @@ scale = Vector2(0.806122, 0.750555)
 
 [node name="Label_PedidosEntregues" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Pedidos entregues: 0"
 
 [node name="Label_OuroFaturado" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Ouro faturado: 0"
 
 [node name="Label_Prestigio" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Prestigio: 0"
 
 [node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]

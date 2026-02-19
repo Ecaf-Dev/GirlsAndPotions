@@ -5,6 +5,8 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dc86d"]
 albedo_color = Color(1, 0.27451, 0.560784, 1)
 metallic = 0.3
+emission_enabled = true
+emission = Color(1, 0.27451, 0.560784, 1)
 
 [node name="poção_de_cura_maior" instance=ExtResource("1_5hwr7")]
 

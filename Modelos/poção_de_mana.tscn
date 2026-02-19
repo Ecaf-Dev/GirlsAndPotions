@@ -4,6 +4,8 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tivtm"]
 albedo_color = Color(0, 1, 1, 1)
+emission_enabled = true
+emission = Color(0, 1, 1, 1)
 
 [node name="poção_de_mana" instance=ExtResource("1_ud83w")]
 

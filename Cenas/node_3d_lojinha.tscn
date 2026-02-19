@@ -32,6 +32,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.91926)
 
 [node name="DirectionalLight3D_Luz" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.694771, 0.598378, -0.399046, -0.240093, 0.715952, 0.655567, 0.677975, -0.359661, 0.641089, -4.70126, 9.00318, 7.39724)
+visible = false
 
 [node name="RigidBody3D_Objeto" parent="." instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 1)
