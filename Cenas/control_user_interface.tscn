@@ -144,7 +144,6 @@ layout_mode = 2
 text = "Prestigio: 0"
 
 [node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
-visible = false
 layout_mode = 2
 
 [node name="GridContainer_PaginaDireita" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja"]
@@ -310,9 +309,9 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 288.8
+offset_left = 809.8
 offset_top = -45.8
-offset_right = 365.8
+offset_right = 886.8
 offset_bottom = -14.8
 grow_vertical = 0
 text = "Comprar"
