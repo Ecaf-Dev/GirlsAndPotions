@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b75oeoxyp6f54"]
+[gd_scene load_steps=6 format=3 uid="uid://b75oeoxyp6f54"]
 
 [ext_resource type="Script" path="res://GirlsAndPotions/Scripts/control_user_interface.gd" id="1_8iyej"]
 [ext_resource type="Texture2D" uid="uid://dvcsnrkqj2mqh" path="res://GirlsAndPotions/Arts/Icones/Moedas_De_Ouro.png" id="1_eefoj"]
 [ext_resource type="Texture2D" uid="uid://b38tfn3m6lp54" path="res://GirlsAndPotions/Arts/Icones/Livro_De_Alquimia.png" id="2_iklui"]
+[ext_resource type="Texture2D" uid="uid://crxkvcm0tutan" path="res://GirlsAndPotions/Arts/Backgrounds/BackgroundHudLivreo.png" id="4_fcksr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_brxqh"]
 font_color = Color(1, 1, 0, 1)
@@ -81,10 +82,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+[node name="TextureRect_BackGround" type="TextureRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-color = Color(0.286275, 0.286275, 0, 0.490196)
+texture = ExtResource("4_fcksr")
+expand_mode = 1
 
 [node name="Control_Glossário" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
 visible = false
@@ -97,8 +99,13 @@ anchor_left = 0.6
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
+offset_left = -65.8
+offset_top = 22.4
+offset_right = -65.8
+offset_bottom = 22.4
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.819311, 0.760642)
 theme_override_constants/separation = 10
 
 [node name="Button_Receitas" type="Button" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaDireita"]
@@ -128,8 +135,13 @@ anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.4
 anchor_bottom = 0.9
+offset_left = 129.75
+offset_top = 23.4
+offset_right = 129.75
+offset_bottom = 23.4
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.806122, 0.750555)
 
 [node name="Label_PedidosEntregues" type="Label" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Glossário/VBoxContainer_PaginaEsquerda"]
 layout_mode = 2
@@ -154,14 +166,18 @@ anchor_left = 0.6
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
+offset_left = -60.8
+offset_top = 19.4
+offset_right = -60.8
+offset_bottom = 19.4
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.800344, 0.787933)
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 10
 columns = 2
 
 [node name="VBoxContainer_Item" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item"]
@@ -176,7 +192,6 @@ text = "Flor Da Vida"
 layout_mode = 2
 
 [node name="VBoxContainer_Item2" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item2"]
@@ -191,7 +206,6 @@ text = "Flor Da Vida"
 layout_mode = 2
 
 [node name="VBoxContainer_Item3" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item3"]
@@ -206,7 +220,6 @@ text = "Flor Da Vida"
 layout_mode = 2
 
 [node name="VBoxContainer_Item4" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaDireita/VBoxContainer_Item4"]
@@ -227,14 +240,18 @@ anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.4
 anchor_bottom = 0.9
+offset_left = 118.75
+offset_top = 21.4
+offset_right = 118.75
+offset_bottom = 21.4
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.857229, 0.773241)
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 10
 columns = 2
 
 [node name="VBoxContainer_Item" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item"]
@@ -249,7 +266,6 @@ text = "Flor Da Vida"
 layout_mode = 2
 
 [node name="VBoxContainer_Item2" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item2"]
@@ -264,7 +280,6 @@ text = "Flor Magica"
 layout_mode = 2
 
 [node name="VBoxContainer_Item3" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item3"]
@@ -279,7 +294,6 @@ text = "Flor Da Vida"
 layout_mode = 2
 
 [node name="VBoxContainer_Item4" type="VBoxContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda"]
-visible = false
 layout_mode = 2
 
 [node name="ColorRect_Imagem" type="ColorRect" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja/GridContainer_PaginaEsquerda/VBoxContainer_Item4"]
@@ -298,10 +312,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 47.8
-offset_top = -44.8
-offset_right = 102.8
-offset_bottom = -13.8
+offset_left = 171.8
+offset_top = -153.8
+offset_right = 226.8
+offset_bottom = -122.8
 grow_vertical = 0
 text = "Voltar"
 
@@ -310,10 +324,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 809.8
-offset_top = -45.8
-offset_right = 886.8
-offset_bottom = -14.8
+offset_left = 419.8
+offset_top = -153.8
+offset_right = 496.8
+offset_bottom = -122.8
 grow_vertical = 0
 text = "Comprar"
 
@@ -327,8 +341,13 @@ anchor_left = 0.05
 anchor_top = 0.1
 anchor_right = 0.4
 anchor_bottom = 0.9
+offset_left = 140.75
+offset_top = 19.4
+offset_right = 140.75
+offset_bottom = 19.4
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.763615, 0.786431)
 
 [node name="GridContainer_PaginaDireita" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas"]
 layout_mode = 1
@@ -337,8 +356,13 @@ anchor_left = 0.6
 anchor_top = 0.1
 anchor_right = 0.95
 anchor_bottom = 0.9
+offset_left = -61.8
+offset_top = 19.4
+offset_right = -61.8
+offset_bottom = 19.4
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.814888, 0.782287)
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 10
 columns = 2
