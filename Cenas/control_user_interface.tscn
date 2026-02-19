@@ -144,6 +144,7 @@ layout_mode = 2
 text = "Prestigio: 0"
 
 [node name="Control_Loja" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="GridContainer_PaginaDireita" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Loja"]
@@ -317,8 +318,30 @@ grow_vertical = 0
 text = "Comprar"
 
 [node name="Control_Receitas" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
-visible = false
 layout_mode = 2
+
+[node name="GridContainer_PaginaEsquerda" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.4
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer_PaginaDireita" type="GridContainer" parent="CanvasLayer/Control_Painel_Livro/MarginContainer/Control_Receitas"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 10
+columns = 2
 
 [node name="Control_Tutoriais" type="Control" parent="CanvasLayer/Control_Painel_Livro/MarginContainer"]
 visible = false
