@@ -319,63 +319,78 @@ func _mostrarHolograma(nome_do_item):
 func _gerenciar_barra_visual(porcentagem: float):
 	if porcentagem <= 0 or porcentagem >= 1.0:
 		if barra_fundo:
-			# Animação de sumir (fade out e escala) antes de apagar
 			var t = create_tween().set_parallel(true)
-			t.tween_property(barra_fundo, "scale", Vector3.ZERO, 0.2)
-			t.tween_property(barra_progresso, "scale", Vector3.ZERO, 0.2)
+			t.tween_property(barra_fundo, "scale", Vector3.ZERO, 0.3).set_trans(Tween.TRANS_BACK)
 			t.finished.connect(func(): 
 				if barra_fundo: barra_fundo.queue_free()
-				if barra_progresso: barra_progresso.queue_free()
 				barra_fundo = null
 				barra_progresso = null
 			)
 		return
 
 	if barra_fundo == null:
-		# --- Barra de Fundo (O "Container" Branco) ---
+		# --- O RECEPTÁCULO (Vidro Místico) ---
 		barra_fundo = MeshInstance3D.new()
-		var mesh_fundo = BoxMesh.new()
-		mesh_fundo.size = Vector3(1.2, 0.15, 0.02) # Um pouco mais alta para o estilo cartoon
+		var mesh_fundo = CylinderMesh.new()
+		mesh_fundo.top_radius = 0.1
+		mesh_fundo.bottom_radius = 0.1
+		mesh_fundo.height = 1.3
 		barra_fundo.mesh = mesh_fundo
+		barra_fundo.rotation.z = deg_to_rad(90)
 		
 		var mat_fundo = StandardMaterial3D.new()
-		mat_fundo.albedo_color = Color(1, 1, 1, 0.8) # Branco levemente transparente
-		mat_fundo.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
-		# Dica: adicione um contorno via código se quiser, ou use um QuadMesh com textura de borda arredondada
+		mat_fundo.transparency = StandardMaterial3D.TRANSPARENCY_ALPHA
+		mat_fundo.albedo_color = Color(0.1, 0.1, 0.2, 0.4) # Azul escuro "etéreo"
+		mat_fundo.roughness = 0.0 # Reflexo de vidro
+		mat_fundo.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED # Fundo que não recebe sombra
 		barra_fundo.material_override = mat_fundo
 		marker_barra.add_child(barra_fundo)
 
-		# --- Barra de Progresso (O Preenchimento Verde) ---
+		# --- O NÚCLEO MÁGICO (Energia) ---
 		barra_progresso = MeshInstance3D.new()
-		var mesh_prog = BoxMesh.new()
-		mesh_prog.size = Vector3(1.15, 0.1, 0.03) # Ligeiramente menor para criar uma "margem" interna
+		var mesh_prog = CylinderMesh.new()
+		mesh_prog.top_radius = 0.05 
+		mesh_prog.bottom_radius = 0.05
+		mesh_prog.height = 1.25
 		barra_progresso.mesh = mesh_prog
 		
 		var mat_prog = StandardMaterial3D.new()
-		mat_prog.albedo_color = Color("#2ecc71") # Um verde esmeralda mais vibrante (cartoon)
 		mat_prog.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+		mat_prog.blend_mode = StandardMaterial3D.BLEND_MODE_ADD # MODO ADITIVO: Brilha intensamente!
+		
+		# Cor de Energia Mágica (Cyan/Neon)
+		mat_prog.albedo_color = Color("#00f2ff")
+		mat_prog.emission_enabled = true
+		mat_prog.emission = Color("#00f2ff")
+		mat_prog.emission_energy_multiplier = 4.0 # Brilho muito forte
+		
 		barra_progresso.material_override = mat_prog
-		marker_barra.add_child(barra_progresso)
+		barra_fundo.add_child(barra_progresso)
 		
-		# Animação de entrada "Pop-in"
+		# Animação de entrada Estelar
 		barra_fundo.scale = Vector3.ZERO
-		create_tween().tween_property(barra_fundo, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		create_tween().tween_property(barra_fundo, "scale", Vector3.ONE, 0.5).set_trans(Tween.TRANS_ELASTIC)
 
-	# --- Atualização de Progresso com Interpolação ---
-	# Em vez de mudar instantâneo, usamos um tween suave para o movimento da barra
-	var alvo_x_scale = porcentagem
-	var alvo_x_pos = -0.575 * (1.0 - porcentagem) # Ajustado para o novo tamanho
+	# --- Lógica de Cor "Alquímica" ---
+	# A energia muda de Azul Neon para Verde Esmeralda quando completa
+	var cor_energia = Color("#00f2ff").lerp(Color("#2eff8c"), porcentagem)
+	barra_progresso.material_override.albedo_color = cor_energia
+	barra_progresso.material_override.emission = cor_energia
+
+	# --- Atualização do Tamanho (Com Suavidade) ---
+	var alvo_height = 1.25 * porcentagem
+	var alvo_pos_y = -0.625 * (1.0 - porcentagem) 
 	
-	var tween_progresso = create_tween().set_parallel(true)
-	tween_progresso.tween_property(barra_progresso, "scale:x", alvo_x_scale, 0.1)
-	tween_progresso.tween_property(barra_progresso, "position:x", alvo_x_pos, 0.1)
-	
-	# Toque final: A barra pulsa levemente quando o progresso avança
-	if int(porcentagem * 100) % 10 == 0:
-		var t_pulse = create_tween()
-		t_pulse.tween_property(barra_progresso, "scale:y", 1.5, 0.05)
-		t_pulse.tween_property(barra_progresso, "scale:y", 1.0, 0.05)
-		
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(barra_progresso.mesh, "height", alvo_height, 0.15).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(barra_progresso, "position:y", alvo_pos_y, 0.15).set_trans(Tween.TRANS_QUAD)
+
+	# --- EFEITO DE PULSAÇÃO "VIVA" ---
+	# Faz o brilho oscilar levemente como se estivesse respirando
+	var tempo = Time.get_ticks_msec() / 1000.0
+	var oscilacao = (sin(tempo * 5.0) * 0.1) + 1.0
+	barra_progresso.scale.x = oscilacao
+	barra_progresso.scale.z = oscilacao	
 func alterar_cor_liquido(cor_especifica = null):
 	if malha_caldeirao == null: return
 
