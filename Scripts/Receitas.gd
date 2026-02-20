@@ -35,7 +35,7 @@ var receitas = {
 		"nome" : "Poção De Cura Maior",
 		"item1" : "Poção De Cura",
 		"item2" : "Poção De Cura",
-		"pode_fabricar" : false,
+		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 10,
 		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
 	},

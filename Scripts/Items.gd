@@ -16,7 +16,7 @@ var itens = {
 		"descricao": "Uma flor pulsando magia",
 		"valor_compra": 2,
 		"valor_venda": 0,
-		"icon": "",
+		"icon": "res://GirlsAndPotions/Arts/Icones/Flor_magica.png",
 		"compravel": true
 	},
 	"Poção De Cura": {
@@ -32,7 +32,7 @@ var itens = {
 		"descricao": "Uma poção que revigora o espirito, o tornando mais valente",
 		"valor_compra": 0,
 		"valor_venda": 10,
-		"icon": "",
+		"icon": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
 		"compravel": false
 	},
 	"Poção De Mana": {
@@ -40,7 +40,7 @@ var itens = {
 		"descricao": "Uma poção que recupera um pouco a energia de um mago",
 		"valor_compra": 0,
 		"valor_venda": 5,
-		"icon": "",
+		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_mana.png",
 		"compravel": false
 	},
 	"Poção De Cura Maior": {
@@ -48,7 +48,7 @@ var itens = {
 		"descricao": "Uma poção que cura ferimentos graves e doenças incomuns",
 		"valor_compra": 0,
 		"valor_venda": 12,
-		"icon": "",
+		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura_maior.png",
 		"compravel": false
 	}
 }
