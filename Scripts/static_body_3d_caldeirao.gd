@@ -317,45 +317,65 @@ func _mostrarHolograma(nome_do_item):
 	print("Holograma de ", nome_do_item, " projetado!")
 
 func _gerenciar_barra_visual(porcentagem: float):
-	# Se a porcentagem for 0 ou menor, e a barra existir, limpamos ela (fim do processo)
 	if porcentagem <= 0 or porcentagem >= 1.0:
-		if barra_fundo: barra_fundo.queue_free()
-		if barra_progresso: barra_progresso.queue_free()
-		barra_fundo = null
-		barra_progresso = null
+		if barra_fundo:
+			# Animação de sumir (fade out e escala) antes de apagar
+			var t = create_tween().set_parallel(true)
+			t.tween_property(barra_fundo, "scale", Vector3.ZERO, 0.2)
+			t.tween_property(barra_progresso, "scale", Vector3.ZERO, 0.2)
+			t.finished.connect(func(): 
+				if barra_fundo: barra_fundo.queue_free()
+				if barra_progresso: barra_progresso.queue_free()
+				barra_fundo = null
+				barra_progresso = null
+			)
 		return
 
-	# Criar as barras se ainda não existirem
 	if barra_fundo == null:
-		# Criando o fundo (Branco)
+		# --- Barra de Fundo (O "Container" Branco) ---
 		barra_fundo = MeshInstance3D.new()
-		barra_fundo.mesh = BoxMesh.new()
-		barra_fundo.mesh.size = Vector3(1.2, 0.1, 0.05) # Tamanho da barra
+		var mesh_fundo = BoxMesh.new()
+		mesh_fundo.size = Vector3(1.2, 0.15, 0.02) # Um pouco mais alta para o estilo cartoon
+		barra_fundo.mesh = mesh_fundo
+		
 		var mat_fundo = StandardMaterial3D.new()
-		mat_fundo.albedo_color = Color.WHITE
-		mat_fundo.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED # Brilha no escuro
+		mat_fundo.albedo_color = Color(1, 1, 1, 0.8) # Branco levemente transparente
+		mat_fundo.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
+		# Dica: adicione um contorno via código se quiser, ou use um QuadMesh com textura de borda arredondada
 		barra_fundo.material_override = mat_fundo
 		marker_barra.add_child(barra_fundo)
 
-		# Criando o progresso (Verde)
+		# --- Barra de Progresso (O Preenchimento Verde) ---
 		barra_progresso = MeshInstance3D.new()
-		barra_progresso.mesh = BoxMesh.new()
-		barra_progresso.mesh.size = Vector3(1.2, 0.1, 0.05)
+		var mesh_prog = BoxMesh.new()
+		mesh_prog.size = Vector3(1.15, 0.1, 0.03) # Ligeiramente menor para criar uma "margem" interna
+		barra_progresso.mesh = mesh_prog
+		
 		var mat_prog = StandardMaterial3D.new()
-		mat_prog.albedo_color = Color.GREEN
+		mat_prog.albedo_color = Color("#2ecc71") # Um verde esmeralda mais vibrante (cartoon)
 		mat_prog.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
 		barra_progresso.material_override = mat_prog
 		marker_barra.add_child(barra_progresso)
 		
-		# Ajuste leve de posição para o verde ficar na frente do branco
-		barra_progresso.position.z = 0.01
+		# Animação de entrada "Pop-in"
+		barra_fundo.scale = Vector3.ZERO
+		create_tween().tween_property(barra_fundo, "scale", Vector3.ONE, 0.3).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
-	# ATUALIZAÇÃO DO TAMANHO (O "pulo do gato")
-	# Mudamos a escala X do verde baseado na porcentagem (0.0 a 1.0)
-	barra_progresso.scale.x = porcentagem
-	# Ajustamos a posição X para que ela cresça da esquerda para a direita, não do centro
-	barra_progresso.position.x = -0.6 * (1.0 - porcentagem)
-
+	# --- Atualização de Progresso com Interpolação ---
+	# Em vez de mudar instantâneo, usamos um tween suave para o movimento da barra
+	var alvo_x_scale = porcentagem
+	var alvo_x_pos = -0.575 * (1.0 - porcentagem) # Ajustado para o novo tamanho
+	
+	var tween_progresso = create_tween().set_parallel(true)
+	tween_progresso.tween_property(barra_progresso, "scale:x", alvo_x_scale, 0.1)
+	tween_progresso.tween_property(barra_progresso, "position:x", alvo_x_pos, 0.1)
+	
+	# Toque final: A barra pulsa levemente quando o progresso avança
+	if int(porcentagem * 100) % 10 == 0:
+		var t_pulse = create_tween()
+		t_pulse.tween_property(barra_progresso, "scale:y", 1.5, 0.05)
+		t_pulse.tween_property(barra_progresso, "scale:y", 1.0, 0.05)
+		
 func alterar_cor_liquido(cor_especifica = null):
 	if malha_caldeirao == null: return
 

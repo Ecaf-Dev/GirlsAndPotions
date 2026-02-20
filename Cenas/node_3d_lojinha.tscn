@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bonfi6ckgtc8l"]
+[gd_scene load_steps=11 format=3 uid="uid://bonfi6ckgtc8l"]
 
 [ext_resource type="PackedScene" uid="uid://7uqrentjh088" path="res://GirlsAndPotions/Cenas/character_body_3d_player.tscn" id="1_ibour"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_t26us"]
@@ -16,6 +16,13 @@ ao_enabled = true
 ao_light_affect = 0.97
 subsurf_scatter_strength = 1.0
 proximity_fade_distance = 1984.33
+
+[sub_resource type="Sky" id="Sky_fcsv3"]
+
+[sub_resource type="Environment" id="Environment_exn1d"]
+background_mode = 2
+sky = SubResource("Sky_fcsv3")
+ambient_light_color = Color(0.431373, 0.74902, 0, 1)
 
 [node name="Node3D_Lojinha" type="Node3D"]
 
@@ -39,6 +46,7 @@ nome_item = "Flor Da Vida"
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("alvo")]
 transform = Transform3D(1, 0, 0, 0, 0.523406, 0.852083, 0, -0.852083, 0.523406, 0, 6, 5)
+environment = SubResource("Environment_exn1d")
 script = ExtResource("3_057y4")
 alvo = NodePath("../CharacterBody3D_Player")
 offset = Vector3(0, 6, 5)
