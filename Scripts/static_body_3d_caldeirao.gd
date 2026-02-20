@@ -17,6 +17,7 @@ var cor_original = Color(0.0, 0.4, 0.9)
 
 var tempo_da_receita = 1
 var receita_validada = false
+var cozinhando = false
 
 # Dicionário com todas as receitas possíveis, está obsoleto!
 const RECEITAS = {
@@ -32,14 +33,14 @@ func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
 	
 	if "nome_item" in body :
-		if slots.size() < MAX_SLOTS && body.quantidade_atual == 1:
+		if slots.size() < MAX_SLOTS && body.quantidade_atual == 1 && cozinhando == false:
 			slots.append(body.nome_item)
 			print("Item adicionado ao slot: ", body.nome_item)
 			print("Estado atual dos slots: ", slots)
 			_receita_compativel(slots)
 			body.queue_free()
 			elastico()
-		elif (body.quantidade_atual >= 2):
+		elif (body.quantidade_atual >= 2) && cozinhando == false:
 			_rejeitar_item(body)
 			print("Isso n é ingrediente")
 		else:
@@ -251,32 +252,40 @@ func _receita_compativel(itens: Array):
 		return null
 		
 func cozinhando_pocao():
-	print("--- INICIANDO PREPARO ---")
 	
-	for segundo in range(tempo_da_receita + 1): # +1 para chegar no 100%
-		# Calcula a porcentagem atual (ex: 0.5 para metade do tempo)
-		var progresso = float(segundo) / float(tempo_da_receita)
-		
-		# Atualiza a barra visual
-		_gerenciar_barra_visual(progresso)
-		
-		print("Preparando... ", int(progresso * 100), "%")
-		
-		if segundo < tempo_da_receita:
-			await get_tree().create_timer(1.0).timeout
 	
-	# Finalização
-	print("--- PREPARO FINALIZADO! ---")
-	_gerenciar_barra_visual(0) # Remove a barra
 	
-	if holograma_atual != null:
-		holograma_atual.queue_free()
-		holograma_atual = null
+	if cozinhando == false:
+		
+		print("--- INICIANDO PREPARO ---")
+		cozinhando = true
+		for segundo in range(tempo_da_receita + 1): # +1 para chegar no 100%
+			# Calcula a porcentagem atual (ex: 0.5 para metade do tempo)
+			var progresso = float(segundo) / float(tempo_da_receita)
+			
+			# Atualiza a barra visual
+			_gerenciar_barra_visual(progresso)
+			
+			print("Preparando... ", int(progresso * 100), "%")
+			
+			if segundo < tempo_da_receita:
+				await get_tree().create_timer(1.0).timeout
+		
+		# Finalização
+		print("--- PREPARO FINALIZADO! ---")
+		_gerenciar_barra_visual(0) # Remove a barra
+		
+		if holograma_atual != null:
+			holograma_atual.queue_free()
+			holograma_atual = null
 
-	if receita_validada == true:
-		cozinhar()
-	
-	slots.clear()
+		if receita_validada == true:
+			cozinhar()
+		
+		slots.clear()
+		cozinhando = false
+	else:
+		return
 
 func _mostrarHolograma(nome_do_item):
 	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
