@@ -49,7 +49,7 @@ transform = Transform3D(1, 0, 0, 0, 0.5234062, 0.85208327, 0, -0.85208327, 0.523
 environment = SubResource("Environment_exn1d")
 script = ExtResource("3_057y4")
 alvo = NodePath("../CharacterBody3D_Player")
-offset = Vector3(0, 3, 3)
+offset = Vector3(0, 5, 3)
 
 [node name="RigidBody3D_Objeto2" parent="." unique_id=1056694780 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 2.66171)

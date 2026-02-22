@@ -44,7 +44,7 @@ material = SubResource("StandardMaterial3D_nlgle")
 [node name="Marker3D_PosicaoFala" type="Marker3D" parent="." unique_id=2005644244]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.967381, 0.484307)
 
-[node name="Unarmed Idle 01" parent="." unique_id=663104643 instance=ExtResource("2_6k1np")]
+[node name="Heroina" parent="." unique_id=663104643 instance=ExtResource("2_6k1np")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [connection signal="area_entered" from="Area3D_monitor" to="." method="_on_area_3d_monitor_area_entered"]

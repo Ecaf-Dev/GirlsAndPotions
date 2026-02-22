@@ -15,7 +15,7 @@ roughness_texture = ExtResource("5_r6n64")
 normal_enabled = true
 normal_texture = ExtResource("4_5htln")
 
-[node name="Unarmed Idle 01" unique_id=663104643 instance=ExtResource("1_lrnts")]
+[node name="Heroina" unique_id=663104643 instance=ExtResource("1_lrnts")]
 
 [node name="Skeleton3D" parent="." index="0" unique_id=328916395]
 bones/0/position = Vector3(-1.7715658e-05, 0.009030965, -0.0002589232)
