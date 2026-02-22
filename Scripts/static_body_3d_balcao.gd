@@ -216,4 +216,3 @@ func _repor_balcao():
 	# Se algo mudou e o player está vendo, atualiza os hologramas
 	if mudou and _player_esta_perto:
 		_exibir_pedidos_magicos()
-

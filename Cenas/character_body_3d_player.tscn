@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://7uqrentjh088"]
+[gd_scene format=3 uid="uid://7uqrentjh088"]
 
-[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/character_body_3d_player.gd" id="1_bdy6o"]
+[ext_resource type="Script" uid="uid://bo7vlixs7th78" path="res://GirlsAndPotions/Scripts/character_body_3d_player.gd" id="1_bdy6o"]
 [ext_resource type="ArrayMesh" uid="uid://b26865l8amxw1" path="res://GirlsAndPotions/Modelos/Bruxinha/base.obj" id="2_1gi1x"]
 [ext_resource type="Texture2D" uid="uid://b7vkox4en8r4s" path="res://GirlsAndPotions/Modelos/Bruxinha/texture_diffuse.png" id="3_u5ug0"]
 [ext_resource type="Texture2D" uid="uid://dom4n5yi0b2ad" path="res://GirlsAndPotions/Modelos/Bruxinha/texture_metallic.png" id="4_cwvad"]
@@ -25,38 +25,38 @@ roughness_texture = ExtResource("6_10s5u")
 normal_enabled = true
 normal_texture = ExtResource("5_txh60")
 
-[node name="CharacterBody3D_Player" type="CharacterBody3D" groups=["player"]]
+[node name="CharacterBody3D_Player" type="CharacterBody3D" unique_id=1576100939 groups=["player"]]
 script = ExtResource("1_bdy6o")
 velocidade_carga = 60.0
 
-[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=1420848551]
 shape = SubResource("CapsuleShape3D_bvvg7")
 
-[node name="Marker3D_MaoPos" type="Marker3D" parent="."]
+[node name="Marker3D_MaoPos" type="Marker3D" parent="." unique_id=2111285757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
-[node name="CSGCylinder3D_Personagem" type="CSGCylinder3D" parent="."]
+[node name="CSGCylinder3D_Personagem" type="CSGCylinder3D" parent="." unique_id=1562728022]
 visible = false
 radius = 0.344
 height = 1.377
 material = SubResource("StandardMaterial3D_qa7kq")
 
-[node name="Area3D_monitor" type="Area3D" parent="."]
+[node name="Area3D_monitor" type="Area3D" parent="." unique_id=1625255084]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.05809)
 
-[node name="CollisionShape3D_ObjetoAlvejado" type="CollisionShape3D" parent="Area3D_monitor"]
+[node name="CollisionShape3D_ObjetoAlvejado" type="CollisionShape3D" parent="Area3D_monitor" unique_id=1079758978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.99433, 0, 0, -0.175787)
 shape = SubResource("BoxShape3D_6n2qw")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Area3D_monitor"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Area3D_monitor" unique_id=1771143848]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.76629, 0, 0, -0.131322)
 visible = false
 material = SubResource("StandardMaterial3D_nlgle")
 
-[node name="Marker3D_PosicaoFala" type="Marker3D" parent="."]
+[node name="Marker3D_PosicaoFala" type="Marker3D" parent="." unique_id=2005644244]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.967381, 0.484307)
 
-[node name="Base" type="MeshInstance3D" parent="."]
+[node name="Base" type="MeshInstance3D" parent="." unique_id=1703602888]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.793322, 0)
 mesh = ExtResource("2_1gi1x")
 surface_material_override/0 = SubResource("StandardMaterial3D_we7wj")
