@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp6u627pn0c85"
-path.s3tc="res://.godot/imported/shaded.png-eb9c32bc47fdf38f1e3ac0c88b48d99f.s3tc.ctex"
+uid="uid://dmqalmifbgjqu"
+path.s3tc="res://.godot/imported/shaded.png-7740275de1f626ac84e401a7b082be63.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://GirlsAndPotions/Modelos/Aventureira/shaded.png"
-dest_files=["res://.godot/imported/shaded.png-eb9c32bc47fdf38f1e3ac0c88b48d99f.s3tc.ctex"]
+source_file="res://GirlsAndPotions/Modelos/Cartoonchar/shaded.png"
+dest_files=["res://.godot/imported/shaded.png-7740275de1f626ac84e401a7b082be63.s3tc.ctex"]
 
 [params]
 

@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://7uqrentjh088"]
 
 [ext_resource type="Script" uid="uid://bo7vlixs7th78" path="res://GirlsAndPotions/Scripts/character_body_3d_player.gd" id="1_bdy6o"]
-[ext_resource type="PackedScene" uid="uid://dji0ng0ud0us1" path="res://GirlsAndPotions/Cenas/bruxinhaModeloCena.tscn" id="2_6k1np"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bvvg7"]
 
@@ -43,9 +42,6 @@ material = SubResource("StandardMaterial3D_nlgle")
 
 [node name="Marker3D_PosicaoFala" type="Marker3D" parent="." unique_id=2005644244]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.967381, 0.484307)
-
-[node name="Bruxinha" parent="." unique_id=161284137 instance=ExtResource("2_6k1np")]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, -0.6416601, 0)
 
 [connection signal="area_entered" from="Area3D_monitor" to="." method="_on_area_3d_monitor_area_entered"]
 [connection signal="area_exited" from="Area3D_monitor" to="." method="_on_area_3d_monitor_area_exited"]
