@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://vhp7c6gnl78c"]
+
+[ext_resource type="PackedScene" uid="uid://csiy6vp8evenw" path="res://GirlsAndPotions/Modelos/Cartoonchar/Animações/Unarmed Idle 01.fbx" id="1_lrnts"]
+[ext_resource type="Texture2D" uid="uid://dmqalmifbgjqu" path="res://GirlsAndPotions/Modelos/Cartoonchar/shaded.png" id="2_yoxu7"]
+[ext_resource type="Texture2D" uid="uid://cj747yoatq3w8" path="res://GirlsAndPotions/Modelos/Cartoonchar/texture_metallic.png" id="3_p4632"]
+[ext_resource type="Texture2D" uid="uid://b66u50ddsv28w" path="res://GirlsAndPotions/Modelos/Cartoonchar/texture_normal.png" id="4_5htln"]
+[ext_resource type="Texture2D" uid="uid://xfkdn7ry0dkj" path="res://GirlsAndPotions/Modelos/Cartoonchar/texture_roughness.png" id="5_r6n64"]
+[ext_resource type="AnimationLibrary" uid="uid://ds7swae8wf2uq" path="res://GirlsAndPotions/Modelos/Cartoonchar/Animações/Running.fbx" id="6_pux84"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k5so8"]
+albedo_texture = ExtResource("2_yoxu7")
+metallic = 1.0
+metallic_texture = ExtResource("3_p4632")
+roughness_texture = ExtResource("5_r6n64")
+normal_enabled = true
+normal_texture = ExtResource("4_5htln")
+
+[node name="Unarmed Idle 01" unique_id=663104643 instance=ExtResource("1_lrnts")]
+
+[node name="Skeleton3D" parent="." index="0" unique_id=328916395]
+bones/0/position = Vector3(-1.7715658e-05, 0.009030965, -0.0002589232)
+bones/0/rotation = Quaternion(0.066905215, -0.00093002454, -0.029801091, 0.99731386)
+bones/1/rotation = Quaternion(0.039667264, -0.041349202, 0.01668531, 0.9982177)
+bones/2/position = Vector3(0, 0.0009494344, 6.2676535e-14)
+bones/2/rotation = Quaternion(0.07634277, -0.082689375, 0.034223847, 0.99305737)
+bones/3/position = Vector3(0, 0.0010850677, 1.1008989e-14)
+bones/3/rotation = Quaternion(0.076342806, -0.08268937, 0.034223847, 0.99305737)
+bones/4/rotation = Quaternion(-0.09193111, 0.047437005, -0.010821913, 0.994576)
+bones/5/position = Vector3(6.7762636e-21, 0.00074794295, -7.159244e-05)
+bones/5/rotation = Quaternion(-0.09224208, 0.10394323, -0.008689383, 0.99025846)
+bones/7/rotation = Quaternion(-0.6216623, -0.37316883, 0.563038, -0.396572)
+bones/8/position = Vector3(9.402442e-13, 0.0010114597, 9.226696e-12)
+bones/8/rotation = Quaternion(0.352216, -0.107617445, 0.00012577935, 0.929711)
+bones/9/position = Vector3(-8.611754e-13, 0.0025058829, 5.8431645e-12)
+bones/9/rotation = Quaternion(0.027462438, -0.027987562, 0.85348535, 0.5196395)
+bones/10/position = Vector3(4.4089055e-12, 0.002141361, 3.1903646e-13)
+bones/10/rotation = Quaternion(-0.10639111, 0.3581599, 0.20516701, 0.90460426)
+bones/11/rotation = Quaternion(0.022534266, -0.015724672, 0.34872112, 0.9368237)
+bones/12/position = Vector3(-6.887097e-05, 0.00048740229, -2.234303e-12)
+bones/12/rotation = Quaternion(0.0738068, 0.0056826496, -0.08293869, 0.9938016)
+bones/13/position = Vector3(-3.3450156e-05, 0.00036473753, -4.0192936e-12)
+bones/13/rotation = Quaternion(-0.015275234, -0.059852064, 0.24499074, 0.9675557)
+bones/15/position = Vector3(-1.9289154e-12, 0.0010482094, 2.126033e-05)
+bones/15/rotation = Quaternion(0.4523392, 0.0018954903, 0.45111156, 0.76934016)
+bones/16/position = Vector3(-1.4517078e-05, 0.0005049892, 2.9256458e-13)
+bones/16/rotation = Quaternion(0.48362678, -0.036604986, 0.5449871, 0.6839256)
+bones/17/rotation = Quaternion(0.11985311, -0.021711797, -0.042356428, 0.99165004)
+bones/19/rotation = Quaternion(0.5645291, -0.4300629, 0.5699611, 0.41412234)
+bones/20/position = Vector3(3.924428e-13, 0.0010114597, 9.22473e-12)
+bones/20/rotation = Quaternion(0.28411472, -0.07687891, 0.37215254, 0.88026756)
+bones/21/position = Vector3(2.7241967e-12, 0.0025074738, -3.1871623e-12)
+bones/21/rotation = Quaternion(0.08146561, -0.076158084, -0.6475066, 0.7538559)
+bones/22/position = Vector3(-2.1955473e-12, 0.002141161, -1.1499326e-12)
+bones/22/rotation = Quaternion(0.007995615, -0.3097686, -0.15075545, 0.93875045)
+bones/23/rotation = Quaternion(0.08688479, -0.016809689, -0.32403362, 0.9418974)
+bones/24/position = Vector3(5.6780125e-05, 0.00052672654, 1.3430531e-11)
+bones/24/rotation = Quaternion(0.09585738, -0.0010997463, 0.088998675, 0.9914079)
+bones/25/position = Vector3(-1.1335393e-06, 0.00036383927, 4.0803298e-13)
+bones/25/rotation = Quaternion(-0.015101783, 0.0750762, -0.11217419, 0.9907333)
+bones/27/position = Vector3(4.8260345e-12, 0.0011308604, 1.7133954e-05)
+bones/27/rotation = Quaternion(0.4289662, -0.023942577, -0.3375611, 0.83753645)
+bones/28/position = Vector3(-1.4764796e-05, 0.00048471816, 2.38423e-12)
+bones/28/rotation = Quaternion(0.49415505, 0.03415228, -0.45227242, 0.74168336)
+bones/29/position = Vector3(-1.997487e-05, 0.00040292667, 2.062633e-12)
+bones/29/rotation = Quaternion(0.1228959, 0.02129452, 0.032244958, 0.991667)
+bones/31/rotation = Quaternion(0.06916525, -0.2131353, 0.974315, 0.022357333)
+bones/32/position = Vector3(-1.6875433e-13, 0.004278064, -5.8340886e-13)
+bones/32/rotation = Quaternion(-0.32062313, 0.064719796, 0.065557666, 0.9427165)
+bones/33/rotation = Quaternion(0.45211664, -0.0015010473, -0.03353245, 0.89132696)
+bones/34/position = Vector3(7.9651346e-13, 0.0015597851, -1.6276827e-11)
+bones/34/rotation = Quaternion(0.3098444, -0.03775303, -0.043462414, 0.9490428)
+bones/36/rotation = Quaternion(-0.013358336, 0.38981777, 0.9201604, -0.034183305)
+bones/37/position = Vector3(-8.0808927e-13, 0.0042783143, 1.0827909e-12)
+bones/37/rotation = Quaternion(-0.11342028, 0.027887361, -0.020386167, 0.99294645)
+bones/38/position = Vector3(-5.5559706e-12, 0.003999874, -2.5354588e-12)
+bones/38/rotation = Quaternion(0.45410082, -0.00427277, 0.03044643, 0.8904197)
+bones/39/position = Vector3(1.2051816e-12, 0.0015744191, 2.7074345e-11)
+bones/39/rotation = Quaternion(0.36818746, -0.07820166, 0.07969398, 0.9230229)
+
+[node name="model" parent="Skeleton3D" index="0" unique_id=1463032356]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_k5so8")
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=267708702]
+libraries/Running = ExtResource("6_pux84")

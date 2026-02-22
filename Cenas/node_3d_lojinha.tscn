@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bonfi6ckgtc8l"]
+[gd_scene format=3 uid="uid://bonfi6ckgtc8l"]
 
 [ext_resource type="PackedScene" uid="uid://7uqrentjh088" path="res://GirlsAndPotions/Cenas/character_body_3d_player.tscn" id="1_ibour"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_t26us"]
-[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/Camera3D.gd" id="3_057y4"]
+[ext_resource type="Script" uid="uid://dmn5rba6cy5rq" path="res://GirlsAndPotions/Scripts/Camera3D.gd" id="3_057y4"]
 [ext_resource type="PackedScene" uid="uid://b24rs8h57wqg6" path="res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn" id="4_ahm42"]
 [ext_resource type="PackedScene" uid="uid://bjw4dhmf2enhd" path="res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn" id="5_2bddq"]
 [ext_resource type="PackedScene" uid="uid://b75oeoxyp6f54" path="res://GirlsAndPotions/Cenas/control_user_interface.tscn" id="6_hwnuv"]
@@ -24,9 +24,9 @@ background_mode = 2
 sky = SubResource("Sky_fcsv3")
 ambient_light_color = Color(0.431373, 0.74902, 0, 1)
 
-[node name="Node3D_Lojinha" type="Node3D"]
+[node name="Node3D_Lojinha" type="Node3D" unique_id=431592752]
 
-[node name="CSGBox3D_Chao" type="CSGBox3D" parent="."]
+[node name="CSGBox3D_Chao" type="CSGBox3D" parent="." unique_id=53243154]
 transform = Transform3D(1.08909, 0.00636371, -0.0102848, -0.00454973, 1.49994, 0.0100693, 0.00891857, -0.0119249, 1.26106, 0, 0, 0)
 use_collision = true
 collision_layer = 3
@@ -34,44 +34,44 @@ collision_mask = 3
 size = Vector3(10, 0.5, 10)
 material = SubResource("StandardMaterial3D_valfg")
 
-[node name="CharacterBody3D_Player" parent="." instance=ExtResource("1_ibour")]
+[node name="CharacterBody3D_Player" parent="." unique_id=2115128453 instance=ExtResource("1_ibour")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.91926)
 
-[node name="DirectionalLight3D_Luz" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D_Luz" type="DirectionalLight3D" parent="." unique_id=744967523]
 transform = Transform3D(0.694771, 0.598378, -0.399046, -0.240093, 0.715952, 0.655567, 0.677975, -0.359661, 0.641089, -4.70126, 9.00318, 7.39724)
 
-[node name="RigidBody3D_Objeto" parent="." instance=ExtResource("2_t26us")]
+[node name="RigidBody3D_Objeto" parent="." unique_id=162340772 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 1)
 nome_item = "Flor Da Vida"
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("alvo")]
-transform = Transform3D(1, 0, 0, 0, 0.523406, 0.852083, 0, -0.852083, 0.523406, 0, 6, 5)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=44034161 node_paths=PackedStringArray("alvo")]
+transform = Transform3D(1, 0, 0, 0, 0.5234062, 0.85208327, 0, -0.85208327, 0.5234062, 0, 4.058199, 3.7208004)
 environment = SubResource("Environment_exn1d")
 script = ExtResource("3_057y4")
 alvo = NodePath("../CharacterBody3D_Player")
-offset = Vector3(0, 6, 5)
+offset = Vector3(0, 3, 3)
 
-[node name="RigidBody3D_Objeto2" parent="." instance=ExtResource("2_t26us")]
+[node name="RigidBody3D_Objeto2" parent="." unique_id=1056694780 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 2.66171)
 nome_item = "Flor Da Vida"
 quantidade_atual = 10
 
-[node name="StaticBody3D_Caldeirao" parent="." instance=ExtResource("4_ahm42")]
+[node name="StaticBody3D_Caldeirao" parent="." unique_id=744893990 instance=ExtResource("4_ahm42")]
 transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 0, 1.2, 0)
 
-[node name="StaticBody3D_Balcao" parent="." instance=ExtResource("5_2bddq")]
+[node name="StaticBody3D_Balcao" parent="." unique_id=1062721444 instance=ExtResource("5_2bddq")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 1, 1, -5)
 
-[node name="RigidBody3D_Objeto3" parent="." instance=ExtResource("2_t26us")]
+[node name="RigidBody3D_Objeto3" parent="." unique_id=1873023884 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
 nome_item = "Flor Magica"
 quantidade_atual = 5
 
-[node name="Control_UserInterface" parent="." instance=ExtResource("6_hwnuv")]
+[node name="Control_UserInterface" parent="." unique_id=1239505562 instance=ExtResource("6_hwnuv")]
 offset_left = 886.636
 offset_top = 408.723
 offset_right = 926.636
 offset_bottom = 448.723
 
-[node name="StaticBody3D_CaixaDeCorreio" parent="." instance=ExtResource("7_knyeq")]
+[node name="StaticBody3D_CaixaDeCorreio" parent="." unique_id=189153913 instance=ExtResource("7_knyeq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6973, 0.420813, 4.32119)

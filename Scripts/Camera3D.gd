@@ -5,7 +5,7 @@ extends Camera3D
 
 # A distância fixa que a câmera ficará do personagem
 # Ajuste esses valores para chegar no ângulo isométrico desejado
-@export var offset: Vector3 = Vector3(10, 10, 10)
+@export var offset: Vector3 = Vector3(5, 5, 5)
 
 func _ready():
 	# Define a posição inicial e faz a câmera olhar para o alvo
