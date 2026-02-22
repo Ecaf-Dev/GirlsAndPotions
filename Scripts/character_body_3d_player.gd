@@ -18,6 +18,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var pode_falar = true
 
+@onready var anim_player = $Heroina/AnimationPlayer
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -68,7 +70,7 @@ func _physics_process(delta):
 			_jogaritem()
 	
 	move_and_slide()
-
+	update_animations()
 
 func _on_area_3d_monitor_area_entered(area):
 	print("objeto dentro da area:", area)
@@ -239,3 +241,20 @@ func _falaronomedoitem(nome_do_item):
 	
 	await get_tree().create_timer(0.5).timeout # Espera meio segundo
 	pode_falar = true
+
+func update_animations():
+	# 1. Checagem de segurança para evitar erros caso o player não tenha sido carregado
+	if anim_player == null: return
+
+	# 2. Lógica de movimento (X e Z)
+	var movendo = Vector2(velocity.x, velocity.z).length() > 0.1
+
+	if movendo:
+		# Verifica se a animação de correr já não está tocando
+		# O nome deve ser EXATAMENTE como aparece na lista do seu AnimationPlayer
+		if anim_player.current_animation != "Correndo/mixamo_com":
+			anim_player.play("Correndo/mixamo_com")
+	else:
+		# Quando parado, toca a animação de Idle
+		if anim_player.current_animation != "Parada/mixamo_com":
+			anim_player.play("Parada/mixamo_com")
