@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c3ol6kd4ooucl"
+path="res://.godot/imported/Item adicionado no caldeirão (online-audio-converter.com).wav-081a2c7cf21badfb1e248adfed2eca26.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Sons/Item adicionado no caldeirão (online-audio-converter.com).wav"
+dest_files=["res://.godot/imported/Item adicionado no caldeirão (online-audio-converter.com).wav-081a2c7cf21badfb1e248adfed2eca26.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

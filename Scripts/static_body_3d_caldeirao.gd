@@ -37,6 +37,7 @@ func _on_area_3d_monitor_body_entered(body):
 			slots.append(body.nome_item)
 			print("Item adicionado ao slot: ", body.nome_item)
 			print("Estado atual dos slots: ", slots)
+			_somitemadicionado()
 			_receita_compativel(slots)
 			body.queue_free()
 			elastico()
@@ -434,3 +435,6 @@ func alterar_cor_liquido(cor_especifica = null):
 		if material_bolha:
 			# Criamos um tween para a cor da bolha acompanhar
 			tween.tween_property(material_bolha, "albedo_color", cor_alvo, 0.6)
+
+func _somitemadicionado():
+	$"Soms/AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão".play()
