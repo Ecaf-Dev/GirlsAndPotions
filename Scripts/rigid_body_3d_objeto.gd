@@ -25,6 +25,7 @@ func _carregar_visual_automatico():
 		if quantidade_atual == 1:
 			cena_modelo = load(caminho_modelo)
 		else:
+			_somvirarcaixa()
 			cena_modelo = load(caminho_modelo_caixa)
 			
 		if cena_modelo:
@@ -107,3 +108,6 @@ func aplicar_elastico_externo(alvo: Node3D = null):
 	
 	tween.tween_property(visual, "scale", squash, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(visual, "scale", escala_base_modelo, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func _somvirarcaixa():
+	$Node/AudioStreamPlayer3D_VirarCaixa.play()
