@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjw4dhmf2enhd"]
+[gd_scene format=3 uid="uid://bjw4dhmf2enhd"]
 
-[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_balcao.gd" id="1_20lu7"]
+[ext_resource type="Script" uid="uid://cgmll28ghawle" path="res://GirlsAndPotions/Scripts/static_body_3d_balcao.gd" id="1_20lu7"]
 [ext_resource type="ArrayMesh" uid="uid://dfsfgbm6qxoac" path="res://GirlsAndPotions/Modelos/Objetos/Balcão.obj" id="2_wwvc4"]
+[ext_resource type="AudioStream" uid="uid://d15aoev1x70cm" path="res://GirlsAndPotions/Arts/Novos Sons/Venda.wav" id="3_h6w6p"]
+[ext_resource type="AudioStream" uid="uid://cu7atr88tfsw3" path="res://GirlsAndPotions/Arts/Novos Sons/Novo Pedido.wav" id="4_al2d3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ltmu"]
 
@@ -13,40 +15,48 @@ albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jd77c"]
 albedo_color = Color(0.505882, 0.2, 0.0117647, 1)
 
-[node name="StaticBody3D_Balcao" type="StaticBody3D" node_paths=PackedStringArray("objeto_visual")]
+[node name="StaticBody3D_Balcao" type="StaticBody3D" unique_id=234715560 node_paths=PackedStringArray("objeto_visual")]
 script = ExtResource("1_20lu7")
 objeto_visual = NodePath("Balcão")
 
-[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=481617886]
 transform = Transform3D(2.35083, 0, 0, 0, 1, 0, 0, 0, 1.30518, 0, 0, 0)
 shape = SubResource("BoxShape3D_6ltmu")
 
-[node name="Area3D_Monitor" type="Area3D" parent="."]
+[node name="Area3D_Monitor" type="Area3D" parent="." unique_id=1519854752]
 transform = Transform3D(1.975, 0, 0, 0, 0.755601, 0, 0, 0, 1.23202, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
+[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor" unique_id=1022539436]
 transform = Transform3D(1.23327, 0, 0, 0, 1.54159, 0, 0, 0, 1.07911, 0, 0, 0)
 shape = SubResource("BoxShape3D_jc4qw")
 
-[node name="CSGBox3D_Visual" type="CSGBox3D" parent="."]
+[node name="CSGBox3D_Visual" type="CSGBox3D" parent="." unique_id=1799172022]
 visible = false
 material = SubResource("StandardMaterial3D_l8sp1")
 
-[node name="Balcão" type="MeshInstance3D" parent="."]
+[node name="Balcão" type="MeshInstance3D" parent="." unique_id=1921885362]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 mesh = ExtResource("2_wwvc4")
 surface_material_override/0 = SubResource("StandardMaterial3D_jd77c")
 
-[node name="Marker3D_Esquerda" type="Marker3D" parent="."]
+[node name="Marker3D_Esquerda" type="Marker3D" parent="." unique_id=1047608244]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.5, 0)
 
-[node name="Marker3D_Centro" type="Marker3D" parent="."]
+[node name="Marker3D_Centro" type="Marker3D" parent="." unique_id=844406778]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
-[node name="Marker3D_Direita" type="Marker3D" parent="."]
+[node name="Marker3D_Direita" type="Marker3D" parent="." unique_id=1416671768]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 0)
+
+[node name="Node" type="Node" parent="." unique_id=1555558172]
+
+[node name="AudioStreamPlayer3D_VendaFeita" type="AudioStreamPlayer3D" parent="Node" unique_id=1847495298]
+stream = ExtResource("3_h6w6p")
+
+[node name="AudioStreamPlayer3D_NovoPedido" type="AudioStreamPlayer3D" parent="Node" unique_id=1849388700]
+stream = ExtResource("4_al2d3")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
 [connection signal="body_exited" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_exited"]

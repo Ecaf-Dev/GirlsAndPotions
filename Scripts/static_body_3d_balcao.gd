@@ -157,6 +157,7 @@ func _recompensa(nome_da_pocao):
 		
 		# Adicionamos o valor real ao Global
 		Global.adicionar_moedas(valor)
+		_somvendaFeita()
 		print("RECOMPENSA: Você vendeu ", nome_da_pocao, " por ", valor, " G!")
 	else:
 		# Fallback caso o nome não esteja no dicionário
@@ -211,8 +212,15 @@ func _repor_balcao():
 		# Remove o primeiro da fila e coloca no balcão
 		var proximo_pedido = fila_de_espera.pop_front() 
 		pedidos.append(proximo_pedido)
+		_somnovopedido()
 		mudou = true
 	
 	# Se algo mudou e o player está vendo, atualiza os hologramas
 	if mudou and _player_esta_perto:
 		_exibir_pedidos_magicos()
+
+func _somnovopedido():
+	$Node/AudioStreamPlayer3D_NovoPedido.play()
+
+func _somvendaFeita():
+	$Node/AudioStreamPlayer3D_VendaFeita.play()
