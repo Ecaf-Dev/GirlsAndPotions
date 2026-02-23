@@ -71,11 +71,10 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("tecla_x"):
 		if(objeto_levantado == null):
+			_levantaritem()
 			_somlevantandoobjeto()
 		elif (objeto_levantado != null) :
-			_somjogando()
-			_jogaritem()
-	
+			_jogaritem()	
 	move_and_slide()
 	update_animations()
 
@@ -104,7 +103,7 @@ func _on_area_3d_monitor_area_exited(area):
 		
 func _levantaritem():
 	if(objeto_levantado == null && objeto_proximo != null):
-		_somlevantandoobjeto()
+		
 		objeto_levantado = objeto_proximo
 		var corpo = objeto_levantado.get_parent()
 		corpo.aplicar_elastico_externo()
@@ -114,6 +113,7 @@ func _levantaritem():
 		corpo.position = Vector3.ZERO
 		corpo.rotation = Vector3.ZERO
 		#meu caracterbody tem um filho chamado Marker3D_maoPos, para colocar o objeto a ser carregado, como faço isso?
+		_somlevantandoobjeto()
 		print("item levantado e grudado")
 	
 func _soltaritem():
@@ -196,7 +196,7 @@ func _instanciar_na_mao(nome):
 	# 1. Carrega a cena base do item
 	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
 	var novo_item = cena_item.instantiate()
-	_somlevantandoobjeto()
+	
 	
 	# 2. Configura os dados do novo item
 	novo_item.nome_item = nome
