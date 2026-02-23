@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bdjh3bx307euc"
+path="res://.godot/imported/Item adicionado no caldeirão.wav-bc40659674093a6eeb0c1b5e930042ee.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav"
+dest_files=["res://.godot/imported/Item adicionado no caldeirão.wav-bc40659674093a6eeb0c1b5e930042ee.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

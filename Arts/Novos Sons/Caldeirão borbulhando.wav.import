@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://uiv1o26h6x1x"
+path="res://.godot/imported/Caldeirão borbulhando.wav-0bcdc43881986c016b19c44e80ca4418.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Novos Sons/Caldeirão borbulhando.wav"
+dest_files=["res://.godot/imported/Caldeirão borbulhando.wav-0bcdc43881986c016b19c44e80ca4418.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
