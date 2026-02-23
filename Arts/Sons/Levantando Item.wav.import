@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dg2sopmjss4o2"
+path="res://.godot/imported/Levantando Item.wav-3104bc39bbed35c11b22b935fdc19229.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Sons/Levantando Item.wav"
+dest_files=["res://.godot/imported/Levantando Item.wav-3104bc39bbed35c11b22b935fdc19229.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bjqnhqmad1sq"
+path="res://.godot/imported/Novo Pedido.wav-2e0e282c4398ed8d608747d73a59bebc.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Sons/Novo Pedido.wav"
+dest_files=["res://.godot/imported/Novo Pedido.wav-2e0e282c4398ed8d608747d73a59bebc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
