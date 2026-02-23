@@ -174,6 +174,7 @@ func _jogaritem():
 	
 	# 6. Resetar estados
 	objeto_levantado = null
+	_somjogando()
 	print("Item lançado instantaneamente!")
 
 func _interagir_com_item():
