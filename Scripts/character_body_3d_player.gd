@@ -50,7 +50,7 @@ func _physics_process(delta):
 		
 		# 4. Rotacionamos o corpo
 		rotation.y = lerp_angle(rotation.y, target_angle, 0.15)
-		_soncaminha(delta, direction.length() > 0)
+		_somcaminha(delta, direction.length() > 0)
 		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -71,9 +71,9 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("tecla_x"):
 		if(objeto_levantado == null):
-			_levantaritem()
+			_somlevantandoobjeto()
 		elif (objeto_levantado != null) :
-			_sonjogando()
+			_somjogando()
 			_jogaritem()
 	
 	move_and_slide()
@@ -104,7 +104,7 @@ func _on_area_3d_monitor_area_exited(area):
 		
 func _levantaritem():
 	if(objeto_levantado == null && objeto_proximo != null):
-		
+		_somlevantandoobjeto()
 		objeto_levantado = objeto_proximo
 		var corpo = objeto_levantado.get_parent()
 		corpo.aplicar_elastico_externo()
@@ -182,7 +182,7 @@ func _interagir_com_item():
 
 	var item_alvo = objeto_proximo.get_parent()
 	var resultado = item_alvo._diminuirquantidade()
-
+	
 	if resultado == "LEVAR_INTEIRO":
 		# Caso seja um item único, usa sua função de levantar que já funciona
 		_levantaritem() 
@@ -196,6 +196,7 @@ func _instanciar_na_mao(nome):
 	# 1. Carrega a cena base do item
 	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
 	var novo_item = cena_item.instantiate()
+	_somlevantandoobjeto()
 	
 	# 2. Configura os dados do novo item
 	novo_item.nome_item = nome
@@ -266,7 +267,7 @@ func update_animations():
 		if anim_player.current_animation != "Parada/mixamo_com":
 			anim_player.play("Parada/mixamo_com")
 
-func _soncaminha(delta, esta_movendo):
+func _somcaminha(delta, esta_movendo):
 	if not esta_movendo:
 		timer_passo = 0.0
 		return
@@ -278,6 +279,8 @@ func _soncaminha(delta, esta_movendo):
 		$Audios/AudioStreamPlayer3D_SonsPasso.play()
 		timer_passo = INTERVALO_PASSO
 
-func _sonjogando():
+func _somjogando():
 	$"Audios/AudioStreamPlayer3D_LançarObjeto".play()
 	
+func _somlevantandoobjeto():
+	$Audios/AudioStreamPlayer3D_LevantarObjeto.play()
