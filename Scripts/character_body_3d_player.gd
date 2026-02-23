@@ -73,6 +73,7 @@ func _physics_process(delta):
 		if(objeto_levantado == null):
 			_levantaritem()
 		elif (objeto_levantado != null) :
+			_sonjogando()
 			_jogaritem()
 	
 	move_and_slide()
@@ -276,3 +277,7 @@ func _soncaminha(delta, esta_movendo):
 		# Verifique se o nome do nó está idêntico ao da sua árvore: AudioStreamPlayer3D_SonsPasso
 		$Audios/AudioStreamPlayer3D_SonsPasso.play()
 		timer_passo = INTERVALO_PASSO
+
+func _sonjogando():
+	$"Audios/AudioStreamPlayer3D_LançarObjeto".play()
+	
