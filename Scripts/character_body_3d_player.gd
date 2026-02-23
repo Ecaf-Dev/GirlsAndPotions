@@ -20,6 +20,10 @@ var pode_falar = true
 
 @onready var anim_player = $Heroina/AnimationPlayer
 
+#tempo
+var timer_passo: float = 0.0
+const INTERVALO_PASSO: float = 0.4
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -46,6 +50,8 @@ func _physics_process(delta):
 		
 		# 4. Rotacionamos o corpo
 		rotation.y = lerp_angle(rotation.y, target_angle, 0.15)
+		_soncaminha(delta, direction.length() > 0)
+		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -258,3 +264,15 @@ func update_animations():
 		# Quando parado, toca a animação de Idle
 		if anim_player.current_animation != "Parada/mixamo_com":
 			anim_player.play("Parada/mixamo_com")
+
+func _soncaminha(delta, esta_movendo):
+	if not esta_movendo:
+		timer_passo = 0.0
+		return
+
+	timer_passo -= delta
+
+	if timer_passo <= 0:
+		# Verifique se o nome do nó está idêntico ao da sua árvore: AudioStreamPlayer3D_SonsPasso
+		$Audios/AudioStreamPlayer3D_SonsPasso.play()
+		timer_passo = INTERVALO_PASSO

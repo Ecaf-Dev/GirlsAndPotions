@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://jndb55uxpkry"
+path="res://.godot/imported/Caminhada.wav-fab6f0761c9183f0c2e692d9cc8695c5.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Novos Sons/Caminhada.wav"
+dest_files=["res://.godot/imported/Caminhada.wav-fab6f0761c9183f0c2e692d9cc8695c5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=1
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
