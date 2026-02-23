@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bjw4dhmf2enhd" path="res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn" id="5_2bddq"]
 [ext_resource type="PackedScene" uid="uid://b75oeoxyp6f54" path="res://GirlsAndPotions/Cenas/control_user_interface.tscn" id="6_hwnuv"]
 [ext_resource type="PackedScene" uid="uid://bcwkg3g4bglte" path="res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn" id="7_knyeq"]
+[ext_resource type="AudioStream" uid="uid://cfqwygtkcs8w0" path="res://GirlsAndPotions/Arts/Novos Sons/CelticaMusicHappy.wav" id="8_kk8d3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_valfg"]
 albedo_color = Color(1, 0.8, 0.627451, 1)
@@ -75,3 +76,10 @@ offset_bottom = 448.723
 
 [node name="StaticBody3D_CaixaDeCorreio" parent="." unique_id=189153913 instance=ExtResource("7_knyeq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6973, 0.420813, 4.32119)
+
+[node name="Musica" type="Node" parent="." unique_id=494129633]
+
+[node name="AudioStreamPlayer3D_backgroundmusica1" type="AudioStreamPlayer3D" parent="Musica" unique_id=1539996605]
+stream = ExtResource("8_kk8d3")
+volume_db = -20.392
+autoplay = true

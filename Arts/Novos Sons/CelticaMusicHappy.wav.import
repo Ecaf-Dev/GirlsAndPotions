@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cfqwygtkcs8w0"
+path="res://.godot/imported/CelticaMusicHappy.wav-8a32f274d7a1588fa653456b5c0d318c.sample"
+
+[deps]
+
+source_file="res://GirlsAndPotions/Arts/Novos Sons/CelticaMusicHappy.wav"
+dest_files=["res://.godot/imported/CelticaMusicHappy.wav-8a32f274d7a1588fa653456b5c0d318c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
