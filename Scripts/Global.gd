@@ -5,8 +5,6 @@ signal moedas_alteradas(quantidade)
 signal pedido_entregue(total_pedidos)
 signal prestigio_alterado(prestigio)
 
-var pedidos_ativos_globais = []
-
 var moedas = 10
 var total_pedidos = 0
 var prestigio = 0
