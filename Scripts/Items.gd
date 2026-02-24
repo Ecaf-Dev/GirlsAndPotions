@@ -19,6 +19,14 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/Flor_magica.png",
 		"compravel": true
 	},
+	"Frasco Vazio": {
+		"nome": "Frasco Vazio",
+		"descricao": "Uma flor pulsando magia",
+		"valor_compra": 1,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/frasco_vazio.png",
+		"compravel": true
+	},
 	"Poção De Cura": {
 		"nome": "Poção De Cura",
 		"descricao": "Uma poção que cura pequenos ferimentos e doenças corriqueiras",
