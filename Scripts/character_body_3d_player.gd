@@ -72,6 +72,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("tecla_x"):
 		if(objeto_levantado == null):
 			_levantaritem()
+			_somlevantandoobjeto()
 		elif (objeto_levantado != null) :
 			_jogaritem()	
 	move_and_slide()
