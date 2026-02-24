@@ -20,13 +20,6 @@ var receita_validada = false
 var cozinhando = false
 
 # Dicionário com todas as receitas possíveis, está obsoleto!
-const RECEITAS = {
-	"Poção De Cura": ["Flor Da Vida", "Flor Da Vida"],
-	"Poção Da Determinação" : ["Flor Da Vida", "Poção De Cura"],
-	"Poção De Cura Maior" : ["Poção De Cura", "Poção De Cura"],
-	"Poção De Mana" : ["Flor Magica", "Flor Magica"],
-	
-}
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
 func _on_area_3d_monitor_body_entered(body):
@@ -54,37 +47,35 @@ func cozinhar():
 		elastico()
 		return
 	
-	# Variável para controlar se achamos uma receita válida
-	var sucesso = false
+	# 1. Pegamos a lista global
+	var todas_as_receitas = Receitas.receitas
 	var nome_da_receita_feita = ""
+	var sucesso = false
 
-	# Criamos cópias para ordenar e garantir que a ordem dos itens não importe
-	
-
-	# Percorremos cada receita dentro do seu dicionário RECEITAS
-	for nome_receita in RECEITAS:
-		var ingredientes_receita = RECEITAS[nome_receita].duplicate()
-		ingredientes_receita.sort()
-
-		# Comparamos os itens no caldeirão com os ingredientes desta receita
+	# 2. Comparamos os slots atuais com o dicionário global
+	for nome_id in todas_as_receitas:
+		var dados = todas_as_receitas[nome_id]
+		var ingredientes_receita = [dados["item1"], dados["item2"]]
+		
+		# Comparação direta (ordem rígida conforme definido no Global)
 		if slots == ingredientes_receita:
-			sucesso = true
-			nome_da_receita_feita = nome_receita
-			break # Se achou, para de procurar
+			if dados["pode_fabricar"]:
+				sucesso = true
+				nome_da_receita_feita = dados["nome"]
+				break
 
-	# Resultado do cozimento baseado na busca acima
+	# 3. Resultado
 	if sucesso:
-		print("RECEITA CRIADA: ", nome_da_receita_feita)
-		alterar_cor_liquido(Color(0.0, 0.4, 0.9))
+		print("RECEITA CRIADA VIA GLOBAL: ", nome_da_receita_feita)
+		alterar_cor_liquido(Color(0.0, 0.4, 0.9)) # Cor padrão ou da poção
 		_instanciarobjeto(nome_da_receita_feita)
-		print("SUCESSO! Você criou uma Poção!")
 	else:
 		elastico()
-		print("ERRO! A mistura falhou e virou lixo.")
+		print("ERRO! A mistura não consta no registro global ou não está liberada.")
 	
-	# Limpa os slots após a tentativa conforme você pediu
+	# Limpa os slots
 	slots.clear()
-
+	
 func _instanciarobjeto(nome_do_item):
 	elastico()
 	if cena_base_item == null: return
