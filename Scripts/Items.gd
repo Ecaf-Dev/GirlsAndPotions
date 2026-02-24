@@ -32,7 +32,7 @@ var itens = {
 		"descricao": "Uma poção que revigora o espirito, o tornando mais valente",
 		"valor_compra": 0,
 		"valor_venda": 10,
-		"icon": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
+		"icon": "res://GirlsAndPotions/Arts/Icones/poção_da_determinação.png",
 		"compravel": false
 	},
 	"Poção De Mana": {

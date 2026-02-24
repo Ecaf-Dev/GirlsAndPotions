@@ -1,29 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://bp66t70uateqy"]
+[gd_scene format=3 uid="uid://bp66t70uateqy"]
 
-[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/v_box_container_item.gd" id="1_xpvmc"]
+[ext_resource type="Script" uid="uid://dbelxw5yi0ojy" path="res://GirlsAndPotions/Scripts/v_box_container_item.gd" id="1_xpvmc"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_7ppfg"]
 
-[node name="VBoxContainer_Item" type="VBoxContainer"]
+[node name="VBoxContainer_Item" type="VBoxContainer" unique_id=1486066522]
 custom_minimum_size = Vector2(40, 50)
 offset_right = 93.0
 offset_bottom = 167.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_xpvmc")
 
-[node name="TextureRect_Imagem" type="TextureRect" parent="."]
+[node name="TextureRect_Imagem" type="TextureRect" parent="." unique_id=1579929573]
 custom_minimum_size = Vector2(50, 75)
 layout_mode = 2
+size_flags_vertical = 3
 texture = SubResource("ViewportTexture_7ppfg")
 expand_mode = 1
 
-[node name="Label_Nome" type="Label" parent="."]
+[node name="Label_Nome" type="Label" parent="." unique_id=394455823]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Flor Da Vida"
 
-[node name="Label_Preco" type="Label" parent="."]
+[node name="Label_Preco" type="Label" parent="." unique_id=1131855946]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 
-[node name="SpinBox_Quantidade" type="SpinBox" parent="."]
+[node name="SpinBox_Quantidade" type="SpinBox" parent="." unique_id=1710355307]
 layout_mode = 2

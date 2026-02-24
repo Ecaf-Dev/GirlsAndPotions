@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b62ec68wbc0fo"]
+[gd_scene format=3 uid="uid://b62ec68wbc0fo"]
 
-[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/h_box_container_nome_do_item.gd" id="1_124rc"]
+[ext_resource type="Script" uid="uid://c3cjd8slsbhgi" path="res://GirlsAndPotions/Scripts/h_box_container_nome_do_item.gd" id="1_124rc"]
 
-[node name="HBoxContainer_NomeDoItem" type="HBoxContainer"]
+[node name="HBoxContainer_NomeDoItem" type="HBoxContainer" unique_id=519368454]
 anchors_preset = -1
 anchor_left = 0.1
 anchor_top = 0.1
