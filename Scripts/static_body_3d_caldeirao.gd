@@ -19,12 +19,19 @@ var tempo_da_receita = 1
 var receita_validada = false
 var cozinhando = false
 
+var liquidodocaldeirão: String = ""
+var pronto_para_coleta: bool = false
+
 # Dicionário com todas as receitas possíveis, está obsoleto!
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
-	
+	if pronto_para_coleta:
+		if "nome_item" in body and body.nome_item != "Frasco Vazio":
+			_rejeitar_item(body)
+			return
+			
 	if "nome_item" in body :
 		if slots.size() < MAX_SLOTS && body.quantidade_atual == 1 && cozinhando == false:
 			slots.append(body.nome_item)
@@ -62,13 +69,15 @@ func cozinhar():
 			if dados["pode_fabricar"]:
 				sucesso = true
 				nome_da_receita_feita = dados["nome"]
+				liquidodocaldeirão = nome_da_receita_feita
+				pronto_para_coleta = true
 				break
 
 	# 3. Resultado
 	if sucesso:
 		print("RECEITA CRIADA VIA GLOBAL: ", nome_da_receita_feita)
-		alterar_cor_liquido(Color(0.0, 0.4, 0.9)) # Cor padrão ou da poção
-		_instanciarobjeto(nome_da_receita_feita)
+		alterar_cor_liquido(Color(0.2, 1.0, 0.2)) # Ex: Brilha verde quando pronto # Cor padrão ou da poção
+		#_instanciarobjeto(nome_da_receita_feita)
 	else:
 		elastico()
 		print("ERRO! A mistura não consta no registro global ou não está liberada.")
@@ -429,3 +438,21 @@ func alterar_cor_liquido(cor_especifica = null):
 
 func _somitemadicionado():
 	$"Soms/AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão".play()
+
+func coletarliquido(nomedoobjetocarregado) -> Array:
+	if nomedoobjetocarregado == "Frasco Vazio" and pronto_para_coleta == true:
+		print("Coleta permitida!")
+		
+		# 1. Primeiro guardamos o nome em uma variável temporária
+		var nome_para_enviar = liquidodocaldeirão
+		
+		# 2. Agora limpamos o caldeirão (Reset)
+		liquidodocaldeirão = ""
+		pronto_para_coleta = false
+		
+		# 3. POR ÚLTIMO, enviamos o sucesso com o nome guardado
+		return [true, nome_para_enviar]
+		
+	else:
+		print("Não pode coletar!")
+		return [false, ""] # Sempre bom manter o mesmo tamanho de array no retorno

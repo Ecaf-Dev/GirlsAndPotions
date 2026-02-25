@@ -59,16 +59,24 @@ func _physics_process(delta):
 	var target_angle = atan2(direction.x,direction.z)
 	
 	if Input.is_action_just_pressed("tecla_z"):
+		
+		
 		#preicos repensar esta logica aqui, pois to com problemas em  filtrar qual ação realizar
-		if(podeCozinhar == true && caldeirao != null && objeto_levantado == null):
+		if(podeCozinhar == true && caldeirao != null && objeto_levantado == null && caldeirao.pronto_para_coleta == false):
 			if caldeirao.has_method("cozinhando_pocao"):
 				caldeirao.cozinhando_pocao()
 		elif(objeto_levantado == null):
 			_interagir_com_item()
 		elif(objeto_levantado != null):
-			_soltaritem()
+			#checagem se o objeto levantado é um frasco vazio
+			
+			if _saberoquelevo():
+				print("hmm")
+			else:
+				_soltaritem()
+			#caso n seja apenas seiga normalmente
+			
 		#criaremos uma checagem que caso a tecla z seja prescionada enquanto proximo a um caldeirão, chamaremos o metodo do caldeirao de cozinhar
-		
 	if Input.is_action_just_pressed("tecla_x"):
 		if(objeto_levantado == null):
 			_levantaritem()
@@ -284,3 +292,26 @@ func _somjogando():
 	
 func _somlevantandoobjeto():
 	$Audios/AudioStreamPlayer3D_LevantarObjeto.play()
+
+func _saberoquelevo() -> bool:
+	#esta função será chamada para checagens de situações usando o objeto que está sendo carregado
+	#exemplo no caso dos frascos haverá uma tratativa em certa situação
+	var pai = objeto_levantado.get_parent()
+	if pai and "nome_item" in pai:
+		var nome_do_item = pai.nome_item
+		print("Sucesso! Nome capturado: ", nome_do_item)
+		if(nome_do_item == "Frasco Vazio") && caldeirao != null:
+			if caldeirao.has_method("coletarliquido"):
+				# Passamos o objeto 'pai' (o frasco) para o caldeirão trabalhar nele
+				var res = caldeirao.coletarliquido(nome_do_item)
+				if res:
+					print(res[1])
+					pai.nome_item = res[1]
+					pai._carregar_visual_automatico()
+				return true # Retorna se a coleta deu certo ou não
+			else:
+				return false
+		else:
+			return false
+	else:
+		return false
