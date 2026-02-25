@@ -21,6 +21,7 @@ var cozinhando = false
 
 var liquidodocaldeirão: String = ""
 var pronto_para_coleta: bool = false
+@export var icone_coleta : Sprite3D # Arraste um ícone de "mão" ou "seta" aqui
 
 # Dicionário com todas as receitas possíveis, está obsoleto!
 
@@ -274,14 +275,18 @@ func cozinhando_pocao():
 		
 		# Finalização
 		print("--- PREPARO FINALIZADO! ---")
-		_gerenciar_barra_visual(0) # Remove a barra
-		
-		if holograma_atual != null:
-			holograma_atual.queue_free()
-			holograma_atual = null
+		_gerenciar_barra_visual(0) 
+
+	# COMENTE OU REMOVA ESTA PARTE ABAIXO:
+	# if holograma_atual != null:
+	#     holograma_atual.queue_free()
+	#     holograma_atual = null
 
 		if receita_validada == true:
-			cozinhar()
+			cozinhar() # Aqui dentro você já seta pronto_para_coleta = true
+		# --- NOVO: Mostrar ícone de coleta ---
+			if icone_coleta:
+				icone_coleta.visible = true
 		
 		slots.clear()
 		cozinhando = false
@@ -443,16 +448,25 @@ func coletarliquido(nomedoobjetocarregado) -> Array:
 	if nomedoobjetocarregado == "Frasco Vazio" and pronto_para_coleta == true:
 		print("Coleta permitida!")
 		
-		# 1. Primeiro guardamos o nome em uma variável temporária
+		# 1. Guardamos o nome da poção
 		var nome_para_enviar = liquidodocaldeirão
 		
-		# 2. Agora limpamos o caldeirão (Reset)
+		# --- LIMPEZA DOS VISUAIS (O que você queria na etapa 3) ---
+		if holograma_atual != null:
+			holograma_atual.queue_free()
+			holograma_atual = null # Importante para não dar erro de instância inválida depois
+		
+		if icone_coleta != null:
+			icone_coleta.visible = false
+		# ---------------------------------------------------------
+		
+		# 2. Resetamos o estado do caldeirão
 		liquidodocaldeirão = ""
 		pronto_para_coleta = false
+		alterar_cor_liquido(cor_original) # Volta para a cor padrão
 		
-		# 3. POR ÚLTIMO, enviamos o sucesso com o nome guardado
 		return [true, nome_para_enviar]
 		
 	else:
 		print("Não pode coletar!")
-		return [false, ""] # Sempre bom manter o mesmo tamanho de array no retorno
+		return [false, ""]
