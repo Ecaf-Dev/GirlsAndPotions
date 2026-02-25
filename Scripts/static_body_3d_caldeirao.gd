@@ -469,4 +469,4 @@ func coletarliquido(nomedoobjetocarregado) -> Array:
 		
 	else:
 		print("Não pode coletar!")
-		return [false, ""]
+		return [false, "Frasco Vazio"]
