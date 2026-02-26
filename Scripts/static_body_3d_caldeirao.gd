@@ -23,6 +23,7 @@ var liquidodocaldeirão: String = ""
 var pronto_para_coleta: bool = false
 @export var icone_coleta : Sprite3D # Arraste um ícone de "mão" ou "seta" aqui
 
+@onready var particula_de_luz = $GPUParticles3D_Sucesso
 # Dicionário com todas as receitas possíveis, está obsoleto!
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
@@ -72,6 +73,7 @@ func cozinhar():
 				nome_da_receita_feita = dados["nome"]
 				liquidodocaldeirão = nome_da_receita_feita
 				pronto_para_coleta = true
+				alternar_estado_pronto()
 				break
 
 	# 3. Resultado
@@ -463,6 +465,7 @@ func coletarliquido(nomedoobjetocarregado) -> Array:
 		# 2. Resetamos o estado do caldeirão
 		liquidodocaldeirão = ""
 		pronto_para_coleta = false
+		alternar_estado_pronto()
 		alterar_cor_liquido(cor_original) # Volta para a cor padrão
 		
 		return [true, nome_para_enviar]
@@ -470,3 +473,10 @@ func coletarliquido(nomedoobjetocarregado) -> Array:
 	else:
 		print("Não pode coletar!")
 		return [false, "Frasco Vazio"]
+
+func alternar_estado_pronto():
+	if particula_de_luz != null:
+		if particula_de_luz.visible == true :
+			particula_de_luz.visible = false
+		else:
+			particula_de_luz.visible = true
