@@ -299,7 +299,6 @@ func cozinhando_pocao():
 
 		if receita_validada == true:
 			# 1. Disparar o Puff com a cor que já temos guardada
-			_disparar_puff_colorido(cor_da_pocao)
 			
 			# 2. Chamar a lógica de finalização
 			cozinhar() 
@@ -463,6 +462,9 @@ func alterar_cor_liquido(cor_especifica = null):
 func _somitemadicionado():
 	$"Soms/AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão".play()
 
+func _sompuff():
+	$Soms/AudioStreamPlayer3D_Puff.play()
+	
 func coletarliquido(nomedoobjetocarregado) -> Array:
 	if nomedoobjetocarregado == "Frasco Vazio" and pronto_para_coleta == true:
 		print("Coleta permitida!")
@@ -529,6 +531,7 @@ func _pegar_cor_do_holograma(holo: Node3D) -> Color:
 
 func _disparar_puff_colorido(cor: Color):
 	print("puff")
+	_sompuff()
 	if particulas_puff == null: return
 	
 	
