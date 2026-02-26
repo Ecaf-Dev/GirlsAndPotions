@@ -91,6 +91,44 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_m2pv8")
 size = Vector2(0.05, 0.05)
 
+[sub_resource type="Gradient" id="Gradient_fgsq8"]
+offsets = PackedFloat32Array(0, 0.34920636, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ugjhr"]
+gradient = SubResource("Gradient_fgsq8")
+
+[sub_resource type="Curve" id="Curve_3y48j"]
+_data = [Vector2(0.06521739, 0.033707857), 0.0, 0.0, 0, 0, Vector2(0.26086956, 1), 0.0, 0.0, 0, 0, Vector2(0.9782608, 0.033707857), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_m2pv8"]
+curve = SubResource("Curve_3y48j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7l2jo"]
+particle_flag_damping_as_friction = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 4.9999976
+radial_accel_max = 7.9999976
+damping_min = 1.0
+damping_max = 1.0
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_m2pv8")
+color_ramp = SubResource("GradientTexture1D_ugjhr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owdnq"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.39215687)
+billboard_mode = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_qs1cd"]
+material = SubResource("StandardMaterial3D_owdnq")
+
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
 collision_layer = 3
@@ -170,5 +208,15 @@ draw_pass_1 = SubResource("QuadMesh_7l2jo")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="GPUParticles3D_Sucesso" unique_id=1381126163]
 light_color = Color(1, 1, 0.70980394, 1)
+
+[node name="GPUParticles3D_Puff" type="GPUParticles3D" parent="." unique_id=28593857]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.8825055, 0)
+emitting = false
+amount = 20
+lifetime = 1.1300000000000001
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_7l2jo")
+draw_pass_1 = SubResource("SphereMesh_qs1cd")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

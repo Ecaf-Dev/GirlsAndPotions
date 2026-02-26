@@ -26,6 +26,9 @@ var pronto_para_coleta: bool = false
 @onready var particula_de_luz = $GPUParticles3D_Sucesso
 # Dicionário com todas as receitas possíveis, está obsoleto!
 
+@onready var particulas_puff = $GPUParticles3D_Puff
+var cor_da_pocao : Color = Color.WHITE
+
 
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
@@ -58,17 +61,14 @@ func cozinhar():
 		elastico()
 		return
 	
-	# 1. Pegamos a lista global
 	var todas_as_receitas = Receitas.receitas
 	var nome_da_receita_feita = ""
 	var sucesso = false
 
-	# 2. Comparamos os slots atuais com o dicionário global
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
 		var ingredientes_receita = [dados["item1"], dados["item2"]]
 		
-		# Comparação direta (ordem rígida conforme definido no Global)
 		if slots == ingredientes_receita:
 			if dados["pode_fabricar"]:
 				sucesso = true
@@ -78,18 +78,25 @@ func cozinhar():
 				alternar_estado_pronto()
 				break
 
-	# 3. Resultado
 	if sucesso:
 		print("RECEITA CRIADA VIA GLOBAL: ", nome_da_receita_feita)
-		#alterar_cor_liquido(Color(0.2, 1.0, 0.2)) # Ex: Brilha verde quando pronto # Cor padrão ou da poção
-		#_instanciarobjeto(nome_da_receita_feita)
+		# --- AQUI ESTÁ A CHAMADA DO PUFF ---
+		# 1. Primeiro, pegamos a cor atual do holograma (que já está azul ou vermelho)
+		if holograma_atual:
+			var cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
+			
+			# 2. Passamos essa cor para o nosso efeito de fumaça
+			_disparar_puff_colorido(cor_da_pocao)
+			
+			# 3. Aproveitamos para garantir que o líquido do caldeirão também use essa cor exata
+			alterar_cor_liquido(cor_da_pocao)
+		# ----------------------------------
+
 	else:
 		elastico()
 		print("ERRO! A mistura não consta no registro global ou não está liberada.")
 	
-	# Limpa os slots
 	slots.clear()
-	
 func _instanciarobjeto(nome_do_item):
 	elastico()
 	if cena_base_item == null: return
@@ -244,7 +251,8 @@ func _receita_compativel(itens: Array):
 			receita_validada = true
 			_mostrarHolograma(receita_encontrada["nome"])
 			if holograma_atual:
-				var cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
+				cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
+				
 				alterar_cor_liquido(cor_da_pocao)
 			return receita_encontrada
 		else:
@@ -290,8 +298,12 @@ func cozinhando_pocao():
 	#     holograma_atual = null
 
 		if receita_validada == true:
-			cozinhar() # Aqui dentro você já seta pronto_para_coleta = true
-		# --- NOVO: Mostrar ícone de coleta ---
+			# 1. Disparar o Puff com a cor que já temos guardada
+			_disparar_puff_colorido(cor_da_pocao)
+			
+			# 2. Chamar a lógica de finalização
+			cozinhar() 
+			
 			if icone_coleta:
 				icone_coleta.visible = true
 		
@@ -514,3 +526,27 @@ func _pegar_cor_do_holograma(holo: Node3D) -> Color:
 	return cor_original
 	print("⚠️ Não achei a Surface 2 nas malhas do holograma.")
 	return cor_original
+
+func _disparar_puff_colorido(cor: Color):
+	print("puff")
+	if particulas_puff == null: return
+	
+	
+	# 1. Pegamos o material das partículas para mudar a cor
+	var mat_processo = particulas_puff.process_material
+	if mat_processo is ParticleProcessMaterial:
+		# Criamos uma cópia única para não afetar outros caldeirões
+		particulas_puff.process_material = mat_processo.duplicate()
+		
+		# Ajustamos a cor base (Albedo) do material de processo
+		particulas_puff.process_material.color = cor
+
+	# 2. Reiniciamos e emitimos as partículas (Efeito One Shot)
+	particulas_puff.restart() # Garante que comece do zero
+	particulas_puff.emitting = true
+	
+	# 3. Som opcional do "Puff"
+	# if $Soms/Som_Puff: $Soms/Som_Puff.play()
+
+# --- INTEGRAÇÃO NA SUA FUNÇÃO EXISTENTE ---
+# Procure a função onde a poção fica pronta (cozinhando_pocao ou cozinhar)
