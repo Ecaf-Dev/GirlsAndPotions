@@ -26,6 +26,8 @@ var pronto_para_coleta: bool = false
 @onready var particula_de_luz = $GPUParticles3D_Sucesso
 # Dicionário com todas as receitas possíveis, está obsoleto!
 
+
+
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
@@ -79,7 +81,7 @@ func cozinhar():
 	# 3. Resultado
 	if sucesso:
 		print("RECEITA CRIADA VIA GLOBAL: ", nome_da_receita_feita)
-		alterar_cor_liquido(Color(0.2, 1.0, 0.2)) # Ex: Brilha verde quando pronto # Cor padrão ou da poção
+		#alterar_cor_liquido(Color(0.2, 1.0, 0.2)) # Ex: Brilha verde quando pronto # Cor padrão ou da poção
 		#_instanciarobjeto(nome_da_receita_feita)
 	else:
 		elastico()
@@ -241,6 +243,9 @@ func _receita_compativel(itens: Array):
 			tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
 			receita_validada = true
 			_mostrarHolograma(receita_encontrada["nome"])
+			if holograma_atual:
+				var cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
+				alterar_cor_liquido(cor_da_pocao)
 			return receita_encontrada
 		else:
 			print("BLOQUEADO: Ordem correta para ", receita_encontrada["nome"], ", mas fabricação não permitida!")
@@ -480,3 +485,32 @@ func alternar_estado_pronto():
 			particula_de_luz.visible = false
 		else:
 			particula_de_luz.visible = true
+
+func _pegar_cor_do_holograma(holo: Node3D) -> Color:
+	# 1. Espera a montagem completa dos nós
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	if not is_instance_valid(holo): return cor_original
+
+	# 2. Busca recursiva (true) por QUALQUER nó que se chame "Pocao"
+	# Usamos find_child porque ele varre todos os níveis abaixo do holograma
+	var alvo = holo.find_child("Pocao", true, false)
+	
+	print("Alvo 'Pocao' encontrado: ", alvo)
+
+	if alvo and (alvo is MeshInstance3D or alvo is GeometryInstance3D):
+		# 3. Verificamos se ele tem a Surface 2 (o seu 3º albedo)
+		# No Godot: 0 = vidro, 1 = detalhe, 2 = LÍQUIDO
+		var mat = alvo.get_active_material(2)
+		
+		if mat is StandardMaterial3D:
+			print("🎯 SUCESSO! Cor extraída do albedo 2 do nó Pocao: ", mat.albedo_color)
+			return mat.albedo_color
+		else:
+			print("⚠️ O nó 'Pocao' foi achado, mas o material não é StandardMaterial3D.")
+	
+	print("❌ Falha: Não encontrei o nó 'Pocao' com as surfaces necessárias.")
+	return cor_original
+	print("⚠️ Não achei a Surface 2 nas malhas do holograma.")
+	return cor_original
