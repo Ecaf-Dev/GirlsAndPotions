@@ -269,48 +269,37 @@ func _receita_compativel(itens: Array):
 		return null
 		
 func cozinhando_pocao():
-	
-	
-	
-	if cozinhando == false:
-		
-		print("--- INICIANDO PREPARO ---")
-		cozinhando = true
-		for segundo in range(tempo_da_receita + 1): # +1 para chegar no 100%
-			# Calcula a porcentagem atual (ex: 0.5 para metade do tempo)
-			var progresso = float(segundo) / float(tempo_da_receita)
-			
-			# Atualiza a barra visual
-			_gerenciar_barra_visual(progresso)
-			
-			print("Preparando... ", int(progresso * 100), "%")
-			
-			if segundo < tempo_da_receita:
-				await get_tree().create_timer(1.0).timeout
-		
-		# Finalização
-		print("--- PREPARO FINALIZADO! ---")
-		_gerenciar_barra_visual(0) 
+	if cozinhando: return 
 
-	# COMENTE OU REMOVA ESTA PARTE ABAIXO:
-	# if holograma_atual != null:
-	#     holograma_atual.queue_free()
-	#     holograma_atual = null
+	# --- VERIFICAÇÃO DE SEGURANÇA ANTES DE COMEÇAR ---
+	if slots.is_empty() or receita_validada == false:
+		tempo_da_receita = 1 # Força 1 segundo se não for uma receita válida
+	# ------------------------------------------------
 
-		if receita_validada == true:
-			# 1. Disparar o Puff com a cor que já temos guardada
-			
-			# 2. Chamar a lógica de finalização
-			cozinhar() 
-			
-			if icone_coleta:
-				icone_coleta.visible = true
+	print("--- INICIANDO PREPARO --- Tempo:", tempo_da_receita)
+	cozinhando = true
+	
+	# Agora o range vai usar o valor atualizado (1 para erro, ou X para sucesso)
+	for segundo in range(tempo_da_receita + 1):
+		var progresso = float(segundo) / float(tempo_da_receita)
+		_gerenciar_barra_visual(progresso)
 		
-		slots.clear()
-		cozinhando = false
+		if segundo < tempo_da_receita:
+			await get_tree().create_timer(1.0).timeout
+	
+	_gerenciar_barra_visual(0) 
+
+	# Decisão baseada na validação
+	if receita_validada == true and not slots.is_empty():
+		_disparar_puff_colorido(cor_da_pocao)
+		cozinhar()
+		if icone_coleta:
+			icone_coleta.visible = true
 	else:
-		return
-
+		_falha_na_cozinha()
+	
+	cozinhando = false
+	
 func _mostrarHolograma(nome_do_item):
 	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
 	if holograma_atual != null:
@@ -550,6 +539,26 @@ func _disparar_puff_colorido(cor: Color):
 	
 	# 3. Som opcional do "Puff"
 	# if $Soms/Som_Puff: $Soms/Som_Puff.play()
+func _falha_na_cozinha():
+	print("🔥 FALHA: A mistura explodiu!")
+	
+	# 1. Puff Cinza (Forçado)
+	var cor_fuligem = Color(0.2, 0.2, 0.2) 
+	_disparar_puff_colorido(cor_fuligem)
+	
+	# 2. RESET TOTAL DE VARIÁVEIS
+	tempo_da_receita = 1     # Reseta o tempo para o padrão de erro
+	cor_da_pocao = Color.WHITE # Limpa a cor antiga
+	receita_validada = false
+	
+	# 3. Restante do reset visual
+	alterar_cor_liquido(cor_original)
+	elastico()
+	slots.clear()
+	
+	if holograma_atual:
+		holograma_atual.queue_free()
+		holograma_atual = null
 
 # --- INTEGRAÇÃO NA SUA FUNÇÃO EXISTENTE ---
 # Procure a função onde a poção fica pronta (cozinhando_pocao ou cozinhar)
