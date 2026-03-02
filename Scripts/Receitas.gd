@@ -11,6 +11,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"Poção De Cura": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
+		"Sequencia": ["Cima", "Esquerda", "Baixo", "Direita"]
 	},
 	"Poção De Mana" : {
 		"prestigio_minimo" : 0,
@@ -20,6 +21,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"Poção De Mana": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
+		"Sequencia": ["Cima", "Direita", "Baixo", "Esquerda"]
 	},
 	"Poção Da Determinação" : {
 		"prestigio_minimo" : 5,
@@ -29,6 +31,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 8,
 		"Poção Da Determinação": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
+		"Sequencia": ["Cima", "Baixo", "Esquerda", "Direita", "Cima"]
 	},
 	"Poção De Cura Maior" : {
 		"prestigio_minimo" : 15,
@@ -38,6 +41,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 10,
 		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
+		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"]
 	},
 	
 }
