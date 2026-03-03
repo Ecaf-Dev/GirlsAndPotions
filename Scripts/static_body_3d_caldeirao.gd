@@ -32,6 +32,21 @@ var cor_da_pocao : Color = Color.WHITE
 var meu_tipo_de_mobilia : String = ""
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
+
+var mexendo_liquido : bool = false
+var indice_da_sequencia : int = 0
+var sequencia_alvo : Array = []
+var nome_receita_atual : String = ""
+var esperando_jogador: bool = false
+# Tradutor para o Godot entender suas palavras do Receitas.gd
+var tradutor_setas = {
+	"Cima": "ui_up",
+	"Baixo": "ui_down",
+	"Esquerda": "ui_left",
+	"Direita": "ui_right"
+}
+
+
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
 	if pronto_para_coleta:
@@ -272,37 +287,40 @@ func _receita_compativel(itens: Array):
 		return null
 				
 func cozinhando_pocao():
-	if cozinhando: return 
+	if cozinhando or mexendo_liquido: return 
 
-	# --- VERIFICAÇÃO DE SEGURANÇA ANTES DE COMEÇAR ---
 	if slots.is_empty() or receita_validada == false:
-		tempo_da_receita = 1 # Força 1 segundo se não for uma receita válida
-	# ------------------------------------------------
+		tempo_da_receita = 1
+	else:
+		# Busca a receita certa para pegar a sequência dela
+		var todas_as_receitas = Receitas.receitas
+		for nome_id in todas_as_receitas:
+			if slots == [todas_as_receitas[nome_id]["item1"], todas_as_receitas[nome_id]["item2"]]:
+				sequencia_alvo = todas_as_receitas[nome_id]["Sequencia"]
+				nome_receita_atual = nome_id
+				break
 
-	print("--- INICIANDO PREPARO --- Tempo:", tempo_da_receita)
+	print("--- INICIANDO PREPARO ---")
 	cozinhando = true
 	
-	# Agora o range vai usar o valor atualizado (1 para erro, ou X para sucesso)
 	for segundo in range(tempo_da_receita + 1):
 		var progresso = float(segundo) / float(tempo_da_receita)
 		_gerenciar_barra_visual(progresso)
-		
 		if segundo < tempo_da_receita:
 			await get_tree().create_timer(1.0).timeout
 	
 	_gerenciar_barra_visual(0) 
+	cozinhando = false
 
-	# Decisão baseada na validação
-	if receita_validada == true and not slots.is_empty():
-		_disparar_puff_colorido(cor_da_pocao)
-		cozinhar()
+	# EM VEZ DE COZINHAR DIRETO, ENTRA NO MINIGAME
+	if receita_validada and not slots.is_empty():
+		print("♨️ Cozimento concluído! Aguardando jogador interagir para começar a mexer...")
+		esperando_jogador = true
 		if icone_coleta:
-			icone_coleta.visible = true
+			icone_coleta.visible = true # Mostra o ícone para o jogador saber que deve interagir
 	else:
 		_falha_na_cozinha()
-	
-	cozinhando = false
-	
+		
 func _mostrarHolograma(nome_do_item):
 	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
 	if holograma_atual != null:
@@ -545,6 +563,10 @@ func _disparar_puff_colorido(cor: Color):
 func _falha_na_cozinha():
 	print("🔥 FALHA: A mistura explodiu!")
 	
+	var player = get_tree().get_first_node_in_group("player") # Certifique-se que o Player está no grupo "player"
+	if player and player.has_method("liberar_movimento"):
+		player.liberar_movimento()
+	
 	# 1. Puff Cinza (Forçado)
 	var cor_fuligem = Color(0.2, 0.2, 0.2) 
 	_disparar_puff_colorido(cor_fuligem)
@@ -563,5 +585,57 @@ func _falha_na_cozinha():
 		holograma_atual.queue_free()
 		holograma_atual = null
 
+func iniciar_minigame_mistura():
+	print("🌀 MISTURE AGORA! Sequência necessária: ", sequencia_alvo)
+	mexendo_liquido = true
+	indice_da_sequencia = 0
+	# Aqui você pode tocar um som de "aviso" ou mostrar uma UI
+func _unhandled_input(event):
+	if not mexendo_liquido: return
+	
+	for direcao in tradutor_setas.keys():
+		if event.is_action_pressed(tradutor_setas[direcao]):
+			_checar_passo_minigame(direcao)
+
+func _checar_passo_minigame(direcao_apertada):
+	var direcao_correta = sequencia_alvo[indice_da_sequencia]
+	
+	if direcao_apertada == direcao_correta:
+		indice_da_sequencia += 1
+		print("✅ Movimento correto: ", direcao_apertada, " (", indice_da_sequencia, "/", sequencia_alvo.size(), ")")
+		elastico() # Feedback visual de que o caldeirão sentiu o movimento
+		
+		if indice_da_sequencia >= sequencia_alvo.size():
+			print("✨ Mistura concluída com sucesso!")
+			mexendo_liquido = false
+			_finalizar_preparo_com_sucesso()
+	else:
+		print("❌ MOVIMENTO ERRADO! Era: ", direcao_correta, " mas você apertou: ", direcao_apertada)
+		mexendo_liquido = false
+		_falha_na_cozinha()
+
+func _finalizar_preparo_com_sucesso():
+	_disparar_puff_colorido(cor_da_pocao)
+	cozinhar() # Aqui ele chama a sua função original que spawna a poção
+	
+	var player = get_tree().get_first_node_in_group("player") # Certifique-se que o Player está no grupo "player"
+	if player and player.has_method("liberar_movimento"):
+		player.liberar_movimento()
+	
+	if icone_coleta:
+		icone_coleta.visible = true
 # --- INTEGRAÇÃO NA SUA FUNÇÃO EXISTENTE ---
-# Procure a função onde a poção fica pronta (cozinhando_pocao ou cozinhar)
+func interagindo_com_mobilia():
+	# Caso 1: O cozimento terminou e está esperando o jogador mexer
+	if esperando_jogador:
+		print("🌀 Jogador começou a mexer!")
+		esperando_jogador = false
+		if icone_coleta:
+			icone_coleta.visible = false # Esconde o ícone enquanto mexe
+		iniciar_minigame_mistura()
+		return
+	
+	# Caso 2: A poção já está pronta e o jogador quer coletar no frasco
+	if pronto_para_coleta:
+		# Aqui você chama sua lógica de coletar que já existe (coletarliquido)
+		print("Tentando coletar poção pronta...")

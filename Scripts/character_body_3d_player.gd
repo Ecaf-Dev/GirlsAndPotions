@@ -17,6 +17,7 @@ var caldeirao = null
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var pode_falar = true
+var pode_andar = true
 
 @onready var anim_player = $Heroina/AnimationPlayer
 
@@ -40,7 +41,7 @@ func _physics_process(delta):
 	# 2. Criamos a direção baseada no ESPAÇO GLOBAL (não usamos transform.basis)
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
 
-	if direction:
+	if direction && pode_andar == true:
 		# Aplicamos a velocidade nos eixos globais
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -52,7 +53,7 @@ func _physics_process(delta):
 		rotation.y = lerp_angle(rotation.y, target_angle, 0.15)
 		_somcaminha(delta, direction.length() > 0)
 		
-	else:
+	elif pode_andar == true:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
@@ -62,9 +63,12 @@ func _physics_process(delta):
 		
 		
 		#preicos repensar esta logica aqui, pois to com problemas em  filtrar qual ação realizar
-		if(podeCozinhar == true && caldeirao != null && objeto_levantado == null && caldeirao.pronto_para_coleta == false):
+		if(podeCozinhar == true && caldeirao != null && objeto_levantado == null && caldeirao.pronto_para_coleta == false && caldeirao.esperando_jogador != true):
 			if caldeirao.has_method("cozinhando_pocao"):
 				caldeirao.cozinhando_pocao()
+		elif(caldeirao != null && caldeirao.esperando_jogador == true && objeto_levantado == null):
+			caldeirao.interagindo_com_mobilia()
+			pode_andar = false
 		elif(objeto_levantado == null):
 			_interagir_com_item()
 		elif(objeto_levantado != null):
@@ -315,3 +319,7 @@ func _saberoquelevo() -> bool:
 			return false
 	else:
 		return false
+
+func liberar_movimento():
+	pode_andar = true
+	print("💃 Movimento da heroína liberado!")
