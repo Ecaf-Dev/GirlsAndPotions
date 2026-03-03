@@ -29,7 +29,7 @@ var pronto_para_coleta: bool = false
 @onready var particulas_puff = $GPUParticles3D_Puff
 var cor_da_pocao : Color = Color.WHITE
 
-
+var meu_tipo_de_mobilia : String = ""
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
 func _on_area_3d_monitor_body_entered(body):
@@ -203,8 +203,10 @@ func _conectar_as_receitas():
 	print("--- FIM DA LEITURA ---")
 
 func _ready():
+	
+	meu_tipo_de_mobilia = name.replace("StaticBody3D_", "")
+	print("Eu sou uma mobília do tipo: ", meu_tipo_de_mobilia)
 	_conectar_as_receitas()
-
 func _receita_compativel(itens: Array):
 	print("--- Caldeirão está analisando os itens atuais ---")
 	alterar_cor_liquido()
