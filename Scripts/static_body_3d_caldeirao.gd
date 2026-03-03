@@ -208,13 +208,13 @@ func _ready():
 	print("Eu sou uma mobília do tipo: ", meu_tipo_de_mobilia)
 	_conectar_as_receitas()
 func _receita_compativel(itens: Array):
-	print("--- Caldeirão está analisando os itens atuais ---")
+	print("--- ", meu_tipo_de_mobilia, " está analisando os itens atuais ---")
 	alterar_cor_liquido()
 	if itens.is_empty():
 		print("Estado: Vazio")
 		return null
 
-	# 1. Monitoramento dos Slots (Mantido)
+	# 1. Monitoramento dos Slots
 	for i in range(itens.size()):
 		if i < MAX_SLOTS:
 			print("Slot ", i, ": ", itens[i])
@@ -223,24 +223,26 @@ func _receita_compativel(itens: Array):
 	
 	print("Total de itens: ", itens.size(), "/", MAX_SLOTS)
 	
-	# 2. Checagem de Transbordamento (Mantido)
+	# 2. Checagem de Transbordamento
 	if itens.size() > MAX_SLOTS:
-		print("AVISO: Caldeirão transbordando!")
+		print("AVISO: ", meu_tipo_de_mobilia, " transbordando!")
 		return null 
 
-	# 3. COMPARATIVO COM O GLOBAL (Ajustado para ORDEM RÍGIDA)
-	# Não usamos mais o .sort(), pois a ordem importa!
+	# 3. COMPARATIVO COM O GLOBAL (Com Filtro de Mobília)
 	var itens_atuais = itens.duplicate() 
-	
 	var todas_as_receitas = Receitas.receitas
 	var receita_encontrada = null
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
-		# Criamos a lista da receita na ordem exata definida no Global
+		
+		# --- NOVO FILTRO DE MOBÍLIA ---
+		if dados.get("Mobilia", "") != meu_tipo_de_mobilia:
+			continue # Pula para a próxima receita se não for desta mobília
+		# ------------------------------
+
 		var ingredientes_receita = [dados["item1"], dados["item2"]]
 		
-		# A comparação agora só é verdadeira se os itens entrarem na mesma sequência
 		if itens_atuais == ingredientes_receita:
 			receita_encontrada = dados
 			break
@@ -254,7 +256,6 @@ func _receita_compativel(itens: Array):
 			_mostrarHolograma(receita_encontrada["nome"])
 			if holograma_atual:
 				cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
-				
 				alterar_cor_liquido(cor_da_pocao)
 			return receita_encontrada
 		else:
@@ -264,12 +265,12 @@ func _receita_compativel(itens: Array):
 			
 	else:
 		if itens.size() == MAX_SLOTS:
-			print("ERRO: Ingredientes na ordem errada ou receita inexistente.")
+			print("ERRO: Ingredientes errados, ordem errada ou receita de outra mobília.")
 			receita_validada = false
 		else:
 			print("AGUARDANDO: Continue a sequência de ingredientes...")
 		return null
-		
+				
 func cozinhando_pocao():
 	if cozinhando: return 
 
