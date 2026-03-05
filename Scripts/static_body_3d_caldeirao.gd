@@ -53,6 +53,10 @@ var tradutor_setas = {
 @onready var marker_setas = $Marker3D_Setas # Certifique-se que o nome no nó é exatamente este
 var setas_visuais : Array = [] # Guardará as instâncias para podermos trocar a cor ou deletar
 
+@export_group("Configurações de Feedback")
+@export var usar_puff_fumaça : bool = true
+@export var usar_holograma : bool = true
+@export var usar_barra_progresso : bool = true
 
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
@@ -108,7 +112,6 @@ func cozinhar():
 			var cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
 			
 			# 2. Passamos essa cor para o nosso efeito de fumaça
-			_disparar_puff_colorido(cor_da_pocao)
 			
 			# 3. Aproveitamos para garantir que o líquido do caldeirão também use essa cor exata
 			alterar_cor_liquido(cor_da_pocao)
@@ -329,6 +332,8 @@ func cozinhando_pocao():
 		
 func _mostrarHolograma(nome_do_item):
 	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
+	if not usar_holograma: return
+	
 	if holograma_atual != null:
 		holograma_atual.queue_free()
 
@@ -634,7 +639,8 @@ func _limpar_setas():
 	setas_visuais.clear()
 	
 func _finalizar_preparo_com_sucesso():
-	_disparar_puff_colorido(cor_da_pocao)
+	if usar_puff_fumaça:
+		_disparar_puff_colorido(cor_da_pocao)
 	cozinhar() # Aqui ele chama a sua função original que spawna a poção
 	
 	

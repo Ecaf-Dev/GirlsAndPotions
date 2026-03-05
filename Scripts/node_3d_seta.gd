@@ -14,7 +14,7 @@ func _ready():
 	ajustarmeutamanho()
 	ajustarminharotacao()
 	
-	sprite.modulate = Color(0.352, 0.352, 0.352, 1.0)
+	sprite.modulate = Color(0.4, 0.4, 0.4, 1.0)
 	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 func marcar_como_acerto():
 	# Feedback visual de sucesso
