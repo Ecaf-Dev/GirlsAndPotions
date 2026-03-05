@@ -296,36 +296,34 @@ func _receita_compativel(itens: Array):
 func cozinhando_pocao():
 	if cozinhando or mexendo_liquido: return 
 
-	if slots.is_empty() or receita_validada == false:
-		tempo_da_receita = 1
-	else:
-		# Busca a receita certa para pegar a sequência dela
+	if not slots.is_empty() and receita_validada:
 		var todas_as_receitas = Receitas.receitas
 		for nome_id in todas_as_receitas:
 			if slots == [todas_as_receitas[nome_id]["item1"], todas_as_receitas[nome_id]["item2"]]:
-				sequencia_alvo = todas_as_receitas[nome_id]["Sequencia"]
+				# Pegamos a sequência, mas se ela não existir no dicionário, vira um Array vazio []
+				sequencia_alvo = todas_as_receitas[nome_id].get("Sequencia", [])
 				nome_receita_atual = nome_id
 				break
 
-	print("--- INICIANDO PREPARO ---")
 	cozinhando = true
-	
 	for segundo in range(tempo_da_receita + 1):
-		var progresso = float(segundo) / float(tempo_da_receita)
-		_gerenciar_barra_visual(progresso)
-		if segundo < tempo_da_receita:
-			await get_tree().create_timer(1.0).timeout
+		_gerenciar_barra_visual(float(segundo) / float(tempo_da_receita))
+		if segundo < tempo_da_receita: await get_tree().create_timer(1.0).timeout
 	
-	_gerenciar_barra_visual(0) 
+	_gerenciar_barra_visual(0)
 	cozinhando = false
 
-	# EM VEZ DE COZINHAR DIRETO, ENTRA NO MINIGAME
 	if receita_validada and not slots.is_empty():
-		print("♨️ Cozimento concluído! Aguardando jogador interagir para começar a mexer...")
-		esperando_jogador = true
-		if icone_coleta:
-			icone_coleta.visible = true # Começa invisível
-			_animar_icone_pulsante()
+		# --- CHECAGEM DE BUG: RECEITA SEM SEQUÊNCIA ---
+		if sequencia_alvo.is_empty():
+			print("ℹ️ Receita sem sequência detectada. Pulando minigame...")
+			_finalizar_preparo_com_sucesso()
+		else:
+			print("♨️ Aguardando interação para iniciar minigame...")
+			esperando_jogador = true
+			if icone_coleta:
+				icone_coleta.visible = true
+				_animar_icone_pulsante()
 	else:
 		_falha_na_cozinha()
 		
@@ -442,6 +440,7 @@ func _gerenciar_barra_visual(porcentagem: float):
 	var oscilacao = (sin(tempo * 5.0) * 0.1) + 1.0
 	barra_progresso.scale.x = oscilacao
 	barra_progresso.scale.z = oscilacao	
+	
 func alterar_cor_liquido(cor_especifica = null):
 	if malha_caldeirao == null: return
 
