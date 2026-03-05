@@ -48,6 +48,11 @@ var tradutor_setas = {
 
 @export var sprite_z : Sprite3D
 
+@export_group("Minigame de Mistura")
+@export var cena_seta : PackedScene # Arraste aqui o Node3D_Seta.tscn
+@onready var marker_setas = $Marker3D_Setas # Certifique-se que o nome no nó é exatamente este
+var setas_visuais : Array = [] # Guardará as instâncias para podermos trocar a cor ou deletar
+
 
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
@@ -587,10 +592,11 @@ func _falha_na_cozinha():
 		holograma_atual = null
 
 func iniciar_minigame_mistura():
-	print("🌀 MISTURE AGORA! Sequência necessária: ", sequencia_alvo)
+	print("🌀 MISTURE AGORA!")
 	mexendo_liquido = true
 	indice_da_sequencia = 0
-	# Aqui você pode tocar um som de "aviso" ou mostrar uma UI
+	_renderizar_setas_visuais() # Chama a sua nova lógica de rotação
+	
 func _unhandled_input(event):
 	if not mexendo_liquido: return
 	icone_coleta.visible = false
@@ -603,19 +609,31 @@ func _checar_passo_minigame(direcao_apertada):
 	var direcao_correta = sequencia_alvo[indice_da_sequencia]
 	
 	if direcao_apertada == direcao_correta:
+		# Feedback na seta visual específica
+		if indice_da_sequencia < setas_visuais.size():
+			setas_visuais[indice_da_sequencia].marcar_como_acerto()
+		
 		indice_da_sequencia += 1
-		print("✅ Movimento correto: ", direcao_apertada, " (", indice_da_sequencia, "/", sequencia_alvo.size(), ")")
-		elastico() # Feedback visual de que o caldeirão sentiu o movimento
+		print("✅ Movimento correto!")
+		elastico()
 		
 		if indice_da_sequencia >= sequencia_alvo.size():
-			print("✨ Mistura concluída com sucesso!")
+			print("✨ Sucesso total!")
 			mexendo_liquido = false
+			_limpar_setas() # Função de limpeza
 			_finalizar_preparo_com_sucesso()
 	else:
-		print("❌ MOVIMENTO ERRADO! Era: ", direcao_correta, " mas você apertou: ", direcao_apertada)
+		print("❌ Errou a sequência!")
 		mexendo_liquido = false
+		_limpar_setas() # Limpa mesmo no erro
 		_falha_na_cozinha()
 
+func _limpar_setas():
+	for s in setas_visuais:
+		if is_instance_valid(s):
+			s.queue_free()
+	setas_visuais.clear()
+	
 func _finalizar_preparo_com_sucesso():
 	_disparar_puff_colorido(cor_da_pocao)
 	cozinhar() # Aqui ele chama a sua função original que spawna a poção
@@ -659,3 +677,29 @@ func _animar_icone_pulsante():
 	# --- FASE 2: DESCER E VOLTAR AO NORMAL ---
 	tween.tween_property(icone_coleta, "position:y", pos_original_y, 0.8).set_trans(Tween.TRANS_SINE)
 	tween.parallel().tween_property(icone_coleta, "scale", escala_original, 0.8).set_trans(Tween.TRANS_SINE)
+
+func _renderizar_setas_visuais():
+	# 1. Limpa setas antigas
+	_limpar_setas()
+
+	# 2. Configurações de exibição
+	var espacamento = 0.45
+	var total = sequencia_alvo.size()
+	var offset_inicial = -((total - 1) * espacamento) / 2.0
+
+	for i in range(total):
+		var nova_seta = cena_seta.instantiate()
+		
+		# PASSO CRUCIAL: Passar a direção ANTES do add_child
+		nova_seta.direcao_da_seta = sequencia_alvo[i]
+		
+		# Adiciona ao marcador
+		marker_setas.add_child(nova_seta)
+		
+		# Posiciona apenas no eixo X para criar a fila
+		nova_seta.position.x = offset_inicial + (i * espacamento)
+		
+		# Garante que as setas fiquem um pouco à frente do caldeirão
+		nova_seta.position.z = 0.2 
+		
+		setas_visuais.append(nova_seta)

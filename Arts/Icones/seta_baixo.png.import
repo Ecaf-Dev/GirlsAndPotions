@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dppty344bk05n"
-path="res://.godot/imported/Sequencia de setas.png-708394b7383061f48459ac13296c457a.ctex"
+uid="uid://ck202hjcekfo0"
+path="res://.godot/imported/seta_baixo.png-ac0743aa2056567fb6044b44b971736f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://GirlsAndPotions/Arts/Icones/Sequencia de setas.png"
-dest_files=["res://.godot/imported/Sequencia de setas.png-708394b7383061f48459ac13296c457a.ctex"]
+source_file="res://GirlsAndPotions/Arts/Icones/seta_baixo.png"
+dest_files=["res://.godot/imported/seta_baixo.png-ac0743aa2056567fb6044b44b971736f.ctex"]
 
 [params]
 

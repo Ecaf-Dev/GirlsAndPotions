@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dqubtcobqq6px" path="res://GirlsAndPotions/Scripts/static_body_3d_caldeirao.gd" id="1_jbh2c"]
 [ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_2gnie"]
+[ext_resource type="PackedScene" uid="uid://c5nlqc8kmte4k" path="res://GirlsAndPotions/Cenas/node_3d_seta.tscn" id="3_m2pv8"]
 [ext_resource type="ArrayMesh" uid="uid://mt6ylx6fmrr7" path="res://GirlsAndPotions/Modelos/Objetos/Caldeirão.obj" id="3_nr5xr"]
 [ext_resource type="AudioStream" uid="uid://uiv1o26h6x1x" path="res://GirlsAndPotions/Arts/Novos Sons/Caldeirão borbulhando.wav" id="4_42tg7"]
 [ext_resource type="AudioStream" uid="uid://bdjh3bx307euc" path="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav" id="5_fgsq8"]
@@ -142,6 +143,7 @@ marker_barra = NodePath("Marker3D_BarraDeProgresso")
 icone_coleta = NodePath("Sprite3D_Z")
 cena_base_item = ExtResource("2_2gnie")
 sprite_z = NodePath("Sprite3D_Z")
+cena_seta = ExtResource("3_m2pv8")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=158951603]
 shape = SubResource("CylinderShape3D_ilf4k")
@@ -231,5 +233,8 @@ transform = Transform3D(0.1, 0, 0, 0, 0.3, 0, 0, 0, 0.4999999, 0, 3.2411308, 0)
 visible = false
 billboard = 1
 texture = ExtResource("7_3y48j")
+
+[node name="Marker3D_Setas" type="Marker3D" parent="." unique_id=1660015833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.24, 0)
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
