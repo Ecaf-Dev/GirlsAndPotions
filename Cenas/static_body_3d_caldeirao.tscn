@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://uiv1o26h6x1x" path="res://GirlsAndPotions/Arts/Novos Sons/Caldeirão borbulhando.wav" id="4_42tg7"]
 [ext_resource type="AudioStream" uid="uid://bdjh3bx307euc" path="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav" id="5_fgsq8"]
 [ext_resource type="AudioStream" uid="uid://cqbbt6njhste" path="res://GirlsAndPotions/Arts/Novos Sons/Puff.wav" id="6_ugjhr"]
+[ext_resource type="Texture2D" uid="uid://duew6g3gag4qj" path="res://GirlsAndPotions/Arts/Icones/Tecla_Z.png" id="7_3y48j"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ilf4k"]
 
@@ -130,7 +131,7 @@ billboard_mode = 1
 [sub_resource type="SphereMesh" id="SphereMesh_qs1cd"]
 material = SubResource("StandardMaterial3D_owdnq")
 
-[node name="StaticBody3D_Caldeirao" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
+[node name="StaticBody3D_Caldeirao" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra", "icone_coleta", "sprite_z")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
@@ -138,7 +139,9 @@ script = ExtResource("1_jbh2c")
 objeto_visual = NodePath("Caldeirão")
 marker_holograma = NodePath("Marker3D_Holograma")
 marker_barra = NodePath("Marker3D_BarraDeProgresso")
+icone_coleta = NodePath("Sprite3D_Z")
 cena_base_item = ExtResource("2_2gnie")
+sprite_z = NodePath("Sprite3D_Z")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=158951603]
 shape = SubResource("CylinderShape3D_ilf4k")
@@ -222,5 +225,11 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_7l2jo")
 draw_pass_1 = SubResource("SphereMesh_qs1cd")
+
+[node name="Sprite3D_Z" type="Sprite3D" parent="." unique_id=581171997]
+transform = Transform3D(0.1, 0, 0, 0, 0.3, 0, 0, 0, 0.4999999, 0, 3.2411308, 0)
+visible = false
+billboard = 1
+texture = ExtResource("7_3y48j")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

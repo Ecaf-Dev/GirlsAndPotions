@@ -46,6 +46,8 @@ var tradutor_setas = {
 	"Direita": "ui_right"
 }
 
+@export var sprite_z : Sprite3D
+
 
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
@@ -317,7 +319,8 @@ func cozinhando_pocao():
 		print("♨️ Cozimento concluído! Aguardando jogador interagir para começar a mexer...")
 		esperando_jogador = true
 		if icone_coleta:
-			icone_coleta.visible = true # Mostra o ícone para o jogador saber que deve interagir
+			icone_coleta.visible = true # Começa invisível
+			_animar_icone_pulsante()
 	else:
 		_falha_na_cozinha()
 		
@@ -486,9 +489,7 @@ func coletarliquido(nomedoobjetocarregado) -> Array:
 		if holograma_atual != null:
 			holograma_atual.queue_free()
 			holograma_atual = null # Importante para não dar erro de instância inválida depois
-		
-		if icone_coleta != null:
-			icone_coleta.visible = false
+
 		# ---------------------------------------------------------
 		
 		# 2. Resetamos o estado do caldeirão
@@ -592,6 +593,7 @@ func iniciar_minigame_mistura():
 	# Aqui você pode tocar um som de "aviso" ou mostrar uma UI
 func _unhandled_input(event):
 	if not mexendo_liquido: return
+	icone_coleta.visible = false
 	
 	for direcao in tradutor_setas.keys():
 		if event.is_action_pressed(tradutor_setas[direcao]):
@@ -618,20 +620,17 @@ func _finalizar_preparo_com_sucesso():
 	_disparar_puff_colorido(cor_da_pocao)
 	cozinhar() # Aqui ele chama a sua função original que spawna a poção
 	
+	
 	var player = get_tree().get_first_node_in_group("player") # Certifique-se que o Player está no grupo "player"
 	if player and player.has_method("liberar_movimento"):
 		player.liberar_movimento()
 	
-	if icone_coleta:
-		icone_coleta.visible = true
 # --- INTEGRAÇÃO NA SUA FUNÇÃO EXISTENTE ---
 func interagindo_com_mobilia():
 	# Caso 1: O cozimento terminou e está esperando o jogador mexer
 	if esperando_jogador:
 		print("🌀 Jogador começou a mexer!")
 		esperando_jogador = false
-		if icone_coleta:
-			icone_coleta.visible = false # Esconde o ícone enquanto mexe
 		iniciar_minigame_mistura()
 		return
 	
@@ -639,3 +638,24 @@ func interagindo_com_mobilia():
 	if pronto_para_coleta:
 		# Aqui você chama sua lógica de coletar que já existe (coletarliquido)
 		print("Tentando coletar poção pronta...")
+
+func _animar_icone_pulsante():
+	if icone_coleta == null: return
+	
+	# 1. Capturamos a escala que você definiu no Inspector
+	var escala_original = icone_coleta.scale
+	var escala_pulo = escala_original + Vector3(0.08, 0.08, 0.08)
+	
+	# 2. Capturamos a posição Y original
+	var pos_original_y = icone_coleta.position.y
+	
+	var tween = create_tween().set_loops()
+	
+	# --- FASE 1: SUBIR E AUMENTAR ---
+	# Usamos parallel() para as duas coisas acontecerem ao mesmo tempo
+	tween.tween_property(icone_coleta, "position:y", pos_original_y + 0.15, 0.8).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(icone_coleta, "scale", escala_pulo, 0.8).set_trans(Tween.TRANS_SINE)
+	
+	# --- FASE 2: DESCER E VOLTAR AO NORMAL ---
+	tween.tween_property(icone_coleta, "position:y", pos_original_y, 0.8).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(icone_coleta, "scale", escala_original, 0.8).set_trans(Tween.TRANS_SINE)
