@@ -58,6 +58,8 @@ var setas_visuais : Array = [] # Guardará as instâncias para podermos trocar a
 @export var usar_holograma : bool = true
 @export var usar_barra_progresso : bool = true
 
+@export var requisito_de_coleta : String = "Flor Da Vida"
+
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
 	if pronto_para_coleta:
@@ -82,46 +84,28 @@ func _on_area_3d_monitor_body_entered(body):
 			print("Caldeirão cheio!")
 
 func cozinhar():
-	if slots.is_empty():
-		print("O caldeirão está vazio!")
-		elastico()
-		return
+	if slots.is_empty(): return
 	
-	var todas_as_receitas = Receitas.receitas
-	var nome_da_receita_feita = ""
-	var sucesso = false
+	var todas = Receitas.receitas
+	var receita_feita = null
 
-	for nome_id in todas_as_receitas:
-		var dados = todas_as_receitas[nome_id]
-		var ingredientes_receita = [dados["item1"], dados["item2"]]
-		
-		if slots == ingredientes_receita:
-			if dados["pode_fabricar"]:
-				sucesso = true
-				nome_da_receita_feita = dados["nome"]
-				liquidodocaldeirão = nome_da_receita_feita
-				pronto_para_coleta = true
-				alternar_estado_pronto()
-				break
+	for id in todas:
+		if slots == _pegar_ingredientes_da_config(todas[id]) and todas[id]["pode_fabricar"]:
+			receita_feita = todas[id]
+			break
 
-	if sucesso:
-		print("RECEITA CRIADA VIA GLOBAL: ", nome_da_receita_feita)
-		# --- AQUI ESTÁ A CHAMADA DO PUFF ---
-		# 1. Primeiro, pegamos a cor atual do holograma (que já está azul ou vermelho)
+	if receita_feita:
+		liquidodocaldeirão = receita_feita["nome"]
+		pronto_para_coleta = true
+		alternar_estado_pronto()
 		if holograma_atual:
-			var cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
-			
-			# 2. Passamos essa cor para o nosso efeito de fumaça
-			
-			# 3. Aproveitamos para garantir que o líquido do caldeirão também use essa cor exata
-			alterar_cor_liquido(cor_da_pocao)
-		# ----------------------------------
-
+			var cor = await _pegar_cor_do_holograma(holograma_atual)
+			alterar_cor_liquido(cor)
 	else:
-		elastico()
-		print("ERRO! A mistura não consta no registro global ou não está liberada.")
+		_falha_na_cozinha()
 	
 	slots.clear()
+	
 func _instanciarobjeto(nome_do_item):
 	elastico()
 	if cena_base_item == null: return
@@ -187,17 +171,28 @@ func elastico():
 		print("Aviso: objeto_visual não definido no Inspector!")
 		return
 
-	# Criamos o Tween para manipulação estética
+	# 1. Capturamos a escala original EXATA do momento
+	var escala_original = objeto_visual.scale
+	
+	# 2. Calculamos os alvos baseados em porcentagem (30% de variação)
+	# Squash (Fino e Alto): X e Z perdem 30%, Y ganha 30%
+	var escala_squash = Vector3(
+		escala_original.x * 0.7, 
+		escala_original.y * 1.3, 
+		escala_original.z * 0.7
+	)
+	
+	# Criamos o Tween
 	var tween = create_tween()
 	
-	# 1. ESTICAR (Squash): Fica fino e alto
-	# Vector3(X, Y, Z) -> Diminuímos X e Z, aumentamos Y
-	tween.tween_property(objeto_visual, "scale", Vector3(0.6, 2.6, 0.8), 0.1)\
+	# --- PASSO 1: ESTICAR (SQUASH) ---
+	tween.tween_property(objeto_visual, "scale", escala_squash, 0.1)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_OUT)
 	
-	# 2. VOLTAR (Stretch): Volta ao normal com um balanço elástico
-	tween.tween_property(objeto_visual, "scale", Vector3(0.8, 2.9, 1.0), 0.3)\
+	# --- PASSO 2: VOLTAR AO NORMAL (STRETCH ELÁSTICO) ---
+	# Retorna exatamente para a escala_original com efeito de mola
+	tween.tween_property(objeto_visual, "scale", escala_original, 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC)\
 		.set_ease(Tween.EASE_OUT)
 		
@@ -210,126 +205,94 @@ func _rejeitar_item(item):
 	elastico()
 
 func _conectar_as_receitas():
-	print("--- INICIANDO LEITURA DE RECEITAS ---")
-	
-	# Assumindo que seu AutoLoad se chama 'Receitas' e a variável lá dentro é 'receitas'
-	var todas_as_receitas = Receitas.receitas 
-	
-	for nome_pocao in todas_as_receitas:
-		var dados = todas_as_receitas[nome_pocao]
-		
-		# Pegamos os ingredientes e as condições
-		var item1 = dados["item1"]
-		var item2 = dados["item2"]
-		var prestigio = dados["prestigio_minimo"]
-		
-		print("Poção: ", nome_pocao, " | Ingredientes: [", item1, ", ", item2, "] | Prestígio: ", prestigio)
-	
-	print("--- FIM DA LEITURA ---")
+	print("--- LISTA DE RECEITAS PARA ", meu_tipo_de_mobilia, " ---")
+	var todas = Receitas.receitas 
+	for id in todas:
+		if todas[id].get("Mobilia") == meu_tipo_de_mobilia:
+			var ing = _pegar_ingredientes_da_config(todas[id])
+			print("-> ", id, " Ingredientes: ", ing)
 
 func _ready():
 	
 	meu_tipo_de_mobilia = name.replace("StaticBody3D_", "")
 	print("Eu sou uma mobília do tipo: ", meu_tipo_de_mobilia)
 	_conectar_as_receitas()
+	
+func _pegar_ingredientes_da_config(dados_da_receita: Dictionary) -> Array:
+	var lista_resultante = []
+	for i in range(1, 9):
+		var chave = "item" + str(i)
+		if dados_da_receita.has(chave):
+			lista_resultante.append(dados_da_receita[chave])
+	return lista_resultante
+	
 func _receita_compativel(itens: Array):
-	print("--- ", meu_tipo_de_mobilia, " está analisando os itens atuais ---")
 	alterar_cor_liquido()
-	if itens.is_empty():
-		print("Estado: Vazio")
-		return null
+	if itens.is_empty(): return null
 
-	# 1. Monitoramento dos Slots
-	for i in range(itens.size()):
-		if i < MAX_SLOTS:
-			print("Slot ", i, ": ", itens[i])
-		else:
-			print("ITEM EXCEDENTE: ", itens[i])
-	
-	print("Total de itens: ", itens.size(), "/", MAX_SLOTS)
-	
-	# 2. Checagem de Transbordamento
-	if itens.size() > MAX_SLOTS:
-		print("AVISO: ", meu_tipo_de_mobilia, " transbordando!")
-		return null 
-
-	# 3. COMPARATIVO COM O GLOBAL (Com Filtro de Mobília)
-	var itens_atuais = itens.duplicate() 
 	var todas_as_receitas = Receitas.receitas
 	var receita_encontrada = null
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
 		
-		# --- NOVO FILTRO DE MOBÍLIA ---
+		# Filtro de Mobília
 		if dados.get("Mobilia", "") != meu_tipo_de_mobilia:
-			continue # Pula para a próxima receita se não for desta mobília
-		# ------------------------------
+			continue 
 
-		var ingredientes_receita = [dados["item1"], dados["item2"]]
-		
-		if itens_atuais == ingredientes_receita:
+		# Comparação dinâmica (independente de ser 1 ou 8 itens)
+		if itens == _pegar_ingredientes_da_config(dados):
 			receita_encontrada = dados
 			break
 	
-	# 4. VALIDAÇÃO DE PERMISSÃO E TEMPO
 	if receita_encontrada != null:
-		if receita_encontrada["pode_fabricar"] == true:
-			print("SUCESSO: Ordem correta e receita liberada! -> ", receita_encontrada["nome"])
-			tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
+		if receita_encontrada.get("pode_fabricar", false):
+			print("✅ Receita Identificada: ", receita_encontrada["nome"])
+			tempo_da_receita = receita_encontrada.get("tempo_de_cozinha", 1)
 			receita_validada = true
-			_mostrarHolograma(receita_encontrada["nome"])
-			if holograma_atual:
-				cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
-				alterar_cor_liquido(cor_da_pocao)
-			return receita_encontrada
-		else:
-			print("BLOQUEADO: Ordem correta para ", receita_encontrada["nome"], ", mas fabricação não permitida!")
-			receita_validada = false
-			return null
 			
-	else:
-		if itens.size() == MAX_SLOTS:
-			print("ERRO: Ingredientes errados, ordem errada ou receita de outra mobília.")
-			receita_validada = false
-		else:
-			print("AGUARDANDO: Continue a sequência de ingredientes...")
-		return null
+			if usar_holograma:
+				_mostrarHolograma(receita_encontrada["nome"])
+				await get_tree().process_frame
+				if holograma_atual:
+					cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
+					alterar_cor_liquido(cor_da_pocao)
+			return receita_encontrada
+	
+	receita_validada = false
+	return null
 				
 func cozinhando_pocao():
 	if cozinhando or mexendo_liquido: return 
 
 	if not slots.is_empty() and receita_validada:
-		var todas_as_receitas = Receitas.receitas
-		for nome_id in todas_as_receitas:
-			if slots == [todas_as_receitas[nome_id]["item1"], todas_as_receitas[nome_id]["item2"]]:
-				# Pegamos a sequência, mas se ela não existir no dicionário, vira um Array vazio []
-				sequencia_alvo = todas_as_receitas[nome_id].get("Sequencia", [])
-				nome_receita_atual = nome_id
+		var todas = Receitas.receitas
+		for id in todas:
+			if slots == _pegar_ingredientes_da_config(todas[id]):
+				sequencia_alvo = todas[id].get("Sequencia", [])
+				nome_receita_atual = id
 				break
 
 	cozinhando = true
-	for segundo in range(tempo_da_receita + 1):
-		_gerenciar_barra_visual(float(segundo) / float(tempo_da_receita))
-		if segundo < tempo_da_receita: await get_tree().create_timer(1.0).timeout
+	# Só mostra a barra se houver tempo de espera (Mortar com tempo 0 pula isso)
+	if usar_barra_progresso and tempo_da_receita > 0:
+		for segundo in range(tempo_da_receita + 1):
+			_gerenciar_barra_visual(float(segundo) / float(tempo_da_receita))
+			if segundo < tempo_da_receita: await get_tree().create_timer(1.0).timeout
 	
 	_gerenciar_barra_visual(0)
 	cozinhando = false
 
 	if receita_validada and not slots.is_empty():
-		# --- CHECAGEM DE BUG: RECEITA SEM SEQUÊNCIA ---
 		if sequencia_alvo.is_empty():
-			print("ℹ️ Receita sem sequência detectada. Pulando minigame...")
 			_finalizar_preparo_com_sucesso()
 		else:
-			print("♨️ Aguardando interação para iniciar minigame...")
 			esperando_jogador = true
 			if icone_coleta:
 				icone_coleta.visible = true
 				_animar_icone_pulsante()
 	else:
-		_falha_na_cozinha()
-		
+		_falha_na_cozinha()		
 func _mostrarHolograma(nome_do_item):
 	# Se já existir um holograma (talvez de uma tentativa anterior), removemos
 	if not usar_holograma: return
@@ -488,31 +451,37 @@ func _sompuff():
 	$Soms/AudioStreamPlayer3D_Puff.play()
 	
 func coletarliquido(nomedoobjetocarregado) -> Array:
-	if nomedoobjetocarregado == "Frasco Vazio" and pronto_para_coleta == true:
-		print("Coleta permitida!")
+	# 1. Verificamos se a coleta atende ao requisito configurado no Inspector
+	# Se requisito_de_coleta for "", qualquer coisa (inclusive mão vazia) coleta.
+	var requisito_atendido = (requisito_de_coleta == "") or (nomedoobjetocarregado == requisito_de_coleta)
+	
+	if pronto_para_coleta == true and requisito_atendido:
+		print("✅ Coleta permitida! Item usado: ", nomedoobjetocarregado if nomedoobjetocarregado != "" else "Mão Vazia")
 		
-		# 1. Guardamos o nome da poção
+		# Guardamos o nome do resultado (Ex: "Flor Da Vida")
 		var nome_para_enviar = liquidodocaldeirão
 		
-		# --- LIMPEZA DOS VISUAIS (O que você queria na etapa 3) ---
+		# --- LIMPEZA E RESET ---
 		if holograma_atual != null:
 			holograma_atual.queue_free()
-			holograma_atual = null # Importante para não dar erro de instância inválida depois
+			holograma_atual = null
 
-		# ---------------------------------------------------------
-		
-		# 2. Resetamos o estado do caldeirão
 		liquidodocaldeirão = ""
 		pronto_para_coleta = false
 		alternar_estado_pronto()
-		alterar_cor_liquido(cor_original) # Volta para a cor padrão
+		alterar_cor_liquido(cor_original) 
 		
 		return [true, nome_para_enviar]
 		
 	else:
-		print("Não pode coletar!")
-		return [false, "Frasco Vazio"]
-
+		# Feedback de erro no console para sabermos por que falhou
+		if not pronto_para_coleta:
+			print("❌ Erro: O item ainda não está pronto para coleta.")
+		elif not requisito_atendido:
+			print("❌ Erro: Item errado. Esperado: '", requisito_de_coleta, "' mas recebeu: '", nomedoobjetocarregado, "'")
+			
+		return [false, nomedoobjetocarregado]
+		
 func alternar_estado_pronto():
 	if particula_de_luz != null:
 		if particula_de_luz.visible == true :

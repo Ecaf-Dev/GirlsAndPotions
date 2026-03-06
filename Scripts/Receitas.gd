@@ -1,7 +1,6 @@
 extends Node
 
-
-# Called when the node enters the scene tree for the first time.
+# Este script funciona como um Banco de Dados Global para suas receitas
 var receitas = {
 	"Poção De Cura" : {
 		"prestigio_minimo" : 0,
@@ -10,7 +9,7 @@ var receitas = {
 		"item2" : "Flor Da Vida",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
-		"Poção De Cura": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
+		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
 		"Sequencia": ["Cima", "Esquerda", "Baixo", "Direita"],
 		"Mobilia" : "Caldeirao"
 	},
@@ -21,7 +20,7 @@ var receitas = {
 		"item2" : "Flor Magica",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
-		"Poção De Mana": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
+		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
 		"Sequencia": ["Cima", "Direita", "Baixo", "Esquerda"],
 		"Mobilia" : "Caldeirao"
 	},
@@ -32,7 +31,7 @@ var receitas = {
 		"item2" : "Poção De Cura",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 8,
-		"Poção Da Determinação": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
+		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
 		"Sequencia": ["Cima", "Baixo", "Esquerda", "Direita", "Cima"],
 		"Mobilia" : "Caldeirao"
 	},
@@ -43,9 +42,19 @@ var receitas = {
 		"item2" : "Poção De Cura",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 10,
-		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
+		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
 		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"],
 		"Mobilia" : "Caldeirao"
+	},
+	# --- RECEITAS DO MORTAR ---
+	"Flor Da Vida" : {
+		"prestigio_minimo" : 0,
+		"nome" : "Flor Da Vida",
+		"item1" : "Flor Magica", # O ingrediente bruto
+		"pode_fabricar" : true,
+		"tempo_de_cozinha" : 0, # Mortar costuma ser instantâneo, focado na sequência
+		"caminho_modelo": "res://GirlsAndPotions/Modelos/flor_da_vida.tscn",
+		"Sequencia": ["Baixo", "Baixo", "Cima"], # Sequência de "amassar"
+		"Mobilia" : "Mortar"
 	}
-	
 }

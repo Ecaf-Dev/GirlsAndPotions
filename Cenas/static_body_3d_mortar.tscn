@@ -1,9 +1,21 @@
 [gd_scene format=3 uid="uid://teklg2ojfmf0"]
 
 [ext_resource type="PackedScene" uid="uid://b24rs8h57wqg6" path="res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn" id="1_4csm0"]
-[ext_resource type="PackedScene" uid="uid://ducyo83yg3nr0" path="res://GirlsAndPotions/Modelos/node_3d_mortar.tscn" id="2_mg1pi"]
+[ext_resource type="ArrayMesh" uid="uid://bmb47mqimdh0h" path="res://GirlsAndPotions/Modelos/Objetos/Mortar.obj" id="2_4csm0"]
 
-[node name="StaticBody3D_Mortar" unique_id=1720406554 instance=ExtResource("1_4csm0")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mg1pi"]
+albedo_color = Color(0.40069774, 0.40069774, 0.40069768, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j21tk"]
+albedo_color = Color(0.4664333, 0.22317141, 0.013400516, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyl27"]
+transparency = 1
+albedo_color = Color(0.39688927, 0.39688927, 0.39688924, 0)
+
+[node name="StaticBody3D_Mortar" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual") instance=ExtResource("1_4csm0")]
+MAX_SLOTS = 1
+objeto_visual = NodePath("Mortar")
 "usar_puff_fumaça" = false
 usar_barra_progresso = false
 
@@ -16,5 +28,9 @@ visible = false
 [node name="GPUParticles3D_Fogareu" parent="." index="7" unique_id=1689929271]
 visible = false
 
-[node name="Node3D_Mortar" parent="." index="13" unique_id=917109126 instance=ExtResource("2_mg1pi")]
-transform = Transform3D(0.3, 0, 0, 0, 0.9, 0, 0, 0, 0.3, 0, 0, -0.06973555)
+[node name="Mortar" type="MeshInstance3D" parent="." index="13" unique_id=371781827]
+transform = Transform3D(0.3, 0, 0, 0, 0.876, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("2_4csm0")
+surface_material_override/0 = SubResource("StandardMaterial3D_mg1pi")
+surface_material_override/1 = SubResource("StandardMaterial3D_j21tk")
+surface_material_override/2 = SubResource("StandardMaterial3D_tyl27")
