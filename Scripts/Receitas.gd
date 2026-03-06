@@ -47,14 +47,25 @@ var receitas = {
 		"Mobilia" : "Caldeirao"
 	},
 	# --- RECEITAS DO MORTAR ---
-	"Flor Da Vida" : {
+	"Tabua De Essencia Da Vida" : {
 		"prestigio_minimo" : 0,
-		"nome" : "Flor Da Vida",
-		"item1" : "Flor Magica", # O ingrediente bruto
+		"nome" : "Tabua De Essencia Da Vida",
+		"item1" : "Flor Da Vida", # O ingrediente bruto
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 0, # Mortar costuma ser instantâneo, focado na sequência
-		"caminho_modelo": "res://GirlsAndPotions/Modelos/flor_da_vida.tscn",
+		"caminho_modelo": "res://GirlsAndPotions/Modelos/tabua_de_essencia_da_vida.tscn",
 		"Sequencia": ["Baixo", "Baixo", "Cima"], # Sequência de "amassar"
 		"Mobilia" : "Mortar"
+	},
+	# --- RECEITAS DO MORTAR ---
+		"Tabua De Essencia Magica" : {
+			"prestigio_minimo" : 0,
+			"nome" : "Tabua De Essencia Magica",
+			"item1" : "Flor Magica", # O ingrediente bruto
+			"pode_fabricar" : true,
+			"tempo_de_cozinha" : 0, # Mortar costuma ser instantâneo, focado na sequência
+			"caminho_modelo": "res://GirlsAndPotions/Modelos/tabua_de_essencia_magica.tscn",
+			"Sequencia": ["Esquerda", "Direita", "Cima"], # Sequência de "amassar"
+			"Mobilia" : "Mortar"
 	}
 }

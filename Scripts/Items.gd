@@ -58,5 +58,29 @@ var itens = {
 		"valor_venda": 12,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura_maior.png",
 		"compravel": false
+	},
+	"Tabua De Essencia": {
+		"nome": "Tabua De Essencia",
+		"descricao": "Tabua para se acumular pó, descartavel após o uso!",
+		"valor_compra": 1,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/tabua_de_essencia.png",
+		"compravel": true
+	},
+	"Tabua De Essencia Da Vida": {
+		"nome": "Tabua De Essencia Da Vida",
+		"descricao": "Tabua para se acumular pó com essencia da vida em seu interior!",
+		"valor_compra": 0,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/tabua_de_essencia_da_vida.png",
+		"compravel": false
+	},
+	"Tabua De Essencia Magica": {
+		"nome": "Tabua De Essencia Magica",
+		"descricao": "Tabua para se acumular pó com essencia magica em seu interior!",
+		"valor_compra": 0,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/tabua_de_essencia_magica.png",
+		"compravel": false
 	}
 }

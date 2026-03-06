@@ -298,28 +298,38 @@ func _somlevantandoobjeto():
 	$Audios/AudioStreamPlayer3D_LevantarObjeto.play()
 
 func _saberoquelevo() -> bool:
-	#esta função será chamada para checagens de situações usando o objeto que está sendo carregado
-	#exemplo no caso dos frascos haverá uma tratativa em certa situação
+	# 1. Pegamos o item que está na mão
 	var pai = objeto_levantado.get_parent()
-	if pai and "nome_item" in pai:
-		var nome_do_item = pai.nome_item
-		print("Sucesso! Nome capturado: ", nome_do_item)
-		if(nome_do_item == "Frasco Vazio") && caldeirao != null:
-			if caldeirao.has_method("coletarliquido"):
-				# Passamos o objeto 'pai' (o frasco) para o caldeirão trabalhar nele
-				var res = caldeirao.coletarliquido(nome_do_item)
-				if res:
-					print(res[1])
-					pai.nome_item = res[1]
-					pai._carregar_visual_automatico()
-				return true # Retorna se a coleta deu certo ou não
-			else:
-				return false
-		else:
-			return false
-	else:
+	
+	# Verificação de segurança: se não tem nada na mão ou não tem nome, cancela
+	if not pai or not ("nome_item" in pai):
 		return false
 
+	var nome_do_item = pai.nome_item
+	print("Mão do Player contém: ", nome_do_item)
+
+	# 2. Se o jogador estiver perto de uma mobília (caldeirao/mortar)
+	if caldeirao != null:
+		if caldeirao.has_method("coletarliquido"):
+			# PERGUNTA para a mobília: "Eu posso coletar o que você tem com o que eu carrego?"
+			var res = caldeirao.coletarliquido(nome_do_item)
+			
+			# res[0] é o Sucesso (true/false)
+			# res[1] é o Novo Nome (ex: "Flor Da Vida" ou "Poção de Cura")
+			if res[0] == true:
+				print("Coleta realizada com sucesso! Novo item: ", res[1])
+				
+				# Atualizamos o item na mão do player com a nova identidade
+				pai.nome_item = res[1]
+				
+				# Se o seu script de item tiver a função de trocar o visual:
+				if pai.has_method("_carregar_visual_automatico"):
+					pai._carregar_visual_automatico()
+				
+				return true
+	
+	return false
+	
 func liberar_movimento():
 	pode_andar = true
 	print("💃 Movimento da heroína liberado!")

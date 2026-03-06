@@ -11,13 +11,14 @@ albedo_color = Color(0.4664333, 0.22317141, 0.013400516, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyl27"]
 transparency = 1
-albedo_color = Color(0.39688927, 0.39688927, 0.39688924, 0)
+albedo_color = Color(0, 0, 0, 1)
 
 [node name="StaticBody3D_Mortar" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual") instance=ExtResource("1_4csm0")]
 MAX_SLOTS = 1
 objeto_visual = NodePath("Mortar")
 "usar_puff_fumaça" = false
 usar_barra_progresso = false
+requisito_de_coleta = "Tabua De Essencia"
 
 [node name="Caldeirão" parent="." index="3" unique_id=1832336314]
 visible = false

@@ -60,10 +60,16 @@ var setas_visuais : Array = [] # Guardará as instâncias para podermos trocar a
 
 @export var requisito_de_coleta : String = "Flor Da Vida"
 
+@export_group("Configurações de Malha")
+@export var indice_surface_liquido : int = 1
+@export var indice_surface_bolha : int = 0
+@export var nome_no_bolhas : String = "GPUParticles3D_Bolhas"
+var escala_original_total : Vector3
+
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
 	if pronto_para_coleta:
-		if "nome_item" in body and body.nome_item != "Frasco Vazio":
+		if "nome_item" in body and body.nome_item != "Frasco Vazio" :
 			_rejeitar_item(body)
 			return
 			
@@ -167,35 +173,26 @@ func _esperar_saida_segura(item, c_layer, c_mask, a_layer, a_mask):
 		print("Poção liberada com camadas originais: Corpo(", c_layer, ") Area(", a_layer, ")")	
 
 func elastico():
-	if objeto_visual == null:
-		print("Aviso: objeto_visual não definido no Inspector!")
-		return
+	if objeto_visual == null: return
 
-	# 1. Capturamos a escala original EXATA do momento
-	var escala_original = objeto_visual.scale
-	
-	# 2. Calculamos os alvos baseados em porcentagem (30% de variação)
-	# Squash (Fino e Alto): X e Z perdem 30%, Y ganha 30%
+	# 2. Usamos a escala salva no _ready para calcular a deformação de 30%
 	var escala_squash = Vector3(
-		escala_original.x * 0.7, 
-		escala_original.y * 1.3, 
-		escala_original.z * 0.7
+		escala_original_total.x * 0.7, 
+		escala_original_total.y * 1.3, 
+		escala_original_total.z * 0.7
 	)
 	
-	# Criamos o Tween
 	var tween = create_tween()
 	
-	# --- PASSO 1: ESTICAR (SQUASH) ---
+	# ESTICAR (Squash)
 	tween.tween_property(objeto_visual, "scale", escala_squash, 0.1)\
 		.set_trans(Tween.TRANS_QUAD)\
 		.set_ease(Tween.EASE_OUT)
 	
-	# --- PASSO 2: VOLTAR AO NORMAL (STRETCH ELÁSTICO) ---
-	# Retorna exatamente para a escala_original com efeito de mola
-	tween.tween_property(objeto_visual, "scale", escala_original, 0.3)\
+	# VOLTAR (Stretch) - Retorna para a escala salva no início
+	tween.tween_property(objeto_visual, "scale", escala_original_total, 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC)\
-		.set_ease(Tween.EASE_OUT)
-		
+		.set_ease(Tween.EASE_OUT)	
 	
 func _rejeitar_item(item):
 	if item is RigidBody3D:
@@ -213,7 +210,8 @@ func _conectar_as_receitas():
 			print("-> ", id, " Ingredientes: ", ing)
 
 func _ready():
-	
+	if objeto_visual:
+		escala_original_total = objeto_visual.scale
 	meu_tipo_de_mobilia = name.replace("StaticBody3D_", "")
 	print("Eu sou uma mobília do tipo: ", meu_tipo_de_mobilia)
 	_conectar_as_receitas()
@@ -412,38 +410,44 @@ func _gerenciar_barra_visual(porcentagem: float):
 func alterar_cor_liquido(cor_especifica = null):
 	if malha_caldeirao == null: return
 
-	# 1. Definir a cor alvo (mantendo sua lógica anterior)
-	var material_liquido = malha_caldeirao.get_surface_override_material(1)
+	# 1. Acessa a Surface correta do líquido baseada no Inspector
+	var material_liquido = malha_caldeirao.get_surface_override_material(indice_surface_liquido)
 	if material_liquido == null:
-		material_liquido = malha_caldeirao.mesh.surface_get_material(1).duplicate()
-		malha_caldeirao.set_surface_override_material(1, material_liquido)
-	
+		# Se não houver override, duplicamos o material da malha para não afetar outros objetos
+		var mat_original = malha_caldeirao.mesh.surface_get_material(indice_surface_liquido)
+		if mat_original:
+			material_liquido = mat_original.duplicate()
+			malha_caldeirao.set_surface_override_material(indice_surface_liquido, material_liquido)
+		else:
+			return # Caso o índice esteja errado e não encontre material
+
 	var alpha_original = material_liquido.albedo_color.a
 	var cor_alvo: Color
 	
 	if cor_especifica != null:
 		cor_alvo = cor_especifica
 	else:
+		# Cor aleatória mantendo a transparência original
 		cor_alvo = Color(randf(), randf(), randf(), alpha_original)
 	
 	cor_alvo.a = alpha_original
 
-	# 2. TWEEN para o Líquido
-	var tween = create_tween().set_parallel(true) # .set_parallel faz as duas cores mudarem juntas
+	# 2. TWEEN para transição suave da cor
+	var tween = create_tween().set_parallel(true)
 	tween.tween_property(material_liquido, "albedo_color", cor_alvo, 0.6)
 
-	# 3. SINCRONIZAR AS BOLHAS
-	var particles = $GPUParticles3D_Bolhas # Certifique-se que o nome está correto
-	if particles:
-		# Acessamos o material da esfera que está no Draw Pass 1
-		# No Godot 4, precisamos pegar o material da malha do pass
-		var material_bolha = particles.draw_pass_1.surface_get_material(0)
+	# 3. SINCRONIZAR AS BOLHAS (Se existirem)
+	var particles = get_node_or_null(nome_no_bolhas)
+	if particles and particles.draw_pass_1:
+		# Acessamos o material da malha das bolhas baseado no índice do Inspector
+		var malha_bolha = particles.draw_pass_1
+		var material_bolha = malha_bolha.surface_get_material(indice_surface_bolha)
 		
-		# Se o material não for único, vamos torná-lo único para não afetar outros caldeirões
 		if material_bolha:
-			# Criamos um tween para a cor da bolha acompanhar
+			# Se o material não for único, criamos um override local para as partículas
+			# Nota: No Godot 4, para partículas, às vezes é melhor usar o material_override do nó
 			tween.tween_property(material_bolha, "albedo_color", cor_alvo, 0.6)
-
+			
 func _somitemadicionado():
 	$"Soms/AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão".play()
 

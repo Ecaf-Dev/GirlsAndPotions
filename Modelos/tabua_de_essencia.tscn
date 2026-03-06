@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b06ncr8e4h41u"]
+
+[ext_resource type="ArrayMesh" uid="uid://ku831e0b8ugf" path="res://GirlsAndPotions/Modelos/Objetos/TabuaDePo.obj" id="1_b7tmu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7tmu"]
+transparency = 1
+albedo_color = Color(0.7490196, 0, 0.16470589, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kngdf"]
+albedo_color = Color(0.41609022, 0.13970962, 0, 1)
+
+[node name="tabua_de_essencia" type="Node3D" unique_id=898006765]
+
+[node name="TabuaDePo" type="MeshInstance3D" parent="." unique_id=598945335]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("1_b7tmu")
+surface_material_override/0 = SubResource("StandardMaterial3D_b7tmu")
+surface_material_override/1 = SubResource("StandardMaterial3D_kngdf")
