@@ -46,6 +46,6 @@ var receitas = {
 		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
 		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"],
 		"Mobilia" : "Caldeirao"
-	},
+	}
 	
 }
