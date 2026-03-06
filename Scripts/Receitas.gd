@@ -5,8 +5,8 @@ var receitas = {
 	"Poção De Cura" : {
 		"prestigio_minimo" : 0,
 		"nome" : "Poção De Cura",
-		"item1" : "Flor Da Vida",
-		"item2" : "Flor Da Vida",
+		"item1" : "Tabua De Essencia Da Vida",
+		"item2" : "Tabua De Essencia Da Vida",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
@@ -16,8 +16,8 @@ var receitas = {
 	"Poção De Mana" : {
 		"prestigio_minimo" : 0,
 		"nome" : "Poção De Mana",
-		"item1" : "Flor Magica",
-		"item2" : "Flor Magica",
+		"item1" : "Tabua De Essencia Magica",
+		"item2" : "Tabua De Essencia Magica",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
@@ -27,7 +27,7 @@ var receitas = {
 	"Poção Da Determinação" : {
 		"prestigio_minimo" : 5,
 		"nome" : "Poção Da Determinação",
-		"item1" : "Flor Da Vida",
+		"item1" : "Tabua De Essencia Da Vida",
 		"item2" : "Poção De Cura",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 8,
