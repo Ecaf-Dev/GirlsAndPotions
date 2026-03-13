@@ -29,7 +29,8 @@ var receita_validada = false
 var cozinhando = false
 var pronto_para_coleta: bool = false
 var holograma_atual : Node3D = null
-var interagindo: bool = true
+var querointeracao: bool = false
+var interagindo: bool = false
 
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
@@ -95,6 +96,8 @@ func cozinhando_pocao():
 
 	cozinhando = true
 	
+	querointeracao = true
+	
 	var progresso_atual = 0.0
 	while progresso_atual < tempo_da_receita:
 		# Se o jogador NÃO está interagindo, o código fica parado aqui esperando
@@ -120,6 +123,7 @@ func cozinhando_pocao():
 func cozinhar():
 	var todas_as_receitas = Receitas.receitas
 	var sucesso = false
+	querointeracao = false
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
@@ -289,4 +293,5 @@ func _sompuff():
 
 func _preparandoingrediente():
 	#enquanto interagindo for verdadeiro, e a variavel, automatico for falsa, a preparação da poção vai progredir em paralelo
-	interagindo = !interagindo
+	if mobilia_automatica == false && querointeracao == true:
+		interagindo = !interagindo

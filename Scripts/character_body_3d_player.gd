@@ -20,6 +20,7 @@ var objeto_interagivel = null
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var pode_falar = true
 var timer_passo: float = 0.0
+var interagindo: bool = false
 
 # --- NODES ---
 @onready var anim_player = $Heroina/AnimationPlayer
@@ -28,7 +29,11 @@ var timer_passo: float = 0.0
 
 func _physics_process(delta):
 	_aplicar_gravidade(delta)
+	if objeto_interagivel and objeto_interagivel.get("querointeracao"):
+		# 'interagindo' no caldeirão vira true APENAS enquanto Z estiver pressionado
+		objeto_interagivel.interagindo = Input.is_action_pressed("tecla_z")
 	_processar_movimento(delta)
+	
 	_processar_inputs()
 	
 	move_and_slide()
@@ -60,20 +65,22 @@ func _processar_movimento(delta):
 func _processar_inputs():
 	# Tecla Z: Interações e Coleta
 	if Input.is_action_just_pressed("tecla_z"):
-		if podeInteragir and objeto_interagivel != null and objeto_levantado == null and not objeto_interagivel.pronto_para_coleta:
-			if objeto_interagivel.has_method("cozinhando_pocao"):
+		# 1. Prioridade: Coleta (Se tiver algo pronto, tenta coletar com frasco)
+		if objeto_interagivel and objeto_interagivel.pronto_para_coleta:
+			if objeto_levantado and _saberoquelevo():
+				return
+
+		# 2. Prioridade: Iniciar Cozimento (Só se não estiver cozinhando e não estiver pronto)
+		if podeInteragir and objeto_interagivel and objeto_levantado == null:
+			if objeto_interagivel.has_method("cozinhando_pocao") and not objeto_interagivel.cozinhando:
 				objeto_interagivel.cozinhando_pocao()
 				return
-		elif objeto_levantado == null:
+		
+		# 3. Resto das interações
+		if objeto_levantado == null:
 			_interagir_com_item()
-			return
 		else:
-			if _saberoquelevo():
-				print("hmm")
-				return
-			else:
-				_soltaritem()
-				return
+			_soltaritem()
 
 	# Tecla X: Levantar e Jogar
 	if Input.is_action_just_pressed("tecla_x"):
