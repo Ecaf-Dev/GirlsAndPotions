@@ -63,13 +63,17 @@ func _processar_inputs():
 		if podeInteragir and objeto_interagivel != null and objeto_levantado == null and not objeto_interagivel.pronto_para_coleta:
 			if objeto_interagivel.has_method("cozinhando_pocao"):
 				objeto_interagivel.cozinhando_pocao()
+				return
 		elif objeto_levantado == null:
 			_interagir_com_item()
+			return
 		else:
 			if _saberoquelevo():
 				print("hmm")
+				return
 			else:
 				_soltaritem()
+				return
 
 	# Tecla X: Levantar e Jogar
 	if Input.is_action_just_pressed("tecla_x"):
