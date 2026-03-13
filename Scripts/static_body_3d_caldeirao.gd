@@ -29,7 +29,7 @@ var receita_validada = false
 var cozinhando = false
 var pronto_para_coleta: bool = false
 var holograma_atual : Node3D = null
-var interagindo: bool = false
+var interagindo: bool = true
 
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
@@ -90,17 +90,23 @@ func _receita_compativel(itens: Array):
 
 func cozinhando_pocao():
 	if cozinhando: return 
-	
 	if slots.is_empty() or !receita_validada:
 		tempo_da_receita = 1 
 
 	cozinhando = true
-	for segundo in range(tempo_da_receita + 1):
-		_gerenciar_barra_visual(float(segundo) / float(tempo_da_receita))
-		if segundo < tempo_da_receita:
-			await get_tree().create_timer(1.0).timeout
 	
-	_gerenciar_barra_visual(0) 
+	var progresso_atual = 0.0
+	while progresso_atual < tempo_da_receita:
+		# Se o jogador NÃO está interagindo, o código fica parado aqui esperando
+		if interagindo:
+			progresso_atual += get_process_delta_time() # Usa o tempo real do jogo
+			var porcentagem = clamp(progresso_atual / tempo_da_receita, 0.0, 1.0)
+			_gerenciar_barra_visual(porcentagem)
+		
+		# Espera o próximo frame da física/processamento para não travar o jogo
+		await get_tree().process_frame 
+	
+	_gerenciar_barra_visual(0)
 
 	if receita_validada and !slots.is_empty():
 		_disparar_puff_colorido(cor_da_pocao)
@@ -282,4 +288,5 @@ func _sompuff():
 		$Soms/AudioStreamPlayer3D_Puff.play()
 
 func _preparandoingrediente():
+	#enquanto interagindo for verdadeiro, e a variavel, automatico for falsa, a preparação da poção vai progredir em paralelo
 	interagindo = !interagindo
