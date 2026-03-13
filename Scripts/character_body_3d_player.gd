@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 # --- CONSTANTES ---
 const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 0
 const INTERVALO_PASSO = 0.4
 
 # --- EXPORTS ---
@@ -15,8 +15,8 @@ var objeto_proximo = null
 var forca_atual: float = 0.0
 const FORCA_MAXIMA = 100.0
 
-var podeCozinhar = false
-var caldeirao = null
+var podeInteragir = false
+var objeto_interagivel = null
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var pode_falar = true
 var timer_passo: float = 0.0
@@ -60,9 +60,9 @@ func _processar_movimento(delta):
 func _processar_inputs():
 	# Tecla Z: Interações e Coleta
 	if Input.is_action_just_pressed("tecla_z"):
-		if podeCozinhar and caldeirao != null and objeto_levantado == null and not caldeirao.pronto_para_coleta:
-			if caldeirao.has_method("cozinhando_pocao"):
-				caldeirao.cozinhando_pocao()
+		if podeInteragir and objeto_interagivel != null and objeto_levantado == null and not objeto_interagivel.pronto_para_coleta:
+			if objeto_interagivel.has_method("cozinhando_pocao"):
+				objeto_interagivel.cozinhando_pocao()
 		elif objeto_levantado == null:
 			_interagir_com_item()
 		else:
@@ -87,13 +87,13 @@ func _on_area_3d_monitor_area_entered(area):
 		objeto_proximo = area
 	
 	if area.is_in_group("caldeirao"):
-		podeCozinhar = true
-		caldeirao = corpo
+		podeInteragir = true
+		objeto_interagivel = corpo
 
 func _on_area_3d_monitor_area_exited(area):
 	if area.is_in_group("caldeirao"):
-		podeCozinhar = false
-		caldeirao = null
+		podeInteragir = false
+		objeto_interagivel = null
 	
 	if area == objeto_proximo:
 		objeto_proximo = null
@@ -181,9 +181,9 @@ func _instanciar_na_mao(nome):
 func _saberoquelevo() -> bool:
 	var pai = objeto_levantado.get_parent()
 	if pai and "nome_item" in pai:
-		if pai.nome_item == "Frasco Vazio" and caldeirao != null:
-			if caldeirao.has_method("coletarliquido"):
-				var res = caldeirao.coletarliquido(pai.nome_item)
+		if pai.nome_item == "Frasco Vazio" and objeto_interagivel != null:
+			if objeto_interagivel.has_method("coletarliquido"):
+				var res = objeto_interagivel.coletarliquido(pai.nome_item)
 				if res:
 					pai.nome_item = res[1]
 					pai._carregar_visual_automatico()
