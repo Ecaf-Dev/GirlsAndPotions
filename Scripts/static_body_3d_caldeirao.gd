@@ -32,6 +32,9 @@ var cor_da_pocao : Color = Color.WHITE
 var meu_tipo_de_mobilia : String = ""
 
 @export var cena_base_item: PackedScene # Arraste sua cena de objeto genérico aqui no Inspector
+
+@export var mobilia_automatica: bool = false
+
 func _on_area_3d_monitor_body_entered(body):
 	print("Corpo detectado: ", body.name)
 	if pronto_para_coleta:
