@@ -10,7 +10,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
-		"Sequencia": ["Cima", "Esquerda", "Baixo", "Direita"],
+		"Sequencia": [],
 		"Mobilia" : "Caldeirao"
 	},
 	"Poção De Mana" : {
@@ -21,7 +21,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
-		"Sequencia": ["Cima", "Direita", "Baixo", "Esquerda"],
+		"Sequencia": [],
 		"Mobilia" : "Caldeirao"
 	},
 	"Poção Da Determinação" : {
@@ -32,7 +32,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 8,
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
-		"Sequencia": ["Cima", "Baixo", "Esquerda", "Direita", "Cima"],
+		"Sequencia": [],
 		"Mobilia" : "Caldeirao"
 	},
 	"Poção De Cura Maior" : {
@@ -43,7 +43,7 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 10,
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
-		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"],
+		"Sequencia": [],
 		"Mobilia" : "Caldeirao"
 	},
 	# --- RECEITAS DO MORTAR ---
@@ -52,9 +52,9 @@ var receitas = {
 		"nome" : "Tabua De Essencia Da Vida",
 		"item1" : "Flor Da Vida", # O ingrediente bruto
 		"pode_fabricar" : true,
-		"tempo_de_cozinha" : 0, # Mortar costuma ser instantâneo, focado na sequência
+		"tempo_de_cozinha" : 2, # Mortar costuma ser instantâneo, focado na sequência
 		"caminho_modelo": "res://GirlsAndPotions/Modelos/tabua_de_essencia_da_vida.tscn",
-		"Sequencia": ["Baixo", "Baixo", "Cima"], # Sequência de "amassar"
+		"Sequencia": [], # Sequência de "amassar"
 		"Mobilia" : "Mortar"
 	},
 	# --- RECEITAS DO MORTAR ---
@@ -63,9 +63,9 @@ var receitas = {
 			"nome" : "Tabua De Essencia Magica",
 			"item1" : "Flor Magica", # O ingrediente bruto
 			"pode_fabricar" : true,
-			"tempo_de_cozinha" : 0, # Mortar costuma ser instantâneo, focado na sequência
+			"tempo_de_cozinha" : 2, # Mortar costuma ser instantâneo, focado na sequência
 			"caminho_modelo": "res://GirlsAndPotions/Modelos/tabua_de_essencia_magica.tscn",
-			"Sequencia": ["Esquerda", "Direita", "Cima"], # Sequência de "amassar"
+			"Sequencia": [], # Sequência de "amassar"
 			"Mobilia" : "Mortar"
 	}
 }

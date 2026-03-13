@@ -30,7 +30,7 @@ ambient_light_color = Color(0.431373, 0.74902, 0, 1)
 [node name="Node3D_Lojinha" type="Node3D" unique_id=431592752]
 
 [node name="CSGBox3D_Chao" type="CSGBox3D" parent="." unique_id=53243154]
-transform = Transform3D(0.9424421, -0.0005809716, 0.63212705, -0.00454973, 1.4999399, 0.0100692995, -0.545893, -0.013504165, 1.0912347, 0, 0, 0)
+transform = Transform3D(1.0891292, 0.0052359803, 0, -0.003801649, 1.4999346, 0.011005401, 3.3176486e-05, -0.01308973, 1.261094, 0, 0, 0)
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -44,8 +44,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.91926)
 transform = Transform3D(0.694771, 0.598378, -0.399046, -0.240093, 0.715952, 0.655567, 0.677975, -0.359661, 0.641089, -4.70126, 9.00318, 7.39724)
 
 [node name="RigidBody3D_Objeto" parent="." unique_id=162340772 instance=ExtResource("2_t26us")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 1)
-nome_item = "Flor Da Vida"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 1.6)
+nome_item = "Tabua De Essencia"
+quantidade_atual = 199
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=44034161 node_paths=PackedStringArray("alvo")]
 transform = Transform3D(1, 0, 0, 0, 0.5234062, 0.85208327, 0, -0.85208327, 0.5234062, 0, 4.058199, 3.7208004)
@@ -55,7 +56,7 @@ alvo = NodePath("../CharacterBody3D_Player")
 offset = Vector3(0, 5, 3)
 
 [node name="RigidBody3D_Objeto2" parent="." unique_id=1056694780 instance=ExtResource("2_t26us")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 2.66171)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 3.5)
 nome_item = "Flor Da Vida"
 quantidade_atual = 10
 
@@ -67,7 +68,7 @@ requisito_de_coleta = "Frasco Vazio"
 transform = Transform3D(0.9998889, 0, 0.014887333, 0, 1, 0, -0.014887333, 0, 0.9998889, 1, 1, -5)
 
 [node name="RigidBody3D_Objeto3" parent="." unique_id=1873023884 instance=ExtResource("2_t26us")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.924, 0)
 nome_item = "Flor Magica"
 quantidade_atual = 5
 
@@ -92,3 +93,8 @@ transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, -1)
 
 [node name="StaticBody3D_Mortar" parent="." unique_id=1720406554 instance=ExtResource("10_2fuaa")]
 transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 1.020632, 5.4931197)
+
+[node name="RigidBody3D_Objeto4" parent="." unique_id=1564608866 instance=ExtResource("2_t26us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 5)
+nome_item = "Frasco Vazio"
+quantidade_atual = 199
