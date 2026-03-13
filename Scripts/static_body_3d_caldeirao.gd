@@ -29,6 +29,7 @@ var receita_validada = false
 var cozinhando = false
 var pronto_para_coleta: bool = false
 var holograma_atual : Node3D = null
+var interagindo: bool = false
 
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
@@ -279,3 +280,6 @@ func _somitemadicionado():
 func _sompuff():
 	if get_node_or_null("Soms/AudioStreamPlayer3D_Puff"):
 		$Soms/AudioStreamPlayer3D_Puff.play()
+
+func _preparandoingrediente():
+	interagindo = !interagindo
