@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://chvryotakatj2"]
+
+[ext_resource type="ArrayMesh" uid="uid://bcs7it5erlsn2" path="res://GirlsAndPotions/Modelos/Objetos/flor_da_vida.obj" id="1_631yq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gfwui"]
+transparency = 1
+albedo_color = Color(0.18039216, 0.59607846, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v3yjd"]
+albedo_color = Color(1, 0.105882, 0.0823529, 1)
+roughness = 0.0
+
+[node name="petalas_da_flor_da_vida" type="Node3D" unique_id=1240040668]
+
+[node name="FlorDaVida" type="MeshInstance3D" parent="." unique_id=984190354]
+transform = Transform3D(9.96377, 0, 0, 0, 9.96377, 0, 0, 0, 9.96377, 0, 0, 0)
+mesh = ExtResource("1_631yq")
+surface_material_override/0 = SubResource("StandardMaterial3D_gfwui")
+surface_material_override/1 = SubResource("StandardMaterial3D_v3yjd")
