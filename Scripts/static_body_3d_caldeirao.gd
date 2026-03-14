@@ -4,7 +4,7 @@ extends StaticBody3D
 @export var MAX_SLOTS = 2
 @export var objeto_visual : Node3D
 @export var cena_base_item: PackedScene
-@export var mobilia_automatica: bool = false
+@export var mobilia_automatica: bool = true
 
 @export_group("Interface")
 @export var marker_holograma : Marker3D
@@ -90,6 +90,7 @@ func _receita_compativel(itens: Array):
 
 func cozinhando_pocao():
 	if cozinhando: return 
+	if pronto_para_coleta: return
 	if slots.is_empty() or !receita_validada:
 		tempo_da_receita = 1 
 
