@@ -9,7 +9,8 @@ var itens = {
 		"valor_compra": 2,
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/flor_da_vida.png",
-		"compravel": true
+		"compravel": true,
+		"escala_icone" : 0.7
 	},
 	"Flor Magica": {
 		"nome": "Flor Magica",
@@ -17,7 +18,8 @@ var itens = {
 		"valor_compra": 2,
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/Flor_magica.png",
-		"compravel": true
+		"compravel": true,
+		"escala_icone" : 0.5
 	},
 	"Frasco Vazio": {
 		"nome": "Frasco Vazio",
@@ -25,7 +27,8 @@ var itens = {
 		"valor_compra": 1,
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/frasco_vazio.png",
-		"compravel": true
+		"compravel": true,
+		"escala_icone" : 0.3
 	},
 	"Poção De Cura": {
 		"nome": "Poção De Cura",
@@ -33,7 +36,8 @@ var itens = {
 		"valor_compra": 0,
 		"valor_venda": 6,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura.png",
-		"compravel": false
+		"compravel": false,
+		"escala_icone" : 0.6
 	},
 	"Poção Da Determinação": {
 		"nome": "Poção Da Determinação",
@@ -41,7 +45,8 @@ var itens = {
 		"valor_compra": 0,
 		"valor_venda": 10,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_da_determinação.png",
-		"compravel": false
+		"compravel": false,
+		"escala_icone" : 0.6
 	},
 	"Poção De Mana": {
 		"nome": "Poção De Mana",
@@ -49,7 +54,8 @@ var itens = {
 		"valor_compra": 0,
 		"valor_venda": 5,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_mana.png",
-		"compravel": false
+		"compravel": false,
+		"escala_icone" : 0.6
 	},
 	"Poção De Cura Maior": {
 		"nome": "Poção De Cura Maior",
@@ -57,6 +63,7 @@ var itens = {
 		"valor_compra": 0,
 		"valor_venda": 12,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura_maior.png",
-		"compravel": false
+		"compravel": false,
+		"escala_icone" : 0.5
 	}
 }

@@ -14,5 +14,5 @@ mesh = ExtResource("1_c54dh")
 surface_material_override/0 = SubResource("StandardMaterial3D_jfmqo")
 
 [node name="Sprite3D_Icone" type="Sprite3D" parent="." unique_id=1662670680]
-transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -1, 0, 0.1, -4.371139e-08, 0, 1.0063041, 0)
+transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -0.1, 0, 0.1, -4.371139e-09, 0, 1, 0)
 texture = ExtResource("2_klrej")

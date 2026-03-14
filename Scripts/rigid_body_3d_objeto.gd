@@ -13,39 +13,40 @@ func _ready():
 func _carregar_visual_automatico():
 	# 1. Limpeza de modelos antigos
 	for child in get_children():
-		if child is MeshInstance3D or (child is Node3D and child.name != "CSGBox3D_ObjetoVisual" and child.name != "CollisionShape3D" and child.name != "Area3D_Monitor"):
+		if child is MeshInstance3D or (child is Node3D and child.name != "CSGBox3D_ObjetoVisual" and child.name != "CollisionShape3D" and child.name != "Area3D_Monitor" and child.name != "Node"):
 			child.queue_free()
 	
 	var nome_arquivo = nome_item.to_lower().replace(" ", "_")
 	var caminho_modelo = "res://GirlsAndPotions/Modelos/" + nome_arquivo + ".tscn"
 	var caminho_modelo_caixa = "res://GirlsAndPotions/Modelos/caixa.tscn"
 	
-	if FileAccess.file_exists(caminho_modelo):
-		var cena_modelo = null
-		if quantidade_atual == 1:
+	var cena_modelo = null
+	
+	if quantidade_atual == 1:
+		if FileAccess.file_exists(caminho_modelo):
 			cena_modelo = load(caminho_modelo)
-		else:
+	else:
+		if FileAccess.file_exists(caminho_modelo_caixa):
 			_somvirarcaixa()
 			cena_modelo = load(caminho_modelo_caixa)
 			
-		if cena_modelo:
-			var instancia = cena_modelo.instantiate()
-			
-			if has_node("CSGBox3D_ObjetoVisual"):
-				$CSGBox3D_ObjetoVisual.visible = false
-			
-			add_child(instancia)
-			
-			# --- LÓGICA DO ELÁSTICO AUTOMÁTICO ---
-			# Armazenamos a escala que o artista definiu na cena .tscn
-			escala_base_modelo = instancia.scale
-			# Disparamos o efeito passando a nova instância
-			aplicar_elastico_externo(instancia)
-			
-			print("Sucesso: Visual de '", nome_item, "' carregado. Qtd: ", quantidade_atual)
+	if cena_modelo:
+		var instancia = cena_modelo.instantiate()
+		
+		if has_node("CSGBox3D_ObjetoVisual"):
+			$CSGBox3D_ObjetoVisual.visible = false
+		
+		add_child(instancia)
+		
+		# --- NOVO: UPGRADE DA CAIXA (AUTO-CONFIGURAÇÃO) ---
+		if quantidade_atual > 1:
+			_configurar_display_caixa(instancia)
+		
+		escala_base_modelo = instancia.scale
+		aplicar_elastico_externo(instancia)
+		print("Sucesso: Visual de '", nome_item, "' carregado. Qtd: ", quantidade_atual)
 	else:
 		print("Aviso: Modelo não encontrado para ", nome_item)
-
 func _physics_process(_delta):
 	# Se o item estiver parado no ar (freeze falso) mas não estiver caindo (linear_velocity baixa)
 	# e não tiver ninguém segurando ele (pai é a cena principal)
@@ -111,3 +112,27 @@ func aplicar_elastico_externo(alvo: Node3D = null):
 
 func _somvirarcaixa():
 	$Node/AudioStreamPlayer3D_VirarCaixa.play()
+func _configurar_display_caixa(instancia_caixa):
+	# Procura os nós de UI dentro do modelo da caixa (caixa.tscn)
+	var sprite_icone = instancia_caixa.find_child("Sprite3D_Icone", true, false)
+	var label_qtd = instancia_caixa.find_child("Label3D_Quantidade", true, false)
+	
+	# 1. Configura o Ícone e sua Escala
+	if sprite_icone and Items.itens.has(nome_item):
+		var dados = Items.itens[nome_item]
+		
+		# Carrega a textura
+		var caminho_icone = dados.get("icon", "")
+		if caminho_icone != "":
+			sprite_icone.texture = load(caminho_icone)
+		
+		# --- AJUSTE DE TAMANHO DA ART (UPGRADE!) ---
+		# Pega a escala_icone do Items.gd. Se não existir, usa 1.0 como padrão.
+		var escala_vinda_do_script = dados.get("escala_icone", 1.0)
+		
+		# Aplicamos a escala no Sprite3D (ajustando X e Y)
+		sprite_icone.scale = Vector3(escala_vinda_do_script, escala_vinda_do_script, 1.0)
+	
+	# 2. Configura a Label de quantidade
+	if label_qtd:
+		label_qtd.text = str(quantidade_atual)

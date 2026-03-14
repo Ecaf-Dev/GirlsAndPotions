@@ -87,3 +87,18 @@ autoplay = true
 
 [node name="GPUParticles3D_ParticulasDeVento" parent="." unique_id=1425120542 instance=ExtResource("9_7v7ex")]
 transform = Transform3D(1.5, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, -1)
+
+[node name="RigidBody3D_Objeto4" parent="." unique_id=1564608866 instance=ExtResource("2_t26us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
+nome_item = "Poção De Cura"
+quantidade_atual = 5
+
+[node name="RigidBody3D_Objeto5" parent="." unique_id=23652449 instance=ExtResource("2_t26us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
+nome_item = "Poção De Mana"
+quantidade_atual = 5
+
+[node name="RigidBody3D_Objeto6" parent="." unique_id=592629114 instance=ExtResource("2_t26us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.24619, 1.92376, 1.50226)
+nome_item = "Poção Da Determinação"
+quantidade_atual = 5
