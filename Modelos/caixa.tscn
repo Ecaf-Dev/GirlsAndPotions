@@ -1,13 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://blsv00axiamw4"]
+[gd_scene format=3 uid="uid://blsv00axiamw4"]
 
 [ext_resource type="ArrayMesh" uid="uid://bqupt6vrgb0sg" path="res://GirlsAndPotions/Modelos/Objetos/Caixa.obj" id="1_c54dh"]
+[ext_resource type="Texture2D" uid="uid://bbw7u6ii5q7eq" path="res://GirlsAndPotions/Arts/Icones/shadow_icon.png" id="2_klrej"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jfmqo"]
 albedo_color = Color(0.462745, 0.235294, 0.0156863, 1)
 
-[node name="caixa" type="Node3D"]
+[node name="caixa" type="Node3D" unique_id=855807463]
 
-[node name="Caixa" type="MeshInstance3D" parent="."]
+[node name="Caixa" type="MeshInstance3D" parent="." unique_id=1547631611]
 transform = Transform3D(0.56, 0, 0, 0, 0.56, 0, 0, 0, 0.56, 0, 0.5, 0)
 mesh = ExtResource("1_c54dh")
 surface_material_override/0 = SubResource("StandardMaterial3D_jfmqo")
+
+[node name="Sprite3D_Icone" type="Sprite3D" parent="." unique_id=1662670680]
+transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, -1, 0, 0.1, -4.371139e-08, 0, 1.0063041, 0)
+texture = ExtResource("2_klrej")
