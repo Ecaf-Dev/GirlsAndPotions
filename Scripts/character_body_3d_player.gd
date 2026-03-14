@@ -30,8 +30,11 @@ var interagindo: bool = false
 func _physics_process(delta):
 	_aplicar_gravidade(delta)
 	if objeto_interagivel and objeto_interagivel.get("querointeracao"):
-		# 'interagindo' no caldeirão vira true APENAS enquanto Z estiver pressionado
-		objeto_interagivel.interagindo = Input.is_action_pressed("tecla_z")
+		interagindo = Input.is_action_pressed("tecla_z")
+		# Repassa para o caldeirão
+		objeto_interagivel.interagindo = interagindo
+	else:
+		interagindo = false
 	_processar_movimento(delta)
 	
 	_processar_inputs()
@@ -47,6 +50,12 @@ func _aplicar_gravidade(delta):
 		velocity.y = JUMP_VELOCITY
 
 func _processar_movimento(delta):
+	if interagindo == true:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
+		_somcaminha(delta, false)
+		return #
+	
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
 
