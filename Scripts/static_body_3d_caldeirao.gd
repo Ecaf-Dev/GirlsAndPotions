@@ -40,7 +40,6 @@ var barra_progresso : MeshInstance3D = null
 func _ready():
 	meu_tipo_de_mobilia = name.replace("StaticBody3D_", "")
 	_conectar_as_receitas()
-
 # --- INTERAÇÕES E SLOTS ---
 
 func _on_area_3d_monitor_body_entered(body):
@@ -95,22 +94,22 @@ func cozinhando_pocao():
 		tempo_da_receita = 1 
 
 	cozinhando = true
-	
-	querointeracao = true
+	querointeracao = true # Avisa o player para travar o movimento e monitorar o Z
 	
 	var progresso_atual = 0.0
 	while progresso_atual < tempo_da_receita:
-		# Se o jogador NÃO está interagindo, o código fica parado aqui esperando
-		if interagindo:
-			progresso_atual += get_process_delta_time() # Usa o tempo real do jogo
+		# LÓGICA OTIMIZADA:
+		# Progride se for automático OU se o jogador estiver ativamente interagindo
+		if mobilia_automatica or interagindo:
+			progresso_atual += get_process_delta_time()
 			var porcentagem = clamp(progresso_atual / tempo_da_receita, 0.0, 1.0)
 			_gerenciar_barra_visual(porcentagem)
 		
-		# Espera o próximo frame da física/processamento para não travar o jogo
 		await get_tree().process_frame 
 	
 	_gerenciar_barra_visual(0)
 
+	# Finalização...
 	if receita_validada and !slots.is_empty():
 		_disparar_puff_colorido(cor_da_pocao)
 		cozinhar()
@@ -118,6 +117,7 @@ func cozinhando_pocao():
 	else:
 		_falha_na_cozinha()
 	
+	querointeracao = false
 	cozinhando = false
 
 func cozinhar():
