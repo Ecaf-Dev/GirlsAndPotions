@@ -47,5 +47,16 @@ var receitas = {
 		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"],
 		"Mobilia" : "Caldeirao"
 	},
+	"Petalas Da Flor Da Vida" : {
+		"prestigio_minimo" : 0,
+		"nome" : "Petalas Da Flor Da Vida",
+		"item1" : "Flor Da Vida",
+		"item2" : "Vazio",
+		"pode_fabricar" : true,
+		"tempo_de_cozinha" : 5,
+		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/petalas_da_flor_da_vida.tscn",
+		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"],
+		"Mobilia" : "MesaDeCorte"
+	},
 	
 }

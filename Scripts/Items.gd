@@ -65,5 +65,14 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura_maior.png",
 		"compravel": false,
 		"escala_icone" : 0.5
+	},
+	"Petalas Da Flor Da Vida" :{
+		"nome": "Petalas Da Flor Da Vida",
+		"descricao": "As petalas cortadas de uma flor da vida",
+		"valor_compra": 0,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/petalas_da_flor_da_vida.png",
+		"compravel": false,
+		"escala_icone" : 0.5
 	}
 }
