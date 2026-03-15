@@ -50,7 +50,7 @@ func _aplicar_gravidade(delta):
 		velocity.y = JUMP_VELOCITY
 
 func _processar_movimento(delta):
-	if interagindo == true:
+	if interagindo:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 		_somcaminha(delta, false)
@@ -199,16 +199,19 @@ func _instanciar_na_mao(nome):
 # --- AUXILIARES E VISUAIS ---
 
 func _saberoquelevo() -> bool:
-	var pai = objeto_levantado.get_parent()
-	if pai and "nome_item" in pai:
-		if pai.nome_item == "Frasco Vazio" and objeto_interagivel != null:
-			if objeto_interagivel.has_method("coletarliquido"):
-				var res = objeto_interagivel.coletarliquido(pai.nome_item)
-				if res:
-					pai.nome_item = res[1]
-					pai._carregar_visual_automatico()
-					return true
-	return false
+	var rb_objeto_levantado = objeto_levantado.get_parent()
+	if (!rb_objeto_levantado || 
+		!("nome_item" in rb_objeto_levantado) || 
+		rb_objeto_levantado.nome_item != "Frasco Vazio"):
+		return false
+		
+	if !objeto_interagivel || !objeto_interagivel.has_method("coletarliquido"):
+		return false
+		
+	var res = objeto_interagivel.coletarliquido(rb_objeto_levantado.nome_item)
+	rb_objeto_levantado.nome_item = res[1]
+	rb_objeto_levantado._carregar_visual_automatico()
+	return true
 
 func _falaronomedoitem(nome):
 	if not pode_falar: return

@@ -18,7 +18,7 @@ extends StaticBody3D
 @onready var particulas_bolhas = $GPUParticles3D_Bolhas
 
 # --- VARIÁVEIS DE ESTADO ---
-var slots = [] 
+var items_processando = [] 
 var meu_tipo_de_mobilia : String = ""
 var liquidodocaldeirão: String = ""
 var cor_original = Color(0.0, 0.4, 0.9)
@@ -42,21 +42,27 @@ func _ready():
 	_conectar_as_receitas()
 # --- INTERAÇÕES E SLOTS ---
 
-func _on_area_3d_monitor_body_entered(body):
-	if pronto_para_coleta:
-		if "nome_item" in body and body.nome_item != "Frasco Vazio":
-			_rejeitar_item(body)
-		return
-			
-	if "nome_item" in body and !cozinhando:
-		if slots.size() < MAX_SLOTS and body.quantidade_atual == 1:
-			slots.append(body.nome_item)
-			_somitemadicionado()
-			_receita_compativel(slots)
-			body.queue_free()
-			elastico()
-		else:
-			_rejeitar_item(body)
+func _on_area_3d_monitor_body_entered(objeto_colidido):
+	var numero_de_items_excedido = items_processando.size() >= MAX_SLOTS;
+	var devo_rejeitar_objeto = (cozinhando || 
+								"nome_item" not in objeto_colidido || 
+								objeto_colidido.quantidade_atual > 1 ||
+								numero_de_items_excedido ||
+								objeto_colidido.nome_item == "Frasco Vazio");
+	
+	if devo_rejeitar_objeto:
+		_rejeitar_item(objeto_colidido)
+		return;
+		
+	_adicionar_item_para_processamento(objeto_colidido)
+	return;
+
+func _adicionar_item_para_processamento(objeto_colidido):
+	items_processando.append(objeto_colidido.nome_item)
+	_somitemadicionado()
+	_receita_compativel(items_processando)
+	objeto_colidido.queue_free()
+	elastico()
 
 func _receita_compativel(itens: Array):
 	alterar_cor_liquido()
@@ -91,7 +97,7 @@ func _receita_compativel(itens: Array):
 func cozinhando_pocao():
 	if cozinhando: return 
 	if pronto_para_coleta: return
-	if slots.is_empty() or !receita_validada:
+	if items_processando.is_empty() or !receita_validada:
 		tempo_da_receita = 1 
 
 	cozinhando = true
@@ -111,7 +117,7 @@ func cozinhando_pocao():
 	_gerenciar_barra_visual(0)
 
 	# Finalização...
-	if receita_validada and !slots.is_empty():
+	if receita_validada and !items_processando.is_empty():
 		_disparar_puff_colorido(cor_da_pocao)
 		cozinhar()
 		if icone_coleta: icone_coleta.visible = true
@@ -128,7 +134,7 @@ func cozinhar():
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
-		if slots == [dados["item1"], dados["item2"]] and dados["pode_fabricar"]:
+		if items_processando == [dados["item1"], dados["item2"]] and dados["pode_fabricar"]:
 			sucesso = true
 			liquidodocaldeirão = dados["nome"]
 			pronto_para_coleta = true
@@ -142,7 +148,7 @@ func cozinhar():
 	elif !sucesso:
 		elastico()
 	
-	slots.clear()
+	items_processando.clear()
 
 # --- VISUAL E FEEDBACK ---
 
@@ -169,9 +175,10 @@ func _gerenciar_barra_visual(porcentagem: float):
 		if barra_fundo:
 			var t = create_tween()
 			t.tween_property(barra_fundo, "scale", Vector3.ZERO, 0.3).set_trans(Tween.TRANS_BACK)
-			t.finished.connect(func(): 
-				if barra_fundo: barra_fundo.queue_free()
-				barra_fundo = null
+			t.finished.connect(
+				func(): 
+					if barra_fundo: barra_fundo.queue_free()
+					barra_fundo = null
 			)
 		return
 
@@ -185,7 +192,9 @@ func _gerenciar_barra_visual(porcentagem: float):
 func _criar_barra_progresso():
 	barra_fundo = MeshInstance3D.new()
 	barra_fundo.mesh = CylinderMesh.new()
-	barra_fundo.mesh.top_radius = 0.1; barra_fundo.mesh.bottom_radius = 0.1; barra_fundo.mesh.height = 1.3
+	barra_fundo.mesh.top_radius = 0.1 
+	barra_fundo.mesh.bottom_radius = 0.1
+	barra_fundo.mesh.height = 1.3
 	barra_fundo.rotation.z = deg_to_rad(90)
 	
 	var mat_fundo = StandardMaterial3D.new()
@@ -196,7 +205,8 @@ func _criar_barra_progresso():
 
 	barra_progresso = MeshInstance3D.new()
 	barra_progresso.mesh = CylinderMesh.new()
-	barra_progresso.mesh.top_radius = 0.05; barra_progresso.mesh.bottom_radius = 0.05
+	barra_progresso.mesh.top_radius = 0.05
+	barra_progresso.mesh.bottom_radius = 0.05
 	
 	var mat_prog = StandardMaterial3D.new()
 	mat_prog.shading_mode = StandardMaterial3D.SHADING_MODE_UNSHADED
@@ -261,7 +271,7 @@ func _falha_na_cozinha():
 	receita_validada = false
 	alterar_cor_liquido(cor_original)
 	elastico()
-	slots.clear()
+	items_processando.clear()
 	if holograma_atual: holograma_atual.queue_free(); holograma_atual = null
 
 func elastico():
