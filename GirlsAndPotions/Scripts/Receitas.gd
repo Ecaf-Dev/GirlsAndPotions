@@ -11,7 +11,7 @@ var receitas = {
 		"tempo_de_cozinha" : 4,
 		"Poção De Cura": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
 		"Mobilia" : "Caldeirao",
-		"precisa_de_frasco": true
+		"objeto_necessario": "Frasco Vazio"
 	},
 	"Poção De Mana" : {
 		"prestigio_minimo" : 0,
@@ -22,7 +22,7 @@ var receitas = {
 		"tempo_de_cozinha" : 4,
 		"Poção De Mana": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
 		"Mobilia" : "Caldeirao",
-		"precisa_de_frasco": true
+		"objeto_necessario": "Frasco Vazio"
 	},
 	"Poção Da Determinação" : {
 		"prestigio_minimo" : 5,
@@ -33,7 +33,7 @@ var receitas = {
 		"tempo_de_cozinha" : 8,
 		"Poção Da Determinação": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
 		"Mobilia" : "Caldeirao",
-		"precisa_de_frasco": true
+		"objeto_necessario": "Frasco Vazio"
 	},
 	"Poção De Cura Maior" : {
 		"prestigio_minimo" : 15,
@@ -44,7 +44,7 @@ var receitas = {
 		"tempo_de_cozinha" : 10,
 		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
 		"Mobilia" : "Caldeirao",
-		"precisa_de_frasco": true
+		"objeto_necessario": "Frasco Vazio"
 	},
 	"Pétalas De Flor Magica" : {
 		"prestigio_minimo" : 0,
@@ -55,6 +55,6 @@ var receitas = {
 		"tempo_de_cozinha" : 4,
 		"Pétalas De Flor Magica": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
 		"Mobilia" : "TabuaDeCorte",
-		"precisa_de_frasco": false
+		"objeto_necessario": null
 	}
 }

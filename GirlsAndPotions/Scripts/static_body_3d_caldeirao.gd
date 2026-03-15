@@ -142,7 +142,7 @@ func cozinhar():
 			sucesso = true
 			receita_concluida = {
 				nome = receita["nome"], 
-				precisa_de_frasco = receita["precisa_de_frasco"]
+				objeto_necessario = receita["objeto_necessario"]
 				}
 			pronto_para_coleta = true
 			alternar_estado_pronto()
@@ -251,8 +251,7 @@ func _pegar_cor_do_holograma(holo: Node3D) -> Color:
 # --- COLETA E UTILITÁRIOS ---
 
 func coletarliquido(nomedoobjetocarregado):
-	if ((receita_concluida.precisa_de_frasco and nomedoobjetocarregado != "Frasco Vazio") ||
-	   (!receita_concluida.precisa_de_frasco and nomedoobjetocarregado == "Frasco Vazio")):
+	if (receita_concluida.objeto_necessario != nomedoobjetocarregado):
 		return null;
 	
 	if !pronto_para_coleta:
