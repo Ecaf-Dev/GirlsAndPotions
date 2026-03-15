@@ -11,7 +11,6 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"Poção De Cura": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
-		"Sequencia": ["Cima", "Esquerda", "Baixo", "Direita"],
 		"Mobilia" : "Caldeirao"
 	},
 	"Poção De Mana" : {
@@ -22,7 +21,6 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"Poção De Mana": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
-		"Sequencia": ["Cima", "Direita", "Baixo", "Esquerda"],
 		"Mobilia" : "Caldeirao"
 	},
 	"Poção Da Determinação" : {
@@ -33,7 +31,6 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 8,
 		"Poção Da Determinação": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
-		"Sequencia": ["Cima", "Baixo", "Esquerda", "Direita", "Cima"],
 		"Mobilia" : "Caldeirao"
 	},
 	"Poção De Cura Maior" : {
@@ -44,7 +41,6 @@ var receitas = {
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 10,
 		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
-		"Sequencia": ["Baixo", "Cima", "Baixo", "Cima", "Esquerda", "Direita"],
 		"Mobilia" : "Caldeirao"
 	},
 	"Pétalas de Flor" : {
