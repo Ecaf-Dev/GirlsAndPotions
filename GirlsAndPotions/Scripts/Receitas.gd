@@ -43,13 +43,14 @@ var receitas = {
 		"Poção De Cura Maior": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
 		"Mobilia" : "Caldeirao"
 	},
-	"Pétalas de Flor" : {
+	"Pétalas De Flor Magica" : {
 		"prestigio_minimo" : 0,
-		"nome" : "Pétalas de Flor da Vida",
+		"nome" : "Pétalas De Flor Magica",
 		"item1" : "Flor Magica",
 		"item2" : "Flor Magica",
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
+		"Pétalas De Flor Magica": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
 		"Mobilia" : "TabuaDeCorte"
 	}
 }
