@@ -1,0 +1,223 @@
+[gd_scene format=3 uid="uid://c0miqn1n2npxs"]
+
+[ext_resource type="Script" uid="uid://dqubtcobqq6px" path="res://GirlsAndPotions/Scripts/static_body_3d_caldeirao.gd" id="1_ajnkd"]
+[ext_resource type="PackedScene" uid="uid://bem8equ6jrjib" path="res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn" id="2_0x5eo"]
+[ext_resource type="ArrayMesh" uid="uid://dfsfgbm6qxoac" path="res://GirlsAndPotions/Modelos/Objetos/Balcão.obj" id="3_ajnkd"]
+[ext_resource type="AudioStream" uid="uid://uiv1o26h6x1x" path="res://GirlsAndPotions/Arts/Novos Sons/Caldeirão borbulhando.wav" id="4_tsxko"]
+[ext_resource type="AudioStream" uid="uid://bdjh3bx307euc" path="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav" id="5_0uoty"]
+[ext_resource type="AudioStream" uid="uid://cqbbt6njhste" path="res://GirlsAndPotions/Arts/Novos Sons/Puff.wav" id="6_wf05w"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ilf4k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32uhq"]
+albedo_color = Color(0.521569, 0, 0.647059, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nnrc6"]
+height = 2.15791
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibihi"]
+albedo_color = Color(0.156863, 0.156863, 0.156863, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jbp8p"]
+emission_shape = 2
+emission_sphere_radius = 2.0
+direction = Vector3(0, 4, 0)
+initial_velocity_min = 0.2
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0.5, 0)
+turbulence_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bjgm"]
+transparency = 1
+albedo_color = Color(0, 0.494118, 1, 0.184314)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qut8x"]
+material = SubResource("StandardMaterial3D_0bjgm")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ud17"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="Gradient" id="Gradient_4feow"]
+offsets = PackedFloat32Array(0, 0.512195, 0.943089)
+colors = PackedColorArray(0.819608, 0.631373, 0, 1, 0.858824, 0.290196, 0, 0.596078, 0.509804, 0.247059, 0, 0.321569)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vfqmn"]
+gradient = SubResource("Gradient_4feow")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gdpqk"]
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(1, 1, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_vfqmn")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2cyp"]
+transparency = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_h0vqa"]
+material = SubResource("StandardMaterial3D_v2cyp")
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="Curve" id="Curve_fgsq8"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7173913, 0.078651786), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ugjhr"]
+curve = SubResource("Curve_fgsq8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3y48j"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+orbit_velocity_min = 0.5000001
+orbit_velocity_max = 0.5000001
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ugjhr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2pv8"]
+transparency = 1
+albedo_color = Color(0.98572034, 0.95828253, 1.540184e-06, 1)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_7l2jo"]
+material = SubResource("StandardMaterial3D_m2pv8")
+size = Vector2(0.05, 0.05)
+
+[sub_resource type="Gradient" id="Gradient_fgsq8"]
+offsets = PackedFloat32Array(0, 0.34920636, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ugjhr"]
+gradient = SubResource("Gradient_fgsq8")
+
+[sub_resource type="Curve" id="Curve_3y48j"]
+_data = [Vector2(0.06521739, 0.033707857), 0.0, 0.0, 0, 0, Vector2(0.26086956, 1), 0.0, 0.0, 0, 0, Vector2(0.9782608, 0.033707857), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_m2pv8"]
+curve = SubResource("Curve_3y48j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7l2jo"]
+particle_flag_damping_as_friction = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 4.9999976
+radial_accel_max = 7.9999976
+damping_min = 1.0
+damping_max = 1.0
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_m2pv8")
+color_ramp = SubResource("GradientTexture1D_ugjhr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owdnq"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.39215687)
+billboard_mode = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_qs1cd"]
+material = SubResource("StandardMaterial3D_owdnq")
+
+[node name="StaticBody3D_TabuaDeCorte" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
+transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_ajnkd")
+objeto_visual = NodePath("Objeto")
+cena_base_item = ExtResource("2_0x5eo")
+marker_holograma = NodePath("Marker3D_Holograma")
+marker_barra = NodePath("Marker3D_BarraDeProgresso")
+
+[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=158951603]
+shape = SubResource("CylinderShape3D_ilf4k")
+
+[node name="CSGCylinder3D_Caldeirao" type="CSGCylinder3D" parent="." unique_id=45977467]
+transform = Transform3D(1.01261, 0, 0, 0, 1.01261, 0, 0, 0, 1.01261, 0, 0, 0)
+visible = false
+material = SubResource("StandardMaterial3D_32uhq")
+
+[node name="Area3D_Monitor" type="Area3D" parent="." unique_id=999437992 groups=["caldeirao"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor" unique_id=1021824611]
+transform = Transform3D(1.05734, 0, 0, 0, 1.2563, 0, 0, 0, 0.989831, 0, 0.127148, 0)
+shape = SubResource("CylinderShape3D_nnrc6")
+
+[node name="Objeto" type="MeshInstance3D" parent="." unique_id=1832336314]
+transform = Transform3D(0.48, 0, 0, 0, 1.754, 0, 0, 0, 0.531, 0, 0, 0)
+mesh = ExtResource("3_ajnkd")
+surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
+
+[node name="Marker3D_Holograma" type="Marker3D" parent="." unique_id=206447482]
+transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 1, 0)
+
+[node name="Marker3D_BarraDeProgresso" type="Marker3D" parent="." unique_id=1438511329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.00277, 0)
+
+[node name="GPUParticles3D_Bolhas" type="GPUParticles3D" parent="." unique_id=1352104686]
+transform = Transform3D(0.103006, 0, 0, 0, 0.103006, 0, 0, 0, 0.103006, 0, 0.67502, 0)
+visible = false
+amount = 12
+lifetime = 3.0
+process_material = SubResource("ParticleProcessMaterial_jbp8p")
+draw_pass_1 = SubResource("SphereMesh_qut8x")
+
+[node name="GPUParticles3D_Fogareu" type="GPUParticles3D" parent="." unique_id=1689929271]
+transform = Transform3D(0.130803, 0, 0, 0, 0.130803, 0, 0, 0, 0.130803, 0.00565224, -1.07457, 0.00453556)
+visible = false
+material_override = SubResource("StandardMaterial3D_7ud17")
+amount = 50
+explosiveness = 0.19
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_gdpqk")
+draw_pass_1 = SubResource("BoxMesh_h0vqa")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="GPUParticles3D_Fogareu" unique_id=982638568]
+transform = Transform3D(7.8559, 0, 0, 0, 22.9564, 0, 0, 0, 7.8559, 0, 0, 0)
+light_color = Color(1, 0.698039, 0, 1)
+shadow_enabled = true
+omni_range = 22.524
+
+[node name="Soms" type="Node" parent="." unique_id=1674523745]
+
+[node name="AudioStreamPlayer3D_Borbulhando" type="AudioStreamPlayer3D" parent="Soms" unique_id=1611495825]
+stream = ExtResource("4_tsxko")
+volume_db = -18.823
+autoplay = true
+
+[node name="AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão" type="AudioStreamPlayer3D" parent="Soms" unique_id=549653759]
+stream = ExtResource("5_0uoty")
+volume_db = -7.843
+
+[node name="AudioStreamPlayer3D_Puff" type="AudioStreamPlayer3D" parent="Soms" unique_id=1146137322]
+stream = ExtResource("6_wf05w")
+
+[node name="GPUParticles3D_Sucesso" type="GPUParticles3D" parent="." unique_id=1212984358]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 3.6623683, 0)
+visible = false
+process_material = SubResource("ParticleProcessMaterial_3y48j")
+draw_pass_1 = SubResource("QuadMesh_7l2jo")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="GPUParticles3D_Sucesso" unique_id=1381126163]
+light_color = Color(1, 1, 0.70980394, 1)
+
+[node name="GPUParticles3D_Puff" type="GPUParticles3D" parent="." unique_id=28593857]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.8825055, 0)
+emitting = false
+amount = 20
+lifetime = 1.13
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_7l2jo")
+draw_pass_1 = SubResource("SphereMesh_qs1cd")
+
+[connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]

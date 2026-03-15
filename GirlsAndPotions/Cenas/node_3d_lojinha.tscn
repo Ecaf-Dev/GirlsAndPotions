@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://dmn5rba6cy5rq" path="res://GirlsAndPotions/Scripts/Camera3D.gd" id="3_057y4"]
 [ext_resource type="PackedScene" uid="uid://b24rs8h57wqg6" path="res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn" id="4_ahm42"]
 [ext_resource type="PackedScene" uid="uid://bjw4dhmf2enhd" path="res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn" id="5_2bddq"]
+[ext_resource type="PackedScene" uid="uid://c0miqn1n2npxs" path="res://GirlsAndPotions/Cenas/static_body_3d_tabua_de_corte.tscn" id="6_2fuaa"]
 [ext_resource type="PackedScene" uid="uid://b75oeoxyp6f54" path="res://GirlsAndPotions/Cenas/control_user_interface.tscn" id="6_hwnuv"]
 [ext_resource type="PackedScene" uid="uid://bcwkg3g4bglte" path="res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn" id="7_knyeq"]
 [ext_resource type="AudioStream" uid="uid://cfqwygtkcs8w0" path="res://GirlsAndPotions/Arts/Novos Sons/CelticaMusicHappy.wav" id="8_kk8d3"]
@@ -29,11 +30,11 @@ ambient_light_color = Color(0.431373, 0.74902, 0, 1)
 [node name="Node3D_Lojinha" type="Node3D" unique_id=431592752]
 
 [node name="CSGBox3D_Chao" type="CSGBox3D" parent="." unique_id=53243154]
-transform = Transform3D(1.0676485, 0, 0.24927399, 0, 1.5000008, 0, -0.21527569, 0, 1.2362612, 0, 0, 0)
+transform = Transform3D(1.0676485, 0, 0.24927399, 0, 1.5000008, 0, -0.21527569, 0, 1.2362612, 3.9033384, 0, 1.6987177)
 use_collision = true
 collision_layer = 3
 collision_mask = 3
-size = Vector3(10, 0.5, 10)
+size = Vector3(17.428345, 0.5, 13.864319)
 material = SubResource("StandardMaterial3D_valfg")
 
 [node name="CharacterBody3D_Player" parent="." unique_id=2115128453 instance=ExtResource("1_ibour")]
@@ -59,10 +60,13 @@ nome_item = "Flor Da Vida"
 quantidade_atual = 10
 
 [node name="StaticBody3D_Caldeirao" parent="." unique_id=744893990 instance=ExtResource("4_ahm42")]
-transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 0, 1.2, 0)
+transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 6.2022066, 1.2, -5.023356)
 
 [node name="StaticBody3D_Balcao" parent="." unique_id=1062721444 instance=ExtResource("5_2bddq")]
 transform = Transform3D(0.9999997, 0, 0, 0, 1, 0, 0, 0, 0.9999997, 1, 1, -5)
+
+[node name="StaticBody3D_TabuaDeCorte" parent="." unique_id=1720406554 instance=ExtResource("6_2fuaa")]
+transform = Transform3D(0.18233585, 0, -0.9559286, 0, 0.33302593, 0, 0.9559286, 0, 0.18233585, 10.789278, 1.0582578, -1.9701707)
 
 [node name="RigidBody3D_Objeto3" parent="." unique_id=1873023884 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.281746, 1.92376, 1.50226)

@@ -35,10 +35,13 @@ var interagindo: bool = false
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
 
+var escala_original_objeto_visual: Vector3 = Vector3(1,1,1)
+
 # --- CICLO DE VIDA ---
 
 func _ready():
 	meu_tipo_de_mobilia = name.replace("StaticBody3D_", "")
+	escala_original_objeto_visual = objeto_visual.scale
 	_conectar_as_receitas()
 # --- INTERAÇÕES E SLOTS ---
 
@@ -134,7 +137,9 @@ func cozinhar():
 
 	for nome_id in todas_as_receitas:
 		var dados = todas_as_receitas[nome_id]
-		if items_processando == [dados["item1"], dados["item2"]] and dados["pode_fabricar"]:
+		if (items_processando == [dados["item1"], dados["item2"]] 
+		and dados["pode_fabricar"]
+		and dados["Mobilia"] == meu_tipo_de_mobilia):
 			sucesso = true
 			liquidodocaldeirão = dados["nome"]
 			pronto_para_coleta = true
@@ -277,8 +282,10 @@ func _falha_na_cozinha():
 func elastico():
 	if !objeto_visual: return
 	var tween = create_tween()
-	tween.tween_property(objeto_visual, "scale", Vector3(0.6, 2.6, 0.8), 0.1).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(objeto_visual, "scale", Vector3(0.8, 2.9, 1.0), 0.3).set_trans(Tween.TRANS_ELASTIC)
+	var vetor_do_efeito = Vector3(escala_original_objeto_visual.x - 0.2, escala_original_objeto_visual.y - 0.3, escala_original_objeto_visual.z - 0.2)
+
+	tween.tween_property(objeto_visual, "scale", vetor_do_efeito, 0.1).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(objeto_visual, "scale", escala_original_objeto_visual, 0.3).set_trans(Tween.TRANS_ELASTIC)
 
 func _rejeitar_item(item):
 	if item is RigidBody3D:

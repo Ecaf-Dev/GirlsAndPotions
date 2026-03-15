@@ -46,6 +46,9 @@ func _carregar_visual_automatico():
 		aplicar_elastico_externo(instancia)
 		print("Sucesso: Visual de '", nome_item, "' carregado. Qtd: ", quantidade_atual)
 	else:
+		var modelo_padrao = MeshInstance3D.new();
+		if has_node("CSGBox3D_ObjetoVisual"):
+			$CSGBox3D_ObjetoVisual.visible = true
 		print("Aviso: Modelo não encontrado para ", nome_item)
 func _physics_process(_delta):
 	# Se o item estiver parado no ar (freeze falso) mas não estiver caindo (linear_velocity baixa)
