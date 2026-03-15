@@ -76,7 +76,7 @@ func _processar_inputs():
 	if Input.is_action_just_pressed("tecla_z"):
 		# 1. Prioridade: Coleta (Se tiver algo pronto, tenta coletar com frasco)
 		if objeto_interagivel and objeto_interagivel.pronto_para_coleta:
-			if objeto_levantado and _saberoquelevo():
+			if _saberoquelevo():
 				return
 
 		# 2. Prioridade: Iniciar Cozimento (Só se não estiver cozinhando e não estiver pronto)
@@ -199,18 +199,20 @@ func _instanciar_na_mao(nome):
 # --- AUXILIARES E VISUAIS ---
 
 func _saberoquelevo() -> bool:
-	var rb_objeto_levantado = objeto_levantado.get_parent()
-	if (!rb_objeto_levantado || 
-		!("nome_item" in rb_objeto_levantado) || 
-		rb_objeto_levantado.nome_item != "Frasco Vazio"):
-		return false
-		
 	if !objeto_interagivel || !objeto_interagivel.has_method("coletarliquido"):
 		return false
 		
-	var res = objeto_interagivel.coletarliquido(rb_objeto_levantado.nome_item)
-	rb_objeto_levantado.nome_item = res[1]
-	rb_objeto_levantado._carregar_visual_automatico()
+	var rb_objeto_levantado = objeto_levantado.get_parent() if objeto_levantado else null
+	var nome_item_levantado = rb_objeto_levantado.nome_item if rb_objeto_levantado else null;	
+	var nome_receita_coletada = objeto_interagivel.coletarliquido(nome_item_levantado)
+	if !nome_receita_coletada:
+		return false;
+	
+	if rb_objeto_levantado:
+		rb_objeto_levantado.nome_item = nome_receita_coletada
+		rb_objeto_levantado._carregar_visual_automatico()
+	else:
+		_instanciar_na_mao(nome_receita_coletada)
 	return true
 
 func _falaronomedoitem(nome):
