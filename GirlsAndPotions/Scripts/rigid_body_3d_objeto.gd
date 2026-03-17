@@ -9,6 +9,7 @@ var escala_base_modelo : Vector3 = Vector3.ONE
 func _ready():
 	await get_tree().create_timer(0.01).timeout
 	_carregar_visual_automatico()
+	_conectarcomglobalitem()
 
 func _carregar_visual_automatico():
 	# 1. Limpeza de modelos antigos
@@ -139,3 +140,10 @@ func _configurar_display_caixa(instancia_caixa):
 	# 2. Configura a Label de quantidade
 	if label_qtd:
 		label_qtd.text = str(quantidade_atual)
+
+func _conectarcomglobalitem():
+	if Items.itens.has(nome_item):
+		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
+		var dados = Items.itens[nome_item]
+		var res = dados.get("euando", false)
+		print(res)

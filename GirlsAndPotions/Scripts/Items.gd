@@ -81,6 +81,6 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/petalas_da_flor_da_vida.png",
 		"compravel": false,
 		"escala_icone" : 0.5,
-		"euando?" : false
+		"euando" : false
 	}
 }
