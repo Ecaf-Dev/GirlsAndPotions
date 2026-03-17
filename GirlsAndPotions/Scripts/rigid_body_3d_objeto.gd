@@ -162,3 +162,5 @@ func _saidinhaanoite():
 	
 	if has_method("aplicar_elastico_externo"):
 		aplicar_elastico_externo()
+	await get_tree().create_timer(3.0).timeout
+	_saidinhaanoite()
