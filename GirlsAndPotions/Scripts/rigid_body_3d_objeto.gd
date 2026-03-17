@@ -142,7 +142,7 @@ func _configurar_display_caixa(instancia_caixa):
 		label_qtd.text = str(quantidade_atual)
 
 func _conectarcomglobalitem():
-	if Items.itens.has(nome_item):
+	if Items.itens.has(nome_item) && quantidade_atual == 1:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		var dados = Items.itens[nome_item]
 		var res = dados.get("euando", false)
