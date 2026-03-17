@@ -10,7 +10,8 @@ var itens = {
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/flor_da_vida.png",
 		"compravel": true,
-		"escala_icone" : 0.7
+		"escala_icone" : 0.7,
+		"euando?" : false
 	},
 	"Flor Magica": {
 		"nome": "Flor Magica",
@@ -19,7 +20,8 @@ var itens = {
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/Flor_magica.png",
 		"compravel": true,
-		"escala_icone" : 0.5
+		"escala_icone" : 0.5,
+		"euando?" : false
 	},
 	"Frasco Vazio": {
 		"nome": "Frasco Vazio",
@@ -28,7 +30,8 @@ var itens = {
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/frasco_vazio.png",
 		"compravel": true,
-		"escala_icone" : 0.3
+		"escala_icone" : 0.3,
+		"euando?" : false
 	},
 	"Poção De Cura": {
 		"nome": "Poção De Cura",
@@ -37,7 +40,8 @@ var itens = {
 		"valor_venda": 6,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura.png",
 		"compravel": false,
-		"escala_icone" : 0.6
+		"escala_icone" : 0.6,
+		"euando?" : false
 	},
 	"Poção Da Determinação": {
 		"nome": "Poção Da Determinação",
@@ -46,7 +50,8 @@ var itens = {
 		"valor_venda": 10,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_da_determinação.png",
 		"compravel": false,
-		"escala_icone" : 0.6
+		"escala_icone" : 0.6,
+		"euando?" : false
 	},
 	"Poção De Mana": {
 		"nome": "Poção De Mana",
@@ -55,7 +60,8 @@ var itens = {
 		"valor_venda": 5,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_mana.png",
 		"compravel": false,
-		"escala_icone" : 0.6
+		"escala_icone" : 0.6,
+		"euando?" : false
 	},
 	"Poção De Cura Maior": {
 		"nome": "Poção De Cura Maior",
@@ -64,7 +70,8 @@ var itens = {
 		"valor_venda": 12,
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura_maior.png",
 		"compravel": false,
-		"escala_icone" : 0.5
+		"escala_icone" : 0.5,
+		"euando?" : false
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",
@@ -73,6 +80,7 @@ var itens = {
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/petalas_da_flor_da_vida.png",
 		"compravel": false,
-		"escala_icone" : 0.5
+		"escala_icone" : 0.5,
+		"euando?" : false
 	}
 }
