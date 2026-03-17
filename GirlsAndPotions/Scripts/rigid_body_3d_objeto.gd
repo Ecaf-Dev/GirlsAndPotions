@@ -147,3 +147,18 @@ func _conectarcomglobalitem():
 		var dados = Items.itens[nome_item]
 		var res = dados.get("euando", false)
 		print(res)
+		if res:
+			_saidinhaanoite()
+
+func _saidinhaanoite():
+	var direcao_aleatoria = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
+	var forca_pulo = 5
+	var forca_impulso = 3
+	
+	var impulso_final= (direcao_aleatoria * forca_impulso) + (Vector3.UP * forca_pulo)
+	
+	freeze = false
+	apply_central_impulse(impulso_final)
+	
+	if has_method("aplicar_elastico_externo"):
+		aplicar_elastico_externo()
