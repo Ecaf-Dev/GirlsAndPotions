@@ -149,6 +149,9 @@ func _conectarcomglobalitem():
 		print(res)
 		if res:
 			_saidinhaanoite()
+	else:
+		await get_tree().create_timer(10.0).timeout 
+		_conectarcomglobalitem()
 
 func _saidinhaanoite():
 	var direcao_aleatoria = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
