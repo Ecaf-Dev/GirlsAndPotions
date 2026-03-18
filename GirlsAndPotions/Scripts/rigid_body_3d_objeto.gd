@@ -183,24 +183,16 @@ func _saidinhaanoite():
 
 func _fugadaprisao():
 	_diminuirquantidade()
-	# Checamos se ainda havia itens para subtrair
 	
 	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
 	var novo_item = cena_item.instantiate()
 		
-	# 1. Configuramos os dados básicos
 	novo_item.nome_item = self.nome_item
 	novo_item.quantidade_atual = 1
 		
-	# 2. Adicionamos ao mundo (pai da caixa)
 	var mapa_principal = get_tree().current_scene
 	mapa_principal.add_child(novo_item)
 		
-	# 3. Posicionamos acima da caixa
 	novo_item.global_position = self.global_position + Vector3.UP * 3
 		
 	novo_item._saidinhaanoite()
-	#if novo_item.has_method("_saidinhaanoite"):
-		# Pequeno delay ou deferred para garantir que o spawn foi limpo
-		#novo_item.call_deferred("_saidinhaanoite")
-		#print("🏃 O novo item '", nome_item, "' nasceu e já saiu pulando!")
