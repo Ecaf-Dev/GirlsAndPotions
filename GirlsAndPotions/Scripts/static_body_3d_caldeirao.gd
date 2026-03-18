@@ -20,7 +20,7 @@ extends StaticBody3D
 # --- VARIÁVEIS DE ESTADO ---
 var items_processando = [] 
 var meu_tipo_de_mobilia : String = ""
-var liquidodocaldeirão: String = ""
+var receita_concluida = {}
 var cor_original = Color(0.0, 0.4, 0.9)
 var cor_da_pocao : Color = Color.WHITE
 
@@ -131,17 +131,19 @@ func cozinhando_pocao():
 	cozinhando = false
 
 func cozinhar():
-	var todas_as_receitas = Receitas.receitas
 	var sucesso = false
 	querointeracao = false
 
-	for nome_id in todas_as_receitas:
-		var dados = todas_as_receitas[nome_id]
-		if (items_processando == [dados["item1"], dados["item2"]] 
-		and dados["pode_fabricar"]
-		and dados["Mobilia"] == meu_tipo_de_mobilia):
+	for nome_receita in Receitas.receitas:
+		var receita = Receitas.receitas[nome_receita]
+		if (items_processando == [receita["item1"], receita["item2"]] 
+			and receita["pode_fabricar"]
+			and receita["Mobilia"] == meu_tipo_de_mobilia):
 			sucesso = true
-			liquidodocaldeirão = dados["nome"]
+			receita_concluida = {
+				nome = receita["nome"], 
+				objeto_necessario = receita["objeto_necessario"]
+				}
 			pronto_para_coleta = true
 			alternar_estado_pronto()
 			break
@@ -248,18 +250,25 @@ func _pegar_cor_do_holograma(holo: Node3D) -> Color:
 
 # --- COLETA E UTILITÁRIOS ---
 
-func coletarliquido(nomedoobjetocarregado) -> Array:
-	if nomedoobjetocarregado == "Frasco Vazio" and pronto_para_coleta:
-		var nome_para_enviar = liquidodocaldeirão
-		if holograma_atual: holograma_atual.queue_free(); holograma_atual = null
-		if icone_coleta: icone_coleta.visible = false
+func coletarliquido(nomedoobjetocarregado):
+	if (receita_concluida.objeto_necessario != nomedoobjetocarregado):
+		return null;
+	
+	if !pronto_para_coleta:
+		return null
 		
-		liquidodocaldeirão = ""
-		pronto_para_coleta = false
-		alternar_estado_pronto()
-		alterar_cor_liquido(cor_original)
-		return [true, nome_para_enviar]
-	return [false, "Frasco Vazio"]
+	if holograma_atual: 
+		holograma_atual.queue_free(); 
+		holograma_atual = null
+	if icone_coleta: 
+		icone_coleta.visible = false
+		
+	pronto_para_coleta = false
+	alternar_estado_pronto()
+	alterar_cor_liquido(cor_original)
+	var nome_receita_concluida = receita_concluida.nome
+	receita_concluida = {}
+	return nome_receita_concluida
 
 func _disparar_puff_colorido(cor: Color):
 	_sompuff()
