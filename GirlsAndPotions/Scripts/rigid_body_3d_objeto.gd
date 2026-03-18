@@ -81,7 +81,6 @@ func _aumentarquantidade(outro_item):
 	# O item que fica chama o visual e o elástico automaticamente
 	outro_item._carregar_visual_automatico()
 	queue_free()
-	_conectarcomglobalitem()
 
 func _diminuirquantidade():
 	if quantidade_atual > 1:
