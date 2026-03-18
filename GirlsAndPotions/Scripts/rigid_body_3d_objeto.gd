@@ -1,3 +1,4 @@
+class_name Objeto
 extends RigidBody3D
 
 @export var nome_item : String = ""

@@ -1,3 +1,4 @@
+class_name CaixaDeCorreio
 extends StaticBody3D
 
 
