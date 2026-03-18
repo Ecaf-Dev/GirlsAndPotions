@@ -11,7 +11,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/flor_da_vida.png",
 		"compravel": true,
 		"escala_icone" : 0.7,
-		"euando" : true
+		"euando" : true,
+		"eu_fujo" : false
 	},
 	"Flor Magica": {
 		"nome": "Flor Magica",
@@ -21,7 +22,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/Flor_magica.png",
 		"compravel": true,
 		"escala_icone" : 0.5,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	},
 	"Frasco Vazio": {
 		"nome": "Frasco Vazio",
@@ -31,7 +33,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/frasco_vazio.png",
 		"compravel": true,
 		"escala_icone" : 0.3,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	},
 	"Poção De Cura": {
 		"nome": "Poção De Cura",
@@ -41,7 +44,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura.png",
 		"compravel": false,
 		"escala_icone" : 0.6,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	},
 	"Poção Da Determinação": {
 		"nome": "Poção Da Determinação",
@@ -51,7 +55,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_da_determinação.png",
 		"compravel": false,
 		"escala_icone" : 0.6,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	},
 	"Poção De Mana": {
 		"nome": "Poção De Mana",
@@ -61,7 +66,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_mana.png",
 		"compravel": false,
 		"escala_icone" : 0.6,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	},
 	"Poção De Cura Maior": {
 		"nome": "Poção De Cura Maior",
@@ -71,7 +77,8 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/poção_de_cura_maior.png",
 		"compravel": false,
 		"escala_icone" : 0.5,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",
@@ -81,6 +88,7 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/petalas_da_flor_da_vida.png",
 		"compravel": false,
 		"escala_icone" : 0.5,
-		"euando" : false
+		"euando" : false,
+		"eu_fujo" : false
 	}
 }
