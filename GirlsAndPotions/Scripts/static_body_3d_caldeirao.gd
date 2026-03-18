@@ -1,3 +1,4 @@
+class_name Caldeirao
 extends StaticBody3D
 
 # --- CONFIGURAÇÕES ---
@@ -17,10 +18,20 @@ extends StaticBody3D
 @onready var particulas_puff = $GPUParticles3D_Puff
 @onready var particulas_bolhas = $GPUParticles3D_Bolhas
 
+# CLASSES INTERNAS
+class ReceitaConcluida:
+	var nome: String
+	var objeto_necessario
+	
+	func _init(p_nome: String, p_objeto_necessario):
+		nome = p_nome
+		objeto_necessario = p_objeto_necessario
+	
+
 # --- VARIÁVEIS DE ESTADO ---
 var items_processando = [] 
 var meu_tipo_de_mobilia : String = ""
-var receita_concluida = {}
+var receita_concluida: ReceitaConcluida = null
 var cor_original = Color(0.0, 0.4, 0.9)
 var cor_da_pocao : Color = Color.WHITE
 
@@ -48,7 +59,8 @@ func _ready():
 func _on_area_3d_monitor_body_entered(objeto_colidido):
 	var numero_de_items_excedido = items_processando.size() >= MAX_SLOTS;
 	var devo_rejeitar_objeto = (cozinhando || 
-								"nome_item" not in objeto_colidido || 
+								pronto_para_coleta ||
+								objeto_colidido is not Objeto || 
 								objeto_colidido.quantidade_atual > 1 ||
 								numero_de_items_excedido ||
 								objeto_colidido.nome_item == "Frasco Vazio");
@@ -60,29 +72,18 @@ func _on_area_3d_monitor_body_entered(objeto_colidido):
 	_adicionar_item_para_processamento(objeto_colidido)
 	return;
 
-func _adicionar_item_para_processamento(objeto_colidido):
+func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 	items_processando.append(objeto_colidido.nome_item)
 	_somitemadicionado()
 	_receita_compativel(items_processando)
 	objeto_colidido.queue_free()
-	elastico()
+	_elastico()
 
 func _receita_compativel(itens: Array):
 	alterar_cor_liquido()
 	if itens.size() < MAX_SLOTS: return null
 
-	var todas_as_receitas = Receitas.receitas
-	var receita_encontrada = null
-
-	for nome_id in todas_as_receitas:
-		var dados = todas_as_receitas[nome_id]
-		if dados.get("Mobilia", "") != meu_tipo_de_mobilia: continue
-
-		var ingredientes_receita = [dados["item1"], dados["item2"]]
-		if itens == ingredientes_receita:
-			receita_encontrada = dados
-			break
-	
+	var receita_encontrada = Receitas.pegar_receita_compativel(itens, meu_tipo_de_mobilia)
 	if receita_encontrada and receita_encontrada["pode_fabricar"]:
 		receita_validada = true
 		tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
@@ -90,10 +91,10 @@ func _receita_compativel(itens: Array):
 		if holograma_atual:
 			cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
 			alterar_cor_liquido(cor_da_pocao)
-		return receita_encontrada
+		return
 	
 	receita_validada = false
-	return null
+	return
 
 # --- LÓGICA DE PREPARO ---
 
@@ -134,26 +135,21 @@ func cozinhar():
 	var sucesso = false
 	querointeracao = false
 
-	for nome_receita in Receitas.receitas:
-		var receita = Receitas.receitas[nome_receita]
-		if (items_processando == [receita["item1"], receita["item2"]] 
-			and receita["pode_fabricar"]
-			and receita["Mobilia"] == meu_tipo_de_mobilia):
-			sucesso = true
-			receita_concluida = {
-				nome = receita["nome"], 
-				objeto_necessario = receita["objeto_necessario"]
-				}
-			pronto_para_coleta = true
-			alternar_estado_pronto()
-			break
+	var receita_compativel = Receitas.pegar_receita_compativel(items_processando, meu_tipo_de_mobilia);
+	if (receita_compativel):
+		sucesso = true
+		receita_concluida = ReceitaConcluida.new(
+			receita_compativel["nome"], 
+			receita_compativel["objeto_necessario"])
+		pronto_para_coleta = true
+		_alternar_estado_pronto()
 
 	if sucesso and holograma_atual:
 		var cor = await _pegar_cor_do_holograma(holograma_atual)
 		_disparar_puff_colorido(cor)
 		alterar_cor_liquido(cor)
 	elif !sucesso:
-		elastico()
+		_elastico()
 	
 	items_processando.clear()
 
@@ -250,8 +246,9 @@ func _pegar_cor_do_holograma(holo: Node3D) -> Color:
 
 # --- COLETA E UTILITÁRIOS ---
 
-func coletarliquido(nomedoobjetocarregado):
-	if (receita_concluida.objeto_necessario != nomedoobjetocarregado):
+func coletarliquido(objeto_levantado: Objeto):
+	var objeto_necessario = objeto_levantado.nome_item if objeto_levantado else null
+	if (receita_concluida.objeto_necessario != objeto_necessario):
 		return null;
 	
 	if !pronto_para_coleta:
@@ -264,10 +261,10 @@ func coletarliquido(nomedoobjetocarregado):
 		icone_coleta.visible = false
 		
 	pronto_para_coleta = false
-	alternar_estado_pronto()
+	_alternar_estado_pronto()
 	alterar_cor_liquido(cor_original)
 	var nome_receita_concluida = receita_concluida.nome
-	receita_concluida = {}
+	receita_concluida = null
 	return nome_receita_concluida
 
 func _disparar_puff_colorido(cor: Color):
@@ -284,11 +281,11 @@ func _falha_na_cozinha():
 	tempo_da_receita = 1
 	receita_validada = false
 	alterar_cor_liquido(cor_original)
-	elastico()
+	_elastico()
 	items_processando.clear()
 	if holograma_atual: holograma_atual.queue_free(); holograma_atual = null
 
-func elastico():
+func _elastico():
 	if !objeto_visual: return
 	var tween = create_tween()
 	var vetor_do_efeito = Vector3(escala_original_objeto_visual.x - 0.2, escala_original_objeto_visual.y - 0.3, escala_original_objeto_visual.z - 0.2)
@@ -297,17 +294,17 @@ func elastico():
 	tween.tween_property(objeto_visual, "scale", escala_original_objeto_visual, 0.3).set_trans(Tween.TRANS_ELASTIC)
 
 func _rejeitar_item(item):
-	if item is RigidBody3D:
+	if item is Objeto:
 		var dir = (item.global_position - global_position).normalized()
 		item.apply_central_impulse(dir * 4.0 + Vector3.UP * 3.0)
-	elastico()
+		_elastico()
 
 func _conectar_as_receitas():
 	var todas = Receitas.receitas 
 	for id in todas:
 		print("Poção: ", id, " | Ingredientes: ", [todas[id]["item1"], todas[id]["item2"]])
 
-func alternar_estado_pronto():
+func _alternar_estado_pronto():
 	if particula_de_luz: particula_de_luz.visible = !particula_de_luz.visible
 
 func _somitemadicionado():
@@ -317,8 +314,3 @@ func _somitemadicionado():
 func _sompuff():
 	if get_node_or_null("Soms/AudioStreamPlayer3D_Puff"):
 		$Soms/AudioStreamPlayer3D_Puff.play()
-
-func _preparandoingrediente():
-	#enquanto interagindo for verdadeiro, e a variavel, automatico for falsa, a preparação da poção vai progredir em paralelo
-	if mobilia_automatica == false && querointeracao == true:
-		interagindo = !interagindo

@@ -1,3 +1,4 @@
+class_name Jogador
 extends CharacterBody3D
 
 # --- CONSTANTES ---
@@ -10,7 +11,7 @@ const INTERVALO_PASSO = 0.4
 @export var multiplicador_distancia: float = 0.15
 
 # --- VARIÁVEIS DE ESTADO ---
-var objeto_levantado = null
+var objeto_levantado: Objeto = null
 var objeto_proximo = null
 var forca_atual: float = 0.0
 const FORCA_MAXIMA = 100.0
@@ -122,8 +123,8 @@ func _on_area_3d_monitor_area_exited(area):
 
 func _levantaritem():
 	if objeto_levantado == null and objeto_proximo != null:
-		objeto_levantado = objeto_proximo
-		var corpo = objeto_levantado.get_parent()
+		objeto_levantado = objeto_proximo.get_parent()
+		var corpo = objeto_levantado;
 		
 		corpo.aplicar_elastico_externo()
 		corpo.freeze = true
@@ -135,7 +136,7 @@ func _levantaritem():
 		_somlevantandoobjeto()
 
 func _soltaritem():
-	var corpo = objeto_levantado.get_parent()
+	var corpo = objeto_levantado
 	corpo.reparent(get_tree().current_scene)
 	
 	var direcao_frente = global_transform.basis.z
@@ -154,7 +155,7 @@ func _soltaritem():
 
 func _jogaritem():
 	if objeto_levantado == null: return
-	var corpo = objeto_levantado.get_parent()
+	var corpo = objeto_levantado
 	
 	var direcao_frente = -Vector3.FORWARD.rotated(Vector3.UP, rotation.y).normalized()
 	var impulso = (direcao_frente * 8.0) + (Vector3.UP * 2.0)
@@ -194,7 +195,7 @@ func _instanciar_na_mao(nome):
 	if novo_item.has_node("CollisionShape3D"):
 		novo_item.get_node("CollisionShape3D").disabled = true
 	
-	objeto_levantado = novo_item.get_node("Area3D_Monitor")
+	objeto_levantado = novo_item
 
 # --- AUXILIARES E VISUAIS ---
 
@@ -202,15 +203,13 @@ func _saberoquelevo() -> bool:
 	if !objeto_interagivel || !objeto_interagivel.has_method("coletarliquido"):
 		return false
 		
-	var rb_objeto_levantado = objeto_levantado.get_parent() if objeto_levantado else null
-	var nome_item_levantado = rb_objeto_levantado.nome_item if rb_objeto_levantado else null;	
-	var nome_receita_coletada = objeto_interagivel.coletarliquido(nome_item_levantado)
+	var nome_receita_coletada = objeto_interagivel.coletarliquido(objeto_levantado)
 	if !nome_receita_coletada:
 		return false;
 	
-	if rb_objeto_levantado:
-		rb_objeto_levantado.nome_item = nome_receita_coletada
-		rb_objeto_levantado._carregar_visual_automatico()
+	if objeto_levantado:
+		objeto_levantado.nome_item = nome_receita_coletada
+		objeto_levantado._carregar_visual_automatico()
 	else:
 		_instanciar_na_mao(nome_receita_coletada)
 	return true

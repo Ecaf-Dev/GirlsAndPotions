@@ -1,3 +1,4 @@
+class_name Balcao
 extends StaticBody3D
 
 @export var pedidos = []
@@ -148,7 +149,7 @@ func _checarentrega(objeto):
 		_rejeitar_item(objeto)
 		
 func _recompensa(nome_da_pocao):
-	elastico()
+	_elastico()
 	
 	# Buscamos os dados do item no seu script global Items
 	if Items.itens.has(nome_da_pocao):
@@ -171,9 +172,9 @@ func _rejeitar_item(item):
 	if item is RigidBody3D:
 		var direcao = (item.global_position - global_position).normalized()
 		item.apply_central_impulse(direcao * 4.0 + Vector3.UP * 3.0)
-	elastico()
+	_elastico()
 
-func elastico():
+func _elastico():
 	if objeto_visual == null: return
 	var tween = create_tween()
 	tween.tween_property(objeto_visual, "scale", Vector3(0.35, 0.7, 0.35), 0.1)\
@@ -183,12 +184,7 @@ func elastico():
 
 func _gerar_pedidos_por_populacao():
 	# 1. Filtra poções viáveis
-	var todas_as_receitas = Receitas.receitas
-	pedidos_viaveis.clear()
-	for nome in todas_as_receitas:
-		if todas_as_receitas[nome]["pode_fabricar"] == true:
-			pedidos_viaveis.append(nome)
-
+	pedidos_viaveis = Receitas.pegar_receitas_viaveis();
 	if pedidos_viaveis.is_empty(): return
 
 	# 2. Calcula a demanda total do dia baseada na população
