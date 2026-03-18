@@ -9,6 +9,7 @@ var escala_base_modelo : Vector3 = Vector3.ONE
 func _ready():
 	await get_tree().create_timer(0.01).timeout
 	_carregar_visual_automatico()
+	await get_tree().create_timer(0.01).timeout
 	_conectarcomglobalitem()
 
 func _carregar_visual_automatico():
@@ -30,6 +31,7 @@ func _carregar_visual_automatico():
 		if FileAccess.file_exists(caminho_modelo_caixa):
 			_somvirarcaixa()
 			cena_modelo = load(caminho_modelo_caixa)
+			
 			
 	if cena_modelo:
 		var instancia = cena_modelo.instantiate()
@@ -82,6 +84,7 @@ func _aumentarquantidade(outro_item):
 	# O item que fica chama o visual e o elástico automaticamente
 	outro_item._carregar_visual_automatico()
 	queue_free()
+	_conectarcomglobalitem()
 
 func _diminuirquantidade():
 	if quantidade_atual > 1:
@@ -142,17 +145,29 @@ func _configurar_display_caixa(instancia_caixa):
 		label_qtd.text = str(quantidade_atual)
 
 func _conectarcomglobalitem():
-	if Items.itens.has(nome_item) && quantidade_atual == 1 && freeze == false:
+	if(!Items.itens.has(nome_item)):
+		print("aqui",nome_item)
+		return
+		
+	if quantidade_atual <= 1 && !freeze:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		var dados = Items.itens[nome_item]
 		var res = dados.get("euando", false)
 		print(res)
 		if res:
 			_saidinhaanoite()
+	if(quantidade_atual >1 && !freeze):
+		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
+		print(quantidade_atual)
+		var dados = Items.itens[nome_item]
+		var res = dados.get("eu_fujo", false)
+		if res:
+			_fugadaprisao()
 	else:
 		await get_tree().create_timer(10.0).timeout 
 		_conectarcomglobalitem()
-
+	return	
+	
 func _saidinhaanoite():
 	var direcao_aleatoria = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
 	var forca_pulo = 5
@@ -165,5 +180,34 @@ func _saidinhaanoite():
 	
 	if has_method("aplicar_elastico_externo"):
 		aplicar_elastico_externo()
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(4.0).timeout
+	_conectarcomglobalitem()
+
+func _fugadaprisao():
+	_diminuirquantidade()
+	# Checamos se ainda havia itens para subtrair
+	
+	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
+	var novo_item = cena_item.instantiate()
+		
+	# 1. Configuramos os dados básicos
+	novo_item.nome_item = self.nome_item
+	novo_item.quantidade_atual = 1
+		
+	# 2. Adicionamos ao mundo (pai da caixa)
+	var mapa_principal = get_tree().current_scene
+	mapa_principal.add_child(novo_item)
+		
+	# 3. Posicionamos acima da caixa
+	novo_item.global_position = self.global_position + Vector3.UP * 2.5
+		
+	if novo_item.has_method("_saidinhaanoite"):
+		# Pequeno delay ou deferred para garantir que o spawn foi limpo
+		novo_item.call_deferred("_saidinhaanoite")
+		print("🏃 O novo item '", nome_item, "' nasceu e já saiu pulando!")
+		# 4. A MÁGICA: Chamamos a função de pulo que já existe no script do item!
+		# Usamos o call_deferred para garantir que a física esteja pronta	
+	
+	# 5. Loop de espera para a próxima tentativa de fuga da caixa
+	await get_tree().create_timer(5.0).timeout
 	_conectarcomglobalitem()

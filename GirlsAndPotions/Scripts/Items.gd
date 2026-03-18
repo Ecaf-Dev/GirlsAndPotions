@@ -78,7 +78,7 @@ var itens = {
 		"compravel": false,
 		"escala_icone" : 0.5,
 		"euando" : false,
-		"eu_fujo" : false
+		"eu_fujo" : true
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",
