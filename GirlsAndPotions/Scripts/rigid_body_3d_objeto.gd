@@ -9,6 +9,7 @@ var escala_base_modelo : Vector3 = Vector3.ONE
 func _ready():
 	await get_tree().create_timer(0.01).timeout
 	_carregar_visual_automatico()
+	_conectarcomglobalitem()
 
 func _carregar_visual_automatico():
 	# 1. Limpeza de modelos antigos
@@ -139,3 +140,30 @@ func _configurar_display_caixa(instancia_caixa):
 	# 2. Configura a Label de quantidade
 	if label_qtd:
 		label_qtd.text = str(quantidade_atual)
+
+func _conectarcomglobalitem():
+	if Items.itens.has(nome_item) && quantidade_atual == 1 && freeze == false:
+		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
+		var dados = Items.itens[nome_item]
+		var res = dados.get("euando", false)
+		print(res)
+		if res:
+			_saidinhaanoite()
+	else:
+		await get_tree().create_timer(10.0).timeout 
+		_conectarcomglobalitem()
+
+func _saidinhaanoite():
+	var direcao_aleatoria = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
+	var forca_pulo = 5
+	var forca_impulso = 3
+	
+	var impulso_final= (direcao_aleatoria * forca_impulso) + (Vector3.UP * forca_pulo)
+	
+	freeze = false
+	apply_central_impulse(impulso_final)
+	
+	if has_method("aplicar_elastico_externo"):
+		aplicar_elastico_externo()
+	await get_tree().create_timer(3.0).timeout
+	_conectarcomglobalitem()
