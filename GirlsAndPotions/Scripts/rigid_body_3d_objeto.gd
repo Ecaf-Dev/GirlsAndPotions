@@ -121,17 +121,16 @@ func _configurar_display_caixa(instancia_caixa):
 	var label_qtd = instancia_caixa.find_child("Label3D_Quantidade", true, false)
 	
 	# 1. Configura o Ícone e sua Escala
-	if sprite_icone and Items.itens.has(nome_item):
-		var dados = Items.itens[nome_item]
-		
+	var item = Items.pegar_item(nome_item);
+	if sprite_icone and item:		
 		# Carrega a textura
-		var caminho_icone = dados.get("icon", "")
+		var caminho_icone = item.icon
 		if caminho_icone != "":
 			sprite_icone.texture = load(caminho_icone)
 		
 		# --- AJUSTE DE TAMANHO DA ART (UPGRADE!) ---
 		# Pega a escala_icone do Items.gd. Se não existir, usa 1.0 como padrão.
-		var escala_vinda_do_script = dados.get("escala_icone", 1.0)
+		var escala_vinda_do_script = item.escala_icone
 		
 		# Aplicamos a escala no Sprite3D (ajustando X e Y)
 		sprite_icone.scale = Vector3(escala_vinda_do_script, escala_vinda_do_script, 1.0)
@@ -141,17 +140,16 @@ func _configurar_display_caixa(instancia_caixa):
 		label_qtd.text = str(quantidade_atual)
 
 func _conectarcomglobalitem():
-	if(!Items.itens.has(nome_item)):
-		print("ITEM NÃO ESTÁ CONFIGURADO NO ITEMS.GD -> ",nome_item)
+	var item = Items.pegar_item(nome_item)
+	if !item:
 		return;
 		
 	if quantidade_atual == 1 && !freeze:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
-		var dados = Items.itens[nome_item]
-		var res = dados.get("eu_ando", false)
+		var res = item.eu_ando
 		print(res)
 		if res:
-			var restempo = dados.get("tempo_eu_ando", 0)
+			var restempo = item.tempo_eu_ando
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
 			_saidinhaanoite()
@@ -159,13 +157,12 @@ func _conectarcomglobalitem():
 	if(quantidade_atual >1 && !freeze):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		print(quantidade_atual)
-		var dados = Items.itens[nome_item]
-		var res = dados.get("eu_fujo", false)
+		var res = item.eu_fujo
 		if res:
-			var restempo = dados.get("tempo_eu_fujo", 0)
+			var restempo = item.tempo_eu_fujo
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			_fugadaprisao()
+			_fugadaprisao(item)
 			_conectarcomglobalitem()
 	else:
 		await get_tree().create_timer(10.0).timeout 
@@ -185,7 +182,7 @@ func _saidinhaanoite():
 	if has_method("aplicar_elastico_externo"):
 		aplicar_elastico_externo()
 
-func _fugadaprisao():
+func _fugadaprisao(item: Items.Item):
 	_diminuirquantidade()
 	
 	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
@@ -197,8 +194,8 @@ func _fugadaprisao():
 	var mapa_principal = get_tree().current_scene
 	mapa_principal.add_child(novo_item)
 	
-	var vou_pular = randf_range(0, 1.0)
-	var soma = Vector3.UP * 2 if vou_pular > 0.8 else Vector3.UP * 1;
+	var vou_pular = randf_range(0, 1.0) < item.probabilidade_fuga;
+	var soma = Vector3.UP * 2 if vou_pular else Vector3.UP * 1;
 	novo_item.global_position = self.global_position + soma;
 		
 	novo_item._saidinhaanoite()

@@ -54,8 +54,9 @@ func _criar_texture_rect(nome_item: String, liberado: bool, eh_resultado: bool =
 	
 	if liberado:
 		# Busca o ícone no script de Itens
-		if Items.itens.has(nome_item):
-			var caminho_icon = Items.itens[nome_item]["icon"]
+		var item = Items.pegar_item(nome_item);
+		if item:
+			var caminho_icon = item.icon
 			if caminho_icon != "":
 				tex_rect.texture = load(caminho_icon)
 			else:
