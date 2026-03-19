@@ -143,7 +143,8 @@ func _configurar_display_caixa(instancia_caixa):
 
 func _conectarcomglobalitem():
 	if(!Items.itens.has(nome_item)):
-		print("aqui",nome_item)
+		print("ITEM NÃO ESTÁ CONFIGURADO NO ITEMS.GD -> ",nome_item)
+		return;
 		
 	if quantidade_atual == 1 && !freeze:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
