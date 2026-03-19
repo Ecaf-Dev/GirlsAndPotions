@@ -11,7 +11,7 @@ var itens = {
 		"compravel": true,
 		"escala_icone" : 0.7,
 		"eu_ando" : true,
-		"tempo_eu_ando" : 3,
+		"tempo_eu_ando" : 7,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0
 	},
