@@ -163,7 +163,9 @@ func _conectarcomglobalitem():
 		var res = dados.get("eu_fujo", false)
 		if res:
 			_fugadaprisao()
-			await get_tree().create_timer(4.0).timeout
+			var restempo = dados.get("tempo_eu_fujo", 0)
+			print(restempo)
+			await get_tree().create_timer(restempo).timeout
 			_conectarcomglobalitem()
 	else:
 		await get_tree().create_timer(10.0).timeout 
