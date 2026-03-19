@@ -5,6 +5,7 @@ extends RigidBody3D
 @export var quantidade_atual : int = 1
 # Variável para armazenar a escala original do modelo carregado
 var escala_base_modelo : Vector3 = Vector3.ONE
+var objeto_stackando: Objeto = null;
 
 func _ready():
 	_carregar_visual_automatico()
@@ -71,9 +72,15 @@ func _on_area_3d_monitor_body_entered(body):
 		_stackaritens(body)
 
 func _stackaritens(outro_item: Objeto):
+	if outro_item.objeto_stackando || self.objeto_stackando:
+		return
+
+	self.objeto_stackando = outro_item;
+	outro_item.objeto_stackando = self;
 	self.quantidade_atual += outro_item.quantidade_atual
 	_carregar_visual_automatico()
 	outro_item.queue_free()
+	self.objeto_stackando = null;
 
 func _diminuirquantidade():
 	if quantidade_atual > 1:
