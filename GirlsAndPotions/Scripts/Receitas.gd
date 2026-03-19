@@ -59,14 +59,14 @@ var receitas = {
 	}
 }
 
-func pegar_receitas_viaveis():
+func pegar_receitas_viaveis() -> Array:
 	var pedidos_viaveis = [];
 	for nome in receitas:
 		if receitas[nome]["pode_fabricar"] == true:
 			pedidos_viaveis.append(nome)
 	return pedidos_viaveis
 
-func pegar_receita_compativel(items_processando: Array, tipo_de_mobilia: String):
+func pegar_receita_compativel(items_processando: Array, tipo_de_mobilia: String) -> Dictionary:
 	for nome_id in receitas:
 		var dados = receitas[nome_id]
 		if dados.get("Mobilia", "") != tipo_de_mobilia: continue
@@ -74,3 +74,4 @@ func pegar_receita_compativel(items_processando: Array, tipo_de_mobilia: String)
 		var ingredientes_receita = [dados["item1"], dados["item2"]]
 		if items_processando == ingredientes_receita:
 			return dados;
+	return {};

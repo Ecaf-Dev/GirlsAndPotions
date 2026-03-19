@@ -63,25 +63,17 @@ func _physics_process(_delta):
 
 # FUNÇÃO QUE VOCÊ PEDIU: Identifica e ajusta proporções automaticamente
 func _on_area_3d_monitor_body_entered(body):
-	if body.get("nome_item") == self.nome_item:
-		if "quantidade_atual" in body:
-			# Só stacka se o outro não estiver sendo carregado (freeze)
-			if body.freeze == false:
-				_stackaritens(body)
+	if (body is Objeto 
+	and body != self
+	and body.global_position.y > self.global_position.y
+	and body.nome_item == self.nome_item 
+	and body.freeze == false):
+		_stackaritens(body)
 
-func _stackaritens(outro_item):
-	if outro_item.quantidade_atual > self.quantidade_atual:
-		_aumentarquantidade(outro_item)
-	elif outro_item.quantidade_atual == self.quantidade_atual:
-		# Critério de desempate por altura (Y)
-		if outro_item.global_position.y < self.global_position.y:
-			_aumentarquantidade(outro_item)
-
-func _aumentarquantidade(outro_item):
-	outro_item.quantidade_atual += self.quantidade_atual
-	# O item que fica chama o visual e o elástico automaticamente
-	outro_item._carregar_visual_automatico()
-	queue_free()
+func _stackaritens(outro_item: Objeto):
+	self.quantidade_atual += outro_item.quantidade_atual
+	_carregar_visual_automatico()
+	outro_item.queue_free()
 
 func _diminuirquantidade():
 	if quantidade_atual > 1:
@@ -194,6 +186,6 @@ func _fugadaprisao():
 	var mapa_principal = get_tree().current_scene
 	mapa_principal.add_child(novo_item)
 		
-	novo_item.global_position = self.global_position + Vector3.UP * 3
+	novo_item.global_position = self.global_position + Vector3.UP * 2
 		
 	novo_item._saidinhaanoite()
