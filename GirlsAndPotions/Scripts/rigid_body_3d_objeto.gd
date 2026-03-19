@@ -148,11 +148,13 @@ func _conectarcomglobalitem():
 	if quantidade_atual == 1 && !freeze:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		var dados = Items.itens[nome_item]
-		var res = dados.get("euando", false)
+		var res = dados.get("eu_ando", false)
 		print(res)
 		if res:
+			var restempo = dados.get("tempo_eu_ando", 0)
+			print(restempo)
+			await get_tree().create_timer(restempo).timeout
 			_saidinhaanoite()
-			await get_tree().create_timer(4.0).timeout
 			_conectarcomglobalitem()
 	if(quantidade_atual >1 && !freeze):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
@@ -160,8 +162,10 @@ func _conectarcomglobalitem():
 		var dados = Items.itens[nome_item]
 		var res = dados.get("eu_fujo", false)
 		if res:
+			var restempo = dados.get("tempo_eu_fujo", 0)
+			print(restempo)
+			await get_tree().create_timer(restempo).timeout
 			_fugadaprisao()
-			await get_tree().create_timer(4.0).timeout
 			_conectarcomglobalitem()
 	else:
 		await get_tree().create_timer(10.0).timeout 
