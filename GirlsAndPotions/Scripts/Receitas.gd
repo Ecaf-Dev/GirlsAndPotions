@@ -59,7 +59,7 @@ var receitas = {
 	}
 }
 
-func pegar_receitas_viaveis():
+func pegar_receitas_viaveis() -> Array:
 	var pedidos_viaveis = [];
 	for nome in receitas:
 		if receitas[nome]["pode_fabricar"] == true:

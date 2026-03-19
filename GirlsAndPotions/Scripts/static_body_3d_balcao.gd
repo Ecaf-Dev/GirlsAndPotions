@@ -94,8 +94,9 @@ func _exibir_pedidos_magicos():
 		
 		# Busca o valor no dicionário Items (Mantive como estava)
 		var valor = 0
-		if Items.itens.has(nome_da_pocao):
-			valor = Items.itens[nome_da_pocao].valor_venda
+		var pocao = Items.pegar_item(nome_da_pocao)
+		if pocao:
+			valor = pocao.valor_venda
 			
 		label_preco.text = str(valor) + " G"
 		label_preco.position.y = -0.5 
@@ -152,9 +153,9 @@ func _recompensa(nome_da_pocao):
 	_elastico()
 	
 	# Buscamos os dados do item no seu script global Items
-	if Items.itens.has(nome_da_pocao):
-		var dados = Items.itens[nome_da_pocao]
-		var valor = dados.valor_venda # Ex: 12 para Cura Maior
+	var pocao = Items.pegar_item(nome_da_pocao)
+	if pocao:
+		var valor = pocao.valor_venda # Ex: 12 para Cura Maior
 		
 		# Adicionamos o valor real ao Global
 		Global.adicionar_moedas(valor)

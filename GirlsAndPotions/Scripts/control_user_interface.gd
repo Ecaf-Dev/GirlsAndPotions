@@ -159,19 +159,18 @@ func _adicionar_items_a_loja():
 	var contador = 0
 	
 	# 2. Loop pelo dicionário global
-	for id in Items.itens:
-		var dados = Items.itens[id]
-		
+	var todos_os_items = Items.pegar_todos_os_items();
+	for item in todos_os_items:
 		# --- O FILTRO DE COMPRAVÉL ---
 		# Se o item não tiver a chave 'compravel' ou se ela for 'false', pulamos ele.
-		if dados.has("compravel") and dados.compravel == false:
-			print("Item ignorado (não é comprável): ", id)
+		if !item.compravel:
+			print("Item ignorado (não é comprável): ", item)
 			continue # Vai direto para o próximo 'id' do loop
 		
 		var novo_item = cena_item.instantiate()
 		
 		# Configura o item com os dados do Global
-		novo_item.configurar(id, dados)
+		novo_item.configurar(item)
 		
 		# 3. Lógica de distribuição (4 por grid)
 		if contador < 4:
@@ -179,7 +178,7 @@ func _adicionar_items_a_loja():
 		elif contador < 8:
 			grid_direita.add_child(novo_item)
 		else:
-			print("Loja cheia! Item não adicionado: ", id)
+			print("Loja cheia! Item não adicionado: ", item.id)
 			break
 			
 		contador += 1

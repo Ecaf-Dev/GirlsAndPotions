@@ -5,6 +5,7 @@ extends RigidBody3D
 @export var quantidade_atual : int = 1
 # Variável para armazenar a escala original do modelo carregado
 var escala_base_modelo : Vector3 = Vector3.ONE
+var objeto_stackando: Objeto = null;
 
 func _ready():
 	_carregar_visual_automatico()
@@ -63,25 +64,23 @@ func _physics_process(_delta):
 
 # FUNÇÃO QUE VOCÊ PEDIU: Identifica e ajusta proporções automaticamente
 func _on_area_3d_monitor_body_entered(body):
-	if body.get("nome_item") == self.nome_item:
-		if "quantidade_atual" in body:
-			# Só stacka se o outro não estiver sendo carregado (freeze)
-			if body.freeze == false:
-				_stackaritens(body)
+	if (body is Objeto 
+	and body != self
+	and body.global_position.y > self.global_position.y
+	and body.nome_item == self.nome_item 
+	and body.freeze == false):
+		_stackaritens(body)
 
-func _stackaritens(outro_item):
-	if outro_item.quantidade_atual > self.quantidade_atual:
-		_aumentarquantidade(outro_item)
-	elif outro_item.quantidade_atual == self.quantidade_atual:
-		# Critério de desempate por altura (Y)
-		if outro_item.global_position.y < self.global_position.y:
-			_aumentarquantidade(outro_item)
+func _stackaritens(outro_item: Objeto):
+	if outro_item.objeto_stackando || self.objeto_stackando:
+		return
 
-func _aumentarquantidade(outro_item):
-	outro_item.quantidade_atual += self.quantidade_atual
-	# O item que fica chama o visual e o elástico automaticamente
-	outro_item._carregar_visual_automatico()
-	queue_free()
+	self.objeto_stackando = outro_item;
+	outro_item.objeto_stackando = self;
+	self.quantidade_atual += outro_item.quantidade_atual
+	_carregar_visual_automatico()
+	outro_item.queue_free()
+	self.objeto_stackando = null;
 
 func _diminuirquantidade():
 	if quantidade_atual > 1:
@@ -122,17 +121,16 @@ func _configurar_display_caixa(instancia_caixa):
 	var label_qtd = instancia_caixa.find_child("Label3D_Quantidade", true, false)
 	
 	# 1. Configura o Ícone e sua Escala
-	if sprite_icone and Items.itens.has(nome_item):
-		var dados = Items.itens[nome_item]
-		
+	var item = Items.pegar_item(nome_item);
+	if sprite_icone and item:		
 		# Carrega a textura
-		var caminho_icone = dados.get("icon", "")
+		var caminho_icone = item.icon
 		if caminho_icone != "":
 			sprite_icone.texture = load(caminho_icone)
 		
 		# --- AJUSTE DE TAMANHO DA ART (UPGRADE!) ---
 		# Pega a escala_icone do Items.gd. Se não existir, usa 1.0 como padrão.
-		var escala_vinda_do_script = dados.get("escala_icone", 1.0)
+		var escala_vinda_do_script = item.escala_icone
 		
 		# Aplicamos a escala no Sprite3D (ajustando X e Y)
 		sprite_icone.scale = Vector3(escala_vinda_do_script, escala_vinda_do_script, 1.0)
@@ -142,16 +140,16 @@ func _configurar_display_caixa(instancia_caixa):
 		label_qtd.text = str(quantidade_atual)
 
 func _conectarcomglobalitem():
-	if(!Items.itens.has(nome_item)):
-		print("aqui",nome_item)
+	var item = Items.pegar_item(nome_item)
+	if !item:
+		return;
 		
 	if quantidade_atual == 1 && !freeze:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
-		var dados = Items.itens[nome_item]
-		var res = dados.get("eu_ando", false)
+		var res = item.eu_ando
 		print(res)
 		if res:
-			var restempo = dados.get("tempo_eu_ando", 0)
+			var restempo = item.tempo_eu_ando
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
 			_saidinhaanoite()
@@ -159,13 +157,12 @@ func _conectarcomglobalitem():
 	if(quantidade_atual >1 && !freeze):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		print(quantidade_atual)
-		var dados = Items.itens[nome_item]
-		var res = dados.get("eu_fujo", false)
+		var res = item.eu_fujo
 		if res:
-			var restempo = dados.get("tempo_eu_fujo", 0)
+			var restempo = item.tempo_eu_fujo
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			_fugadaprisao()
+			_fugadaprisao(item)
 			_conectarcomglobalitem()
 	else:
 		await get_tree().create_timer(10.0).timeout 
@@ -185,7 +182,7 @@ func _saidinhaanoite():
 	if has_method("aplicar_elastico_externo"):
 		aplicar_elastico_externo()
 
-func _fugadaprisao():
+func _fugadaprisao(item: Items.Item):
 	_diminuirquantidade()
 	
 	var cena_item = load("res://GirlsAndPotions/Cenas/rigid_body_3d_objeto.tscn")
@@ -196,7 +193,9 @@ func _fugadaprisao():
 		
 	var mapa_principal = get_tree().current_scene
 	mapa_principal.add_child(novo_item)
-		
-	novo_item.global_position = self.global_position + Vector3.UP * 3
+	
+	var vou_pular = randf_range(0, 1.0) < item.probabilidade_fuga;
+	var soma = Vector3.UP * 2 if vou_pular else Vector3.UP * 1;
+	novo_item.global_position = self.global_position + soma;
 		
 	novo_item._saidinhaanoite()

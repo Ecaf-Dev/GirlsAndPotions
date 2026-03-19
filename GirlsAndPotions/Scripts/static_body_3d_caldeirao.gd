@@ -57,20 +57,22 @@ func _ready():
 # --- INTERAÇÕES E SLOTS ---
 
 func _on_area_3d_monitor_body_entered(objeto_colidido):
-	var numero_de_items_excedido = items_processando.size() >= MAX_SLOTS;
-	var devo_rejeitar_objeto = (cozinhando || 
-								pronto_para_coleta ||
-								objeto_colidido is not Objeto || 
-								objeto_colidido.quantidade_atual > 1 ||
-								numero_de_items_excedido ||
-								objeto_colidido.nome_item == "Frasco Vazio");
-	
-	if devo_rejeitar_objeto:
-		_rejeitar_item(objeto_colidido)
-		return;
+	if objeto_colidido is Objeto:
+		var numero_de_items_excedido = items_processando.size() >= MAX_SLOTS;
+		var devo_rejeitar_objeto = (cozinhando || 
+									pronto_para_coleta ||
+									objeto_colidido.quantidade_atual > 1 ||
+									numero_de_items_excedido ||
+									objeto_colidido.nome_item == "Frasco Vazio");
 		
-	_adicionar_item_para_processamento(objeto_colidido)
-	return;
+		if devo_rejeitar_objeto:
+			_rejeitar_item(objeto_colidido)
+			return;
+			
+		_adicionar_item_para_processamento(objeto_colidido)
+		return;
+	if objeto_colidido is Jogador:
+		print("JOGADOR ENCOSTOU NO CALDERAO")
 
 func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 	items_processando.append(objeto_colidido.nome_item)
@@ -159,19 +161,20 @@ func _mostrarHolograma(nome_do_item):
 	if holograma_atual: holograma_atual.queue_free()
 	if !cena_base_item or !marker_holograma: return
 
-	var holo = cena_base_item.instantiate()
-	holograma_atual = holo
-	holo.scale = Vector3(0.6, 1.3, 0.6)
-	marker_holograma.add_child(holo)
+	holograma_atual = cena_base_item.instantiate() as Objeto
+	holograma_atual.nome_item = nome_do_item
+	holograma_atual.scale = Vector3(0.6, 1.3, 0.6)
+	if holograma_atual is RigidBody3D:
+		holograma_atual.freeze = true
+		holograma_atual.collision_layer = 0
+		holograma_atual.collision_mask = 0
 	
-	holo.nome_item = nome_do_item
-	if holo is RigidBody3D:
-		holo.freeze = true
-		holo.collision_layer = 0
-		holo.collision_mask = 0
-	
-	var area = holo.get_node_or_null("Area3D_Monitor")
-	if area: area.collision_layer = 0; area.collision_mask = 0
+	var area = holograma_atual.get_node_or_null("Area3D_Monitor")
+	if area: 
+		area.collision_layer = 0
+		area.collision_mask = 0
+		
+	marker_holograma.add_child(holograma_atual)
 
 func _gerenciar_barra_visual(porcentagem: float):
 	if porcentagem <= 0 or porcentagem >= 1.0:
