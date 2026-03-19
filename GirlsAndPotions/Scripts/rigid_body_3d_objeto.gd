@@ -192,7 +192,9 @@ func _fugadaprisao():
 		
 	var mapa_principal = get_tree().current_scene
 	mapa_principal.add_child(novo_item)
-		
-	novo_item.global_position = self.global_position + Vector3.UP * 2
+	
+	var vou_pular = randf_range(0, 1.0)
+	var soma = Vector3.UP * 2 if vou_pular > 0.8 else Vector3.UP * 1;
+	novo_item.global_position = self.global_position + soma;
 		
 	novo_item._saidinhaanoite()
