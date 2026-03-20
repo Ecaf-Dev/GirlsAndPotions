@@ -164,7 +164,7 @@ func _adicionar_items_a_loja():
 		# --- O FILTRO DE COMPRAVÉL ---
 		# Se o item não tiver a chave 'compravel' ou se ela for 'false', pulamos ele.
 		if !item.compravel:
-			print("Item ignorado (não é comprável): ", item)
+			print("Item ignorado (não é comprável): ", item.nome)
 			continue # Vai direto para o próximo 'id' do loop
 		
 		var novo_item = cena_item.instantiate()
