@@ -138,7 +138,7 @@ var itens = {
 		"eu_fujo" : true,
 		"tempo_eu_fujo": 7,
 		"probabilidade_fuga": 1,
-		"ocupo_espaco": false
+		"ocupo_espaco": true
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",

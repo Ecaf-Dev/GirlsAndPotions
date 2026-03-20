@@ -10,6 +10,7 @@ var objeto_stackando: Objeto = null;
 func _ready():
 	_carregar_visual_automatico()
 	_conectarcomglobalitem()
+	_ocuparespaco()
 
 func _carregar_visual_automatico():
 	# 1. Limpeza de modelos antigos
@@ -199,3 +200,15 @@ func _fugadaprisao(item: Items.Item):
 	novo_item.global_position = self.global_position + soma;
 		
 	novo_item._saidinhaanoite()
+
+func _ocuparespaco():
+	var item = Items.pegar_item(nome_item)
+	if !item:
+		return
+	var res = item.ocupo_espaco
+	if(res):
+		self.set_collision_layer(3)
+		self.set_collision_mask(3)
+	else:
+		self.set_collision_layer(2)
+		self.set_collision_mask(2)
