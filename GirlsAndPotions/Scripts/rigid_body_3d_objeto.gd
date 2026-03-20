@@ -10,6 +10,7 @@ var objeto_stackando: Objeto = null;
 func _ready():
 	_carregar_visual_automatico()
 	_conectarcomglobalitem()
+	_ocuparespaco()
 
 func _carregar_visual_automatico():
 	# 1. Limpeza de modelos antigos
@@ -152,7 +153,8 @@ func _conectarcomglobalitem():
 			var restempo = item.tempo_eu_ando
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			_saidinhaanoite()
+			if !freeze:
+				_saidinhaanoite()
 			_conectarcomglobalitem()
 	if(quantidade_atual >1 && !freeze):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
@@ -162,7 +164,8 @@ func _conectarcomglobalitem():
 			var restempo = item.tempo_eu_fujo
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			_fugadaprisao(item)
+			if !freeze:
+				_fugadaprisao(item)
 			_conectarcomglobalitem()
 	else:
 		await get_tree().create_timer(10.0).timeout 
@@ -199,3 +202,14 @@ func _fugadaprisao(item: Items.Item):
 	novo_item.global_position = self.global_position + soma;
 		
 	novo_item._saidinhaanoite()
+
+func _ocuparespaco():
+	var item = Items.pegar_item(nome_item)
+	if !item:
+		return
+	if(item.ocupo_espaco):
+		self.set_collision_layer(3)
+		self.set_collision_mask(3)
+	else:
+		self.set_collision_layer(2)
+		self.set_collision_mask(2)
