@@ -207,8 +207,7 @@ func _ocuparespaco():
 	var item = Items.pegar_item(nome_item)
 	if !item:
 		return
-	var res = item.ocupo_espaco
-	if(res):
+	if(item.ocupo_espaco):
 		self.set_collision_layer(3)
 		self.set_collision_mask(3)
 	else:
