@@ -67,7 +67,7 @@ var receitas = {
 	"Pétalas De Flor Magica" : {
 		"prestigio_minimo" : 0,
 		"nome" : "Pétalas De Flor Magica",
-		"ingredientes": ["Flor Magica", "Flor Magica"],
+		"ingredientes": ["Flor Magica"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"modelo": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",

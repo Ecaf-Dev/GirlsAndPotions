@@ -67,6 +67,7 @@ transform = Transform3D(0.9999997, 0, 0, 0, 1, 0, 0, 0, 0.9999997, 1, 1, -5)
 
 [node name="StaticBody3D_TabuaDeCorte" parent="." unique_id=1720406554 instance=ExtResource("6_2fuaa")]
 transform = Transform3D(0.18233585, 0, -0.9559286, 0, 0.33302593, 0, 0.9559286, 0, 0.18233585, 10.789278, 1.0582578, -1.9701707)
+MAX_SLOTS = 1
 mobilia_automatica = false
 
 [node name="RigidBody3D_Objeto3" parent="." unique_id=1873023884 instance=ExtResource("2_t26us")]
