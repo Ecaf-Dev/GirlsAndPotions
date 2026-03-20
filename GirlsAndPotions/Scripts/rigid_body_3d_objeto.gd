@@ -153,7 +153,8 @@ func _conectarcomglobalitem():
 			var restempo = item.tempo_eu_ando
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			_saidinhaanoite()
+			if !freeze:
+				_saidinhaanoite()
 			_conectarcomglobalitem()
 	if(quantidade_atual >1 && !freeze):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
@@ -163,7 +164,8 @@ func _conectarcomglobalitem():
 			var restempo = item.tempo_eu_fujo
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			_fugadaprisao(item)
+			if !freeze:
+				_fugadaprisao(item)
 			_conectarcomglobalitem()
 	else:
 		await get_tree().create_timer(10.0).timeout 
