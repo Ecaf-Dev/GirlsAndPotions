@@ -29,7 +29,7 @@ class ReceitaConcluida:
 	
 
 # --- VARIÁVEIS DE ESTADO ---
-var items_processando = [] 
+var items_processando: Array[String] = [] 
 var meu_tipo_de_mobilia : String = ""
 var receita_concluida: ReceitaConcluida = null
 var cor_original = Color(0.0, 0.4, 0.9)

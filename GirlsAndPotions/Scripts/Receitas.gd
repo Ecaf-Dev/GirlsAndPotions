@@ -4,7 +4,7 @@ class Receita:
 	var id: String
 	var prestigio_minimo: int
 	var nome: String
-	var items: Array
+	var items: Array[String] = []
 	var pode_fabricar: bool
 	var tempo_de_cozinha: int
 	var modelo: String
@@ -15,7 +15,7 @@ class Receita:
 		self.id = receita_dictionary.get("nome", null)
 		self.prestigio_minimo = receita_dictionary.get("prestigio_minimo", 0)
 		self.nome = receita_dictionary.get("nome", null)
-		self.items = receita_dictionary.get("items", [])
+		self.items.assign(receita_dictionary.get("items", [])) 
 		self.pode_fabricar = receita_dictionary.get("pode_fabricar", false)
 		self.tempo_de_cozinha = receita_dictionary.get("tempo_de_cozinha", 0)
 		self.modelo = receita_dictionary.get("modelo", null)
@@ -89,13 +89,13 @@ func pegar_receitas_viaveis() -> Array:
 			pedidos_viaveis.append(nome)
 	return pedidos_viaveis
 
-func pegar_receita_compativel(items_processando: Array, tipo_de_mobilia: String) -> Receita:
+func pegar_receita_compativel(items_processando: Array[String], tipo_de_mobilia: String) -> Receita:
 	for nome_id in receitas:
-		var receita = receitas[nome_id]
-		if receita.get("mobilia", "") != tipo_de_mobilia: continue
-
-		if items_processando == receita["items"]:
-			return Receita.new(receita);
+		var receita = Receita.new(receitas[nome_id]);
+		if receita.mobilia != tipo_de_mobilia: continue
+		
+		if items_processando == receita.items:
+			return receita;
 	return null;
 
 func pegar_todas_as_receitas() -> Array[Receita]:
