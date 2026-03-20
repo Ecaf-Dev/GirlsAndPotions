@@ -14,6 +14,7 @@ class Item:
 	var eu_fujo: bool
 	var tempo_eu_fujo: float
 	var probabilidade_fuga: float
+	var ocupo_espaco: bool
 
 	func _init(item_dictionary: Dictionary):
 		self.id = item_dictionary.get("nome", null)
@@ -29,6 +30,7 @@ class Item:
 		self.eu_fujo = item_dictionary.get("eu_fujo", false)
 		self.tempo_eu_fujo = item_dictionary.get("tempo_eu_fujo", 0)
 		self.probabilidade_fuga = item_dictionary.get("probabilidade_fuga", 0)
+		self.ocupo_espaco = item_dictionary.get("ocupo_espaco", false)
 
 # Called when the node enters the scene tree for the first time.
 var itens = {
@@ -44,7 +46,9 @@ var itens = {
 		"tempo_eu_ando" : 5,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
+		
 	},
 	"Flor Magica": {
 		"nome": "Flor Magica",
@@ -58,7 +62,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
 	},
 	"Frasco Vazio": {
 		"nome": "Frasco Vazio",
@@ -72,7 +77,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
 	},
 	"Poção De Cura": {
 		"nome": "Poção De Cura",
@@ -86,7 +92,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
 	},
 	"Poção Da Determinação": {
 		"nome": "Poção Da Determinação",
@@ -100,7 +107,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
 	},
 	"Poção De Mana": {
 		"nome": "Poção De Mana",
@@ -114,7 +122,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
 	},
 	"Poção De Cura Maior": {
 		"nome": "Poção De Cura Maior",
@@ -128,7 +137,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : true,
 		"tempo_eu_fujo": 7,
-		"probabilidade_fuga": 1
+		"probabilidade_fuga": 1,
+		"ocupo_espaco": false
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",
@@ -142,7 +152,8 @@ var itens = {
 		"tempo_eu_ando" : 0,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0
+		"probabilidade_fuga": 0,
+		"ocupo_espaco": false
 	}
 }
 
