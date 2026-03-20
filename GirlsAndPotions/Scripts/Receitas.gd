@@ -4,7 +4,7 @@ class Receita:
 	var id: String
 	var prestigio_minimo: int
 	var nome: String
-	var items: Array[String] = []
+	var ingredientes: Array[String] = []
 	var pode_fabricar: bool
 	var tempo_de_cozinha: int
 	var modelo: String
@@ -15,7 +15,7 @@ class Receita:
 		self.id = receita_dictionary.get("nome", null)
 		self.prestigio_minimo = receita_dictionary.get("prestigio_minimo", 0)
 		self.nome = receita_dictionary.get("nome", null)
-		self.items.assign(receita_dictionary.get("items", [])) 
+		self.ingredientes.assign(receita_dictionary.get("ingredientes", [])) 
 		self.pode_fabricar = receita_dictionary.get("pode_fabricar", false)
 		self.tempo_de_cozinha = receita_dictionary.get("tempo_de_cozinha", 0)
 		self.modelo = receita_dictionary.get("modelo", null)
@@ -27,7 +27,7 @@ var receitas = {
 	"Poção De Cura" : {
 		"prestigio_minimo" : 0,
 		"nome" : "Poção De Cura",
-		"items": ["Flor Da Vida", "Flor Da Vida"],
+		"ingredientes": ["Flor Da Vida", "Flor Da Vida"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"modelo": "res://GirlsAndPotions/Modelos/poção_de_cura.tscn",
@@ -37,7 +37,7 @@ var receitas = {
 	"Poção De Mana" : {
 		"prestigio_minimo" : 0,
 		"nome" : "Poção De Mana",
-		"items": ["Flor Magica", "Flor Magica"],
+		"ingredientes": ["Flor Magica", "Flor Magica"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"modelo": "res://GirlsAndPotions/Modelos/poção_de_mana.tscn",
@@ -47,7 +47,7 @@ var receitas = {
 	"Poção Da Determinação" : {
 		"prestigio_minimo" : 5,
 		"nome" : "Poção Da Determinação",
-		"items": ["Flor Da Vida", "Poção De Cura"],
+		"ingredientes": ["Flor Da Vida", "Poção De Cura"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 8,
 		"modelo": "res://GirlsAndPotions/Modelos/poção_da_determinação.tscn",
@@ -57,7 +57,7 @@ var receitas = {
 	"Poção De Cura Maior" : {
 		"prestigio_minimo" : 15,
 		"nome" : "Poção De Cura Maior",
-		"items": ["Poção De Cura", "Poção De Cura"],
+		"ingredientes": ["Poção De Cura", "Poção De Cura"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 10,
 		"modelo": "res://GirlsAndPotions/Modelos/poção_de_cura_maior.tscn",
@@ -67,7 +67,7 @@ var receitas = {
 	"Pétalas De Flor Magica" : {
 		"prestigio_minimo" : 0,
 		"nome" : "Pétalas De Flor Magica",
-		"items": ["Flor Magica", "Flor Magica"],
+		"ingredientes": ["Flor Magica", "Flor Magica"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
 		"modelo": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
@@ -94,7 +94,7 @@ func pegar_receita_compativel(items_processando: Array[String], tipo_de_mobilia:
 		var receita = Receita.new(receitas[nome_id]);
 		if receita.mobilia != tipo_de_mobilia: continue
 		
-		if items_processando == receita.items:
+		if items_processando == receita.ingredientes:
 			return receita;
 	return null;
 

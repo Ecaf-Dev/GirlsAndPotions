@@ -24,7 +24,7 @@ func _conectarareceitaeitensglobal():
 
 	# 3. Montar a sequência de ingredientes dinamicamente
 	var index_item = 1
-	for nome_ingrediente in receita.items:
+	for nome_ingrediente in receita.ingredientes:
 		# Se for o segundo item em diante, adicionamos um Label de "+"
 		if index_item > 1:
 			_criar_label_simbolo("+")
