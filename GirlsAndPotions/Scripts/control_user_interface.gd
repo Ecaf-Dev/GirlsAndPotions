@@ -164,7 +164,7 @@ func _adicionar_items_a_loja():
 		# --- O FILTRO DE COMPRAVÉL ---
 		# Se o item não tiver a chave 'compravel' ou se ela for 'false', pulamos ele.
 		if !item.compravel:
-			print("Item ignorado (não é comprável): ", item)
+			print("Item ignorado (não é comprável): ", item.nome)
 			continue # Vai direto para o próximo 'id' do loop
 		
 		var novo_item = cena_item.instantiate()
@@ -192,7 +192,7 @@ func _adicionar_receitas():
 	for child in grid_esquerda.get_children(): child.queue_free()
 	for child in grid_direita.get_children(): child.queue_free()
 	
-	var todas_receitas = Receitas.receitas.keys()
+	var todas_receitas = Receitas.pegar_todas_as_receitas()
 	
 	# 2. Definição matemática do Folheto
 	var receitas_por_pagina = 3
@@ -207,7 +207,7 @@ func _adicionar_receitas():
 		
 		# Verifica se ainda existem receitas no dicionário para preencher esta vaga
 		if indice_real < todas_receitas.size():
-			var nome_da_pocao = todas_receitas[indice_real]
+			var nome_da_pocao = todas_receitas[indice_real].nome
 			var nova_linha = cena_hbox.instantiate()
 			
 			# O nome do nó é o que o script interno do HBox usa para se configurar

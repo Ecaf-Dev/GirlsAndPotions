@@ -11,31 +11,26 @@ func _conectarareceitaeitensglobal():
 	# 1. Identificar qual poção este HBox representa através do nome do nó
 	# Exemplo: de "HBoxContainer_Poção De Cura" extraímos "Poção De Cura"
 	var nome_da_pocao = name.replace("HBoxContainer_", "")
-	
-	if not Receitas.receitas.has(nome_da_pocao):
+	var receita = Receitas.pegar_receita(nome_da_pocao)
+	if !receita:
 		print("Erro: Receita não encontrada para o nó: ", name)
 		return
 		
-	var dados_receita = Receitas.receitas[nome_da_pocao]
-	var pode_exibir = dados_receita["pode_fabricar"]
+	var pode_exibir = receita.pode_fabricar
 	
 	# 2. Limpar qualquer lixo que esteja no HBox (caso você tenha feito placeholders no editor)
 	for child in get_children():
 		child.queue_free()
 
 	# 3. Montar a sequência de ingredientes dinamicamente
-	# Vamos percorrer as chaves do dicionário procurando por "item1", "item2", etc.
 	var index_item = 1
-	while dados_receita.has("item" + str(index_item)):
-		var nome_ingrediente = dados_receita["item" + str(index_item)]
-		
+	for nome_ingrediente in receita.ingredientes:
 		# Se for o segundo item em diante, adicionamos um Label de "+"
 		if index_item > 1:
 			_criar_label_simbolo("+")
 		
 		# Criar o ícone do ingrediente
 		_criar_texture_rect(nome_ingrediente, pode_exibir)
-		
 		index_item += 1
 	
 	# 4. Adicionar o símbolo de "="
