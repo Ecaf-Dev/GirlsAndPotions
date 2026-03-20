@@ -61,12 +61,11 @@ func _exibir_pedidos_magicos():
 		add_child(container)
 		
 		# 2. Carregar e Instanciar o Modelo 3D via Receitas Global
-		if Receitas.receitas.has(nome_da_pocao):
-			var dados_receita = Receitas.receitas[nome_da_pocao]
-			
+		var receita = Receitas.pegar_receita(nome_da_pocao)
+		if receita:			
 			# Pegamos o caminho usando o próprio nome da poção como chave
 			# como está definido no seu script Global
-			var caminho_modelo = dados_receita.get(nome_da_pocao) 
+			var caminho_modelo = receita.modelo
 			
 			if caminho_modelo:
 				var cena_modelo = load(caminho_modelo)

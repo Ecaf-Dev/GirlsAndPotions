@@ -303,9 +303,9 @@ func _rejeitar_item(item):
 		_elastico()
 
 func _conectar_as_receitas():
-	var todas = Receitas.receitas 
-	for id in todas:
-		print("Poção: ", id, " | Ingredientes: ", [todas[id]["item1"], todas[id]["item2"]])
+	var todas = Receitas.pegar_todas_as_receitas()
+	for receita in todas:
+		print("Poção: ", receita.id, " | Ingredientes: ", ",".join(receita.items))
 
 func _alternar_estado_pronto():
 	if particula_de_luz: particula_de_luz.visible = !particula_de_luz.visible
