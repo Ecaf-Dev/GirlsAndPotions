@@ -86,10 +86,10 @@ func _receita_compativel(itens: Array):
 	if itens.size() < MAX_SLOTS: return null
 
 	var receita_encontrada = Receitas.pegar_receita_compativel(itens, meu_tipo_de_mobilia)
-	if receita_encontrada and receita_encontrada["pode_fabricar"]:
+	if receita_encontrada:
 		receita_validada = true
-		tempo_da_receita = receita_encontrada["tempo_de_cozinha"]
-		_mostrarHolograma(receita_encontrada["nome"])
+		tempo_da_receita = receita_encontrada.tempo_de_cozinha
+		_mostrarHolograma(receita_encontrada.nome)
 		if holograma_atual:
 			cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
 			alterar_cor_liquido(cor_da_pocao)
@@ -141,8 +141,8 @@ func cozinhar():
 	if (receita_compativel):
 		sucesso = true
 		receita_concluida = ReceitaConcluida.new(
-			receita_compativel["nome"], 
-			receita_compativel["objeto_necessario"])
+			receita_compativel.nome, 
+			receita_compativel.objeto_necessario)
 		pronto_para_coleta = true
 		_alternar_estado_pronto()
 

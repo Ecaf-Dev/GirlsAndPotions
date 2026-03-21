@@ -84,15 +84,16 @@ func pegar_receita(nome_receita) -> Receita:
 
 func pegar_receitas_viaveis() -> Array:
 	var pedidos_viaveis = [];
-	for nome in receitas:
-		if receitas[nome]["pode_fabricar"] == true:
-			pedidos_viaveis.append(nome)
+	for receitas in pegar_todas_as_receitas():
+		if !receitas.pode_fabricar:
+			continue
+		pedidos_viaveis.append(nome)
 	return pedidos_viaveis
 
 func pegar_receita_compativel(items_processando: Array[String], tipo_de_mobilia: String) -> Receita:
 	for nome_id in receitas:
 		var receita = Receita.new(receitas[nome_id]);
-		if receita.mobilia != tipo_de_mobilia: continue
+		if receita.mobilia != tipo_de_mobilia and !receita.pode_fabricar: continue
 		
 		if items_processando == receita.ingredientes:
 			return receita;
