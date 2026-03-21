@@ -82,12 +82,12 @@ func pegar_receita(nome_receita) -> Receita:
 		return null;
 	return Receita.new(receitas[nome_receita]);
 
-func pegar_receitas_viaveis() -> Array:
-	var pedidos_viaveis = [];
-	for receitas in pegar_todas_as_receitas():
-		if !receitas.pode_fabricar:
+func pegar_receitas_viaveis() -> Array[Receita]:
+	var pedidos_viaveis: Array[Receita] = [];
+	for receita in pegar_todas_as_receitas():
+		if !receita.pode_fabricar:
 			continue
-		pedidos_viaveis.append(nome)
+		pedidos_viaveis.append(receita)
 	return pedidos_viaveis
 
 func pegar_receita_compativel(items_processando: Array[String], tipo_de_mobilia: String) -> Receita:

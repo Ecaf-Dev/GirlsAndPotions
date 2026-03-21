@@ -1,13 +1,14 @@
 class_name Balcao
 extends StaticBody3D
 
-@export var pedidos = []
+@export var nome_fase: String = "Fase 1";
 @export var max_pedidos = 3
 @export var objeto_visual : Node3D
 
-var pedidos_viaveis = []
-var pedidos_ativos = []
-var fila_de_espera = [] # Pedidos que aguardam vaga no balcão
+var pedidos: Array[Receitas.Receita] = []
+var pedidos_viaveis: Array[Receitas.Receita] = []
+var pedidos_ativos: Array[Receitas.Receita] = []
+var fila_de_espera: Array[Receitas.Receita] = [] # Pedidos que aguardam vaga no balcão
 
 @export var pedidos_por_dia = 0.05
 # --- CONFIGURAÇÃO DE MODELOS ---
@@ -18,7 +19,7 @@ var _player_esta_perto = false
 
 func _ready():
 	# Limpa qualquer resquício e gera os primeiros pedidos
-	_gerar_pedidos_por_populacao()
+	_gerar_pedidos()
 		
 func _process(delta):
 	# Percorre todos os hologramas que estão no balcão no momento
@@ -29,11 +30,10 @@ func _process(delta):
 			item.rotate_y(delta * 1.5)
 
 func _on_area_3d_monitor_body_entered(body):
-	if body.is_in_group("player"):
+	if body is Jogador:
 		_player_esta_perto = true
 		_exibir_pedidos_magicos()
-	
-	if "nome_item" in body:
+	if body is Objeto:
 		_checarentrega(body)
 	
 func _on_area_3d_monitor_body_exited(body):
@@ -47,40 +47,35 @@ func _on_area_3d_monitor_body_exited(body):
 		# Verificamos se o jogador AINDA está longe antes de sumir com tudo
 		if not _player_esta_perto:
 			_limpar_exibicao()
+
 # --- NOVA FUNÇÃO DE EXIBIÇÃO COM MOVIMENTO E MODELO ---
 func _exibir_pedidos_magicos():
 	_limpar_exibicao()
-	
-	for i in range(pedidos.size()):
-		if i >= posicoes.size(): break
-		
-		var nome_da_pocao = pedidos[i]
-		
+	var posicao_exibicao = 0;
+	for pedido in pedidos:		
 		# 1. Criar um Container para o modelo e o texto
 		var container = Node3D.new()
 		add_child(container)
 		
 		# 2. Carregar e Instanciar o Modelo 3D via Receitas Global
-		var receita = Receitas.pegar_receita(nome_da_pocao)
-		if receita:			
-			# Pegamos o caminho usando o próprio nome da poção como chave
-			# como está definido no seu script Global
-			var caminho_modelo = receita.modelo
-			
-			if caminho_modelo:
-				var cena_modelo = load(caminho_modelo)
-				if cena_modelo:
-					var instancia = cena_modelo.instantiate()
-					container.add_child(instancia)
-					instancia.scale = Vector3(0.3, 0.3, 0.3) 
-					instancia.position.y = 0.0 
-					
-					if instancia is RigidBody3D: 
-						instancia.freeze = true
+		# Pegamos o caminho usando o próprio nome da poção como chave
+		# como está definido no seu script Global
+		var caminho_modelo = pedido.modelo
+		
+		if caminho_modelo:
+			var cena_modelo = load(caminho_modelo)
+			if cena_modelo:
+				var instancia = cena_modelo.instantiate()
+				container.add_child(instancia)
+				instancia.scale = Vector3(0.3, 0.3, 0.3) 
+				instancia.position.y = 0.0 
+				
+				if instancia is RigidBody3D: 
+					instancia.freeze = true
 		
 		# 3. Criar o Label ACIMA do modelo (Nome)
 		var label_nome = Label3D.new()
-		label_nome.text = nome_da_pocao
+		label_nome.text = pedido.nome
 		label_nome.position.y = 0.8 
 		label_nome.billboard = StandardMaterial3D.BILLBOARD_ENABLED
 		label_nome.no_depth_test = true
@@ -93,7 +88,7 @@ func _exibir_pedidos_magicos():
 		
 		# Busca o valor no dicionário Items (Mantive como estava)
 		var valor = 0
-		var pocao = Items.pegar_item(nome_da_pocao)
+		var pocao = Items.pegar_item(pedido.nome)
 		if pocao:
 			valor = pocao.valor_venda
 			
@@ -111,13 +106,14 @@ func _exibir_pedidos_magicos():
 		container.scale = Vector3.ZERO
 		
 		var tw = create_tween().set_parallel(true)
-		tw.tween_property(container, "global_position", posicoes[i].global_position, 0.6)\
+		tw.tween_property(container, "global_position", posicoes[posicao_exibicao].global_position, 0.6)\
 			.set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 		
 		tw.tween_property(container, "scale", Vector3.ONE, 0.8)\
 			.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 		
 		itens_exibidos.append(container)		
+		posicao_exibicao += 1;
 		
 func _limpar_exibicao():
 	for item in itens_exibidos:
@@ -130,13 +126,18 @@ func _limpar_exibicao():
 	itens_exibidos.clear()
 
 # --- RESTANTE DA SUA LÓGICA ---
-func _checarentrega(objeto):
-	if objeto.nome_item in pedidos:
-		var nome_entregue = objeto.nome_item
-		pedidos.erase(nome_entregue)
+func _checarentrega(objeto: Objeto):
+	var pedido_entregue: Receitas.Receita = null;
+	for pedido in pedidos:
+		if objeto.nome_item != pedido.nome: continue
+
+		pedido_entregue = pedido;
+		break;
+	
+	if pedido_entregue:
+		pedidos.erase(pedido_entregue)
 		objeto.queue_free()
-		
-		_recompensa(nome_entregue) 
+		_recompensa(pedido_entregue) 
 		
 		# Tenta puxar o próximo da fila automaticamente
 		_repor_balcao()
@@ -148,18 +149,20 @@ func _checarentrega(objeto):
 	else:
 		_rejeitar_item(objeto)
 		
-func _recompensa(nome_da_pocao):
+	print("NUMERO DE ESTRELAS ATUAIS :", Fases.pegar_fase(nome_fase).pegar_numero_de_estrelas(Global.moedas))
+		
+func _recompensa(pedido_entregue: Receitas.Receita):
 	_elastico()
 	
 	# Buscamos os dados do item no seu script global Items
-	var pocao = Items.pegar_item(nome_da_pocao)
-	if pocao:
-		var valor = pocao.valor_venda # Ex: 12 para Cura Maior
+	var item = Items.pegar_item(pedido_entregue.nome)
+	if item:
+		var valor = item.valor_venda # Ex: 12 para Cura Maior
 		
 		# Adicionamos o valor real ao Global
 		Global.adicionar_moedas(valor)
 		_somvendaFeita()
-		print("RECOMPENSA: Você vendeu ", nome_da_pocao, " por ", valor, " G!")
+		print("RECOMPENSA: Você vendeu ", item.nome, " por ", valor, " G!")
 	else:
 		# Fallback caso o nome não esteja no dicionário
 		Global.adicionar_moedas(5) 
@@ -168,10 +171,9 @@ func _recompensa(nome_da_pocao):
 	Global.registrar_pedido()
 	Global.alterar_prestigio(1)
 
-func _rejeitar_item(item):
-	if item is RigidBody3D:
-		var direcao = (item.global_position - global_position).normalized()
-		item.apply_central_impulse(direcao * 4.0 + Vector3.UP * 3.0)
+func _rejeitar_item(item: Objeto):
+	var direcao = (item.global_position - global_position).normalized()
+	item.apply_central_impulse(direcao * 4.0 + Vector3.UP * 3.0)
 	_elastico()
 
 func _elastico():
@@ -182,18 +184,17 @@ func _elastico():
 	tween.tween_property(objeto_visual, "scale", Vector3(0.5, 0.5, 0.5), 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
-func _gerar_pedidos_por_populacao():
-	# 1. Filtra poções viáveis
-	pedidos_viaveis = Receitas.pegar_receitas_viaveis();
-	if pedidos_viaveis.is_empty(): return
+func _gerar_pedidos():
+	# 1. Busca a Fase atual
+	var fase = Fases.pegar_fase(nome_fase);
+	if !fase: return
 
-	# 2. Calcula a demanda total do dia baseada na população
-	var total_pessoas = Populacao.get_total_populacao()
-	var quantidade_total_dia = ceil(total_pessoas * pedidos_por_dia) 
+	# 2. Gera os pedidos com base na regra da classe Fase
+	pedidos_viaveis = fase.gerar_pedidos();
 	
 	# 3. Preenche a FILA DE ESPERA primeiro
 	fila_de_espera.clear()
-	for i in range(quantidade_total_dia):
+	for i in range(pedidos_viaveis.size()):
 		fila_de_espera.append(pedidos_viaveis.pick_random())
 	
 	print("Pedidos totais gerados para hoje: ", fila_de_espera.size())
