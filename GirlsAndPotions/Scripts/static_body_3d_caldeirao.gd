@@ -39,7 +39,7 @@ var tempo_da_receita = 1
 var receita_validada = false
 var cozinhando = false
 var pronto_para_coleta: bool = false
-var holograma_atual : Node3D = null
+var holograma_atual : Objeto = null
 var querointeracao: bool = false
 var interagindo: bool = false
 
@@ -78,7 +78,14 @@ func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 	items_processando.append(objeto_colidido.nome_item)
 	_somitemadicionado()
 	_receita_compativel(items_processando)
-	objeto_colidido.queue_free()
+
+	var receita = Receitas.pegar_receita(objeto_colidido.nome_item);
+	if !receita || receita.objeto_necessario != "Frasco Vazio":
+		objeto_colidido.queue_free()
+	else:
+		objeto_colidido.nome_item = "Frasco Vazio"
+		objeto_colidido._carregar_visual_automatico()
+		_rejeitar_item(objeto_colidido)
 	_elastico()
 
 func _receita_compativel(itens: Array):
