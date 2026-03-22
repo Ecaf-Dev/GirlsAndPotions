@@ -30,7 +30,7 @@ var interagindo: bool = false
 
 func _physics_process(delta):
 	_aplicar_gravidade(delta)
-	if objeto_interagivel and objeto_interagivel.get("querointeracao"):
+	if objeto_interagivel and objeto_interagivel.querointeracao:
 		interagindo = Input.is_action_pressed("tecla_z")
 		# Repassa para o caldeirão
 		objeto_interagivel.interagindo = interagindo
@@ -103,27 +103,28 @@ func _processar_inputs():
 
 func _on_area_3d_monitor_area_entered(area):
 	var corpo = area.get_parent()
-	if objeto_levantado == null and area.is_in_group("item_carregavel"):
+	if corpo is Objeto and objeto_levantado == null:
 		_falaronomedoitem(corpo.nome_item)
-		objeto_proximo = area
+		objeto_proximo = corpo
 	
-	if area.is_in_group("caldeirao"):
+	if corpo is Caldeirao:
 		podeInteragir = true
 		objeto_interagivel = corpo
 
 func _on_area_3d_monitor_area_exited(area):
-	if area.is_in_group("caldeirao"):
+	var corpo = area.get_parent();
+	if corpo is Caldeirao:
 		podeInteragir = false
 		objeto_interagivel = null
 	
-	if area == objeto_proximo:
+	if corpo == objeto_proximo:
 		objeto_proximo = null
 
 # --- MECÂNICAS DE ITEM ---
 
 func _levantaritem():
 	if objeto_levantado == null and objeto_proximo != null:
-		objeto_levantado = objeto_proximo.get_parent()
+		objeto_levantado = objeto_proximo
 		var corpo = objeto_levantado;
 		
 		corpo.aplicar_elastico_externo()
@@ -136,35 +137,33 @@ func _levantaritem():
 		_somlevantandoobjeto()
 
 func _soltaritem():
-	var corpo = objeto_levantado
-	corpo.reparent(get_tree().current_scene)
+	objeto_levantado.reparent(get_tree().current_scene)
 	
 	var direcao_frente = global_transform.basis.z
-	corpo.global_position = global_position + (direcao_frente * 1.5) + Vector3.UP * 0.5
+	objeto_levantado.global_position = global_position + (direcao_frente * 1.5) + Vector3.UP * 0.5
 	
-	corpo.set_deferred("freeze", false)
-	corpo.set_deferred("sleeping", false)
-	corpo.get_node("CollisionShape3D").set_deferred("disabled", false)
+	objeto_levantado.set_deferred("freeze", false)
+	objeto_levantado.set_deferred("sleeping", false)
+	objeto_levantado.get_node("CollisionShape3D").set_deferred("disabled", false)
 
 	get_tree().create_timer(0.05).timeout.connect(func(): 
-		if is_instance_valid(corpo): corpo.apply_central_impulse(Vector3.DOWN * 2.0)
+		if is_instance_valid(objeto_levantado): objeto_levantado.apply_central_impulse(Vector3.DOWN * 2.0)
 	)
 	
-	corpo.aplicar_elastico_externo()
+	objeto_levantado.aplicar_elastico_externo()
 	objeto_levantado = null
 
 func _jogaritem():
 	if objeto_levantado == null: return
-	var corpo = objeto_levantado
 	
 	var direcao_frente = -Vector3.FORWARD.rotated(Vector3.UP, rotation.y).normalized()
 	var impulso = (direcao_frente * 8.0) + (Vector3.UP * 2.0)
 	
-	corpo.reparent(get_tree().root)
-	corpo.freeze = false
-	corpo.get_node("CollisionShape3D").disabled = false
-	corpo.apply_central_impulse(impulso)
-	corpo.apply_torque_impulse(Vector3(randf(), randf(), randf()) * 2.0)
+	objeto_levantado.reparent(get_tree().root)
+	objeto_levantado.freeze = false
+	objeto_levantado.get_node("CollisionShape3D").disabled = false
+	objeto_levantado.apply_central_impulse(impulso)
+	objeto_levantado.apply_torque_impulse(Vector3(randf(), randf(), randf()) * 2.0)
 	
 	objeto_levantado = null
 	_somjogando()
@@ -172,7 +171,7 @@ func _jogaritem():
 func _interagir_com_item():
 	if objeto_levantado != null or objeto_proximo == null: return
 	
-	var item_alvo = objeto_proximo.get_parent()
+	var item_alvo = objeto_proximo
 	var resultado = item_alvo._diminuirquantidade()
 	
 	if resultado == "LEVAR_INTEIRO":
