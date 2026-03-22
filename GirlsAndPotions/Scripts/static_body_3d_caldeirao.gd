@@ -171,6 +171,7 @@ func _mostrarHolograma(nome_do_item):
 	holograma_atual = cena_base_item.instantiate() as Objeto
 	holograma_atual.nome_item = nome_do_item
 	holograma_atual.scale = Vector3(0.6, 1.3, 0.6)
+	holograma_atual.desativar_colisao()
 	if holograma_atual is RigidBody3D:
 		holograma_atual.freeze = true
 		holograma_atual.collision_layer = 0
@@ -305,8 +306,7 @@ func _elastico():
 
 func _rejeitar_item(item):
 	if item is Objeto:
-		var dir = (item.global_position - global_position).normalized()
-		item.apply_central_impulse(dir * 4.0 + Vector3.UP * 3.0)
+		item.apply_central_impulse(Vector3.BACK * 2.3 + Vector3.UP * 4.0)
 		_elastico()
 
 func _conectar_as_receitas():
