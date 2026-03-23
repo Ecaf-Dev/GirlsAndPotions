@@ -213,3 +213,10 @@ func _ocuparespaco():
 	else:
 		self.set_collision_layer(2)
 		self.set_collision_mask(2)
+		
+func desativar_colisao():
+	# Supondo que o CollisionShape3D seja filho direto do RigidBody3D
+	$CollisionShape3D.disabled = true
+
+func ativar_colisao():
+	$CollisionShape3D.disabled = false

@@ -39,7 +39,7 @@ var tempo_da_receita = 1
 var receita_validada = false
 var cozinhando = false
 var pronto_para_coleta: bool = false
-var holograma_atual : Node3D = null
+var holograma_atual : Objeto = null
 var querointeracao: bool = false
 var interagindo: bool = false
 
@@ -78,7 +78,14 @@ func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 	items_processando.append(objeto_colidido.nome_item)
 	_somitemadicionado()
 	_receita_compativel(items_processando)
-	objeto_colidido.queue_free()
+
+	var receita = Receitas.pegar_receita(objeto_colidido.nome_item);
+	if !receita || receita.objeto_necessario != "Frasco Vazio":
+		objeto_colidido.queue_free()
+	else:
+		objeto_colidido.nome_item = "Frasco Vazio"
+		objeto_colidido._carregar_visual_automatico()
+		_rejeitar_item(objeto_colidido)
 	_elastico()
 
 func _receita_compativel(itens: Array):
@@ -164,6 +171,7 @@ func _mostrarHolograma(nome_do_item):
 	holograma_atual = cena_base_item.instantiate() as Objeto
 	holograma_atual.nome_item = nome_do_item
 	holograma_atual.scale = Vector3(0.6, 1.3, 0.6)
+	holograma_atual.desativar_colisao()
 	if holograma_atual is RigidBody3D:
 		holograma_atual.freeze = true
 		holograma_atual.collision_layer = 0
@@ -298,8 +306,7 @@ func _elastico():
 
 func _rejeitar_item(item):
 	if item is Objeto:
-		var dir = (item.global_position - global_position).normalized()
-		item.apply_central_impulse(dir * 4.0 + Vector3.UP * 3.0)
+		item.apply_central_impulse(Vector3.BACK * 2.3 + Vector3.UP * 4.0)
 		_elastico()
 
 func _conectar_as_receitas():
