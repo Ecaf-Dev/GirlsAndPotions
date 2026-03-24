@@ -42,12 +42,12 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/flor_da_vida.png",
 		"compravel": true,
 		"escala_icone" : 0.7,
-		"eu_ando" : true,
+		"eu_ando" : false,
 		"tempo_eu_ando" : 5,
-		"eu_fujo" : true,
+		"eu_fujo" : false,
 		"tempo_eu_fujo": 3,
 		"probabilidade_fuga": 1,
-		"ocupo_espaco": true
+		"ocupo_espaco": false
 		
 	},
 	"Flor Magica": {

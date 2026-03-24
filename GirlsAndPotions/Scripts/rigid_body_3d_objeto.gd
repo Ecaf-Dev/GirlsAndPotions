@@ -248,7 +248,9 @@ func localizaranimacao():
 func _controlar_animacoes():
 	var anim = find_child("AnimationPlayer", true, false)
 	if !anim: return
-	
+	if freeze:
+		anim.play("Armação|Carregado")
+		
 		# 1. Se o sapo estiver voando (subindo ou caindo rápido)
 	if abs(linear_velocity.y) > 0.5:
 		if linear_velocity.y > 0:
