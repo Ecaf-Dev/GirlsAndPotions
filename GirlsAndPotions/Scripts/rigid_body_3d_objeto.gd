@@ -55,6 +55,7 @@ func _carregar_visual_automatico():
 			$CSGBox3D_ObjetoVisual.visible = true
 		print("Aviso: Modelo não encontrado para ", nome_item)
 func _physics_process(_delta):
+	_controlar_animacoes()
 	# Se o item estiver parado no ar (freeze falso) mas não estiver caindo (linear_velocity baixa)
 	# e não tiver ninguém segurando ele (pai é a cena principal)
 	if not freeze and linear_velocity.length() < 0.1 and get_parent() == get_tree().current_scene:
@@ -243,3 +244,21 @@ func localizaranimacao():
 			print("⚠️ O AnimationPlayer de ", nome_item, " existe, mas está vazio.")
 	else:
 		print("❌ Nenhum AnimationPlayer encontrado para o item: ", nome_item)
+
+func _controlar_animacoes():
+	var anim = find_child("AnimationPlayer", true, false)
+	if !anim: return
+	
+		# 1. Se o sapo estiver voando (subindo ou caindo rápido)
+	if abs(linear_velocity.y) > 0.5:
+		if linear_velocity.y > 0:
+			anim.play("Armação|Pulando") # Subindo
+		else:
+			anim.play("Armação|Voando")   # Caindo (batendo as pernas)
+			
+	# 2. Se o sapo estiver praticamente parado no chão
+	elif linear_velocity.length() < 0.2:
+		# Se ele estiver sendo carregado (quantidade_atual no seu sistema)
+		# ou se você quiser usar a animação de 'Carregado' em algum momento:
+		if anim.current_animation != "Armação|Parado":
+			anim.play("Armação|Parado")
