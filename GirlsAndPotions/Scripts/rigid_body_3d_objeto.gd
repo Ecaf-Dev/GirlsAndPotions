@@ -40,6 +40,7 @@ func _carregar_visual_automatico():
 			$CSGBox3D_ObjetoVisual.visible = false
 		
 		add_child(instancia)
+		localizaranimacao()
 		
 		# --- NOVO: UPGRADE DA CAIXA (AUTO-CONFIGURAÇÃO) ---
 		if quantidade_atual > 1:
@@ -222,3 +223,23 @@ func desativar_colisao():
 
 func ativar_colisao():
 	$CollisionShape3D.disabled = false
+
+func localizaranimacao():
+	# 1. Procuramos o AnimationPlayer dentro dos filhos deste objeto
+	# O True no final do find_child faz a busca ser recursiva (procura em todos os sub-nós)
+	var anim_player = find_child("AnimationPlayer", true, false)
+	
+	if anim_player and anim_player is AnimationPlayer:
+		print("🎬 AnimationPlayer encontrado no item: ", nome_item)
+		
+		# 2. Pegamos a biblioteca de animações
+		var lista_animacoes = anim_player.get_animation_list()
+		
+		if lista_animacoes.size() > 0:
+			print("📜 Animações disponíveis para [", nome_item, "]:")
+			for anim_name in lista_animacoes:
+				print("  - ", anim_name)
+		else:
+			print("⚠️ O AnimationPlayer de ", nome_item, " existe, mas está vazio.")
+	else:
+		print("❌ Nenhum AnimationPlayer encontrado para o item: ", nome_item)
