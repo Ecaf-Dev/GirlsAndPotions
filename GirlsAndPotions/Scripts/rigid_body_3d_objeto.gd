@@ -179,6 +179,7 @@ func _saidinhaanoite():
 	var forca_impulso = 3
 	
 	var impulso_final= (direcao_aleatoria * forca_impulso) + (Vector3.UP * forca_pulo)
+	look_at(global_position + direcao_aleatoria, Vector3.UP)
 	
 	freeze = false
 	apply_central_impulse(impulso_final)
