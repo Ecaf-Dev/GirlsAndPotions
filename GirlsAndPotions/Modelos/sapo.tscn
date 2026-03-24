@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://hfrvn43v726s"]
-
-[ext_resource type="PackedScene" uid="uid://dvcbvoo2jth8n" path="res://GirlsAndPotions/Modelos/Objetos/ElSaponEsqueleto.fbx" id="2_sf4ry"]
-
-[node name="sapo" type="Node3D" unique_id=1264572297]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-
-[node name="ElSaponEsqueleto" parent="." unique_id=1539063735 instance=ExtResource("2_sf4ry")]
