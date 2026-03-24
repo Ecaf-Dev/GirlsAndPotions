@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dvcbvoo2jth8n" path="res://GirlsAndPotions/Modelos/Objetos/ElSaponEsqueleto.fbx" id="1_qh2yv"]
 
 [node name="el_sapon" unique_id=534326101 instance=ExtResource("1_qh2yv")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(-1.7484556e-08, 0, 0.4, 0, 0.4, 0, -0.4, 0, -1.7484556e-08, 0, 0, 0)
 
 [node name="Armação" parent="." index="0" unique_id=555812202]
 transform = Transform3D(5.9604654e-06, -1.6292068e-05, 100, -100, -4.371139e-06, 5.9604645e-06, 4.371138e-06, -100, -1.6292068e-05, 0, 0, 0)

@@ -174,6 +174,7 @@ func _conectarcomglobalitem():
 	
 func _saidinhaanoite():
 	var direcao_aleatoria = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
+
 	var forca_pulo = 5
 	var forca_impulso = 3
 	
