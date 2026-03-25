@@ -7,6 +7,8 @@ extends RigidBody3D
 var escala_base_modelo : Vector3 = Vector3.ONE
 var objeto_stackando: Objeto = null;
 
+var esta_congelado_manualmente: bool = false
+
 func _ready():
 	_carregar_visual_automatico()
 	_conectarcomglobalitem()
@@ -58,7 +60,7 @@ func _physics_process(_delta):
 	_controlar_animacoes()
 	# Se o item estiver parado no ar (freeze falso) mas não estiver caindo (linear_velocity baixa)
 	# e não tiver ninguém segurando ele (pai é a cena principal)
-	if not freeze and linear_velocity.length() < 0.1 and get_parent() == get_tree().current_scene:
+	if not freeze and not esta_congelado_manualmente and linear_velocity.length() < 0.1 and get_parent() == get_tree().current_scene:
 		# Verificamos se ele está longe do chão (opcional, mas ajuda)
 		# Se ele estiver 'dormindo', nós acordamos ele na marra
 		if sleeping:
@@ -71,7 +73,8 @@ func _on_area_3d_monitor_body_entered(body):
 	and body != self
 	and body.global_position.y > self.global_position.y
 	and body.nome_item == self.nome_item 
-	and body.freeze == false):
+	and body.freeze == false
+	and body.esta_congelado_manualmente == false):
 		_stackaritens(body)
 
 func _stackaritens(outro_item: Objeto):
@@ -147,7 +150,7 @@ func _conectarcomglobalitem():
 	if !item:
 		return;
 		
-	if quantidade_atual == 1 && !freeze:
+	if quantidade_atual == 1 && !freeze && !esta_congelado_manualmente:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		var res = item.eu_ando
 		print(res)
@@ -155,10 +158,10 @@ func _conectarcomglobalitem():
 			var restempo = item.tempo_eu_ando
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			if !freeze:
+			if !freeze || !esta_congelado_manualmente:
 				_saidinhaanoite()
 			_conectarcomglobalitem()
-	if(quantidade_atual >1 && !freeze):
+	if(quantidade_atual >1 && !freeze && !esta_congelado_manualmente):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
 		print(quantidade_atual)
 		var res = item.eu_fujo
@@ -166,7 +169,7 @@ func _conectarcomglobalitem():
 			var restempo = item.tempo_eu_fujo
 			print(restempo)
 			await get_tree().create_timer(restempo).timeout
-			if !freeze:
+			if !freeze || !esta_congelado_manualmente:
 				_fugadaprisao(item)
 			_conectarcomglobalitem()
 	else:
@@ -183,7 +186,8 @@ func _saidinhaanoite():
 	var impulso_final= (direcao_aleatoria * forca_impulso) + (Vector3.UP * forca_pulo)
 	look_at(global_position + direcao_aleatoria, Vector3.UP)
 	
-	freeze = false
+	#freeze = false
+	descongelar_objeto()
 	apply_central_impulse(impulso_final)
 	
 	if has_method("aplicar_elastico_externo"):
@@ -247,20 +251,57 @@ func localizaranimacao():
 
 func _controlar_animacoes():
 	var anim = find_child("AnimationPlayer", true, false)
+	
 	if !anim: return
-	if freeze:
+	if esta_congelado_manualmente == true:
 		anim.play("Armação|Carregado")
-		
 		# 1. Se o sapo estiver voando (subindo ou caindo rápido)
-	if abs(linear_velocity.y) > 0.5:
+	if abs(linear_velocity.y) > 0.5 && !esta_congelado_manualmente:
 		if linear_velocity.y > 0:
 			anim.play("Armação|Pulando") # Subindo
 		else:
 			anim.play("Armação|Voando")   # Caindo (batendo as pernas)
 			
 	# 2. Se o sapo estiver praticamente parado no chão
-	elif linear_velocity.length() < 0.2:
+	elif linear_velocity.length() < 0.2 && !esta_congelado_manualmente:
 		# Se ele estiver sendo carregado (quantidade_atual no seu sistema)
 		# ou se você quiser usar a animação de 'Carregado' em algum momento:
 		if anim.current_animation != "Armação|Parado":
 			anim.play("Armação|Parado")
+
+func congelar_objeto():
+	esta_congelado_manualmente = true
+	
+	# 1. Desativa a gravidade (O objeto para de cair)
+	gravity_scale = 0.0
+	
+	# 2. Zera as velocidades atuais para ele parar no ar instantaneamente
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
+	
+	# 3. Desativa as colisões (Ele para de bater e ser batido)
+	# Usamos set_deferred para evitar erros de física se a função for chamada 
+	# no meio de um cálculo de colisão.
+	$CollisionShape3D.set_deferred("disabled", true)
+	
+	# 4. (Opcional) Se tiver Area3D para monitoramento de stack, desative também
+	if has_node("Area3D_Monitor"):
+		$Area3D_Monitor.set_deferred("monitoring", false)
+		$Area3D_Monitor.set_deferred("monitorable", false)
+
+	print("❄️ Objeto '", nome_item, "' congelado manualmente.")
+	
+func descongelar_objeto():
+	esta_congelado_manualmente = false
+	
+	# 1. Restaura a gravidade padrão
+	gravity_scale = 1.0
+	
+	# 2. Reativa os colisores
+	$CollisionShape3D.set_deferred("disabled", false)
+	
+	if has_node("Area3D_Monitor"):
+		$Area3D_Monitor.set_deferred("monitoring", true)
+		$Area3D_Monitor.set_deferred("monitorable", true)
+
+	print("🔥 Objeto '", nome_item, "' liberado para a física.")

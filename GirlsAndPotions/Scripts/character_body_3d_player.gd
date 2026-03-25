@@ -128,8 +128,11 @@ func _levantaritem():
 		var corpo = objeto_levantado;
 		
 		corpo.aplicar_elastico_externo()
-		corpo.freeze = true
-		corpo.get_node("CollisionShape3D").disabled = true
+		if corpo.has_method("congelar_objeto"):
+			corpo.congelar_objeto()
+		#else:
+			#corpo.freeze = true
+		#corpo.get_node("CollisionShape3D").disabled = true
 		corpo.reparent(marker_mao)
 		
 		corpo.position = Vector3.ZERO
@@ -142,7 +145,8 @@ func _soltaritem():
 	var direcao_frente = global_transform.basis.z
 	objeto_levantado.global_position = global_position + (direcao_frente * 1.5) + Vector3.UP * 0.5
 	
-	objeto_levantado.set_deferred("freeze", false)
+	#objeto_levantado.set_deferred("freeze", false)
+	objeto_levantado.descongelar_objeto()
 	objeto_levantado.set_deferred("sleeping", false)
 	objeto_levantado.get_node("CollisionShape3D").set_deferred("disabled", false)
 
@@ -160,7 +164,8 @@ func _jogaritem():
 	var impulso = (direcao_frente * 8.0) + (Vector3.UP * 2.0)
 	
 	objeto_levantado.reparent(get_tree().root)
-	objeto_levantado.freeze = false
+	#objeto_levantado.freeze = false
+	objeto_levantado.descongelar_objeto()
 	objeto_levantado.get_node("CollisionShape3D").disabled = false
 	objeto_levantado.apply_central_impulse(impulso)
 	objeto_levantado.apply_torque_impulse(Vector3(randf(), randf(), randf()) * 2.0)
@@ -189,7 +194,8 @@ func _instanciar_na_mao(nome):
 	marker_mao.add_child(novo_item)
 	novo_item.position = Vector3.ZERO
 	novo_item.rotation = Vector3.ZERO
-	novo_item.freeze = true
+	#novo_item.freeze = true
+	novo_item.congelar_objeto()
 	
 	if novo_item.has_node("CollisionShape3D"):
 		novo_item.get_node("CollisionShape3D").disabled = true
