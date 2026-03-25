@@ -6,14 +6,24 @@
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r7swc"]
-albedo_color = Color(4.512258e-06, 0.37721282, 0.044740885, 1)
+albedo_color = Color(0, 0.97291213, 0.09280152, 1)
 
 [node name="el_sapon" unique_id=112756885 instance=ExtResource("1_qh2yv")]
 transform = Transform3D(-1.7484556e-08, 0, 0.4, 0, 0.4, 0, -0.4, 0, -1.7484556e-08, 0, 0, 0)
 
-[node name="Armação" parent="." index="0" unique_id=1192600329]
+[node name="Armação" parent="." index="0" unique_id=306033223]
 transform = Transform3D(5.9604654e-06, -1.6292068e-05, 100, -100, -4.371139e-06, 5.9604645e-06, 4.371138e-06, -100, -1.6292068e-05, 0, 0, 0)
 
-[node name="Olhos" parent="Armação/Skeleton3D" parent_id_path=PackedInt32Array(1092291263) index="0" unique_id=1489565209]
+[node name="Skeleton3D" parent="Armação" index="0" unique_id=1435407405]
+bones/0/rotation = Quaternion(0.7071069, 0, 4.335985e-10, 0.70710677)
+bones/2/rotation = Quaternion(-0.7071067, 3.996803e-15, 5.3385076e-08, 0.7071068)
+bones/4/position = Vector3(0.0049352613, -0.014988635, 0.01006476)
+bones/4/rotation = Quaternion(0.7071068, 0, -4.0745368e-10, 0.70710677)
+bones/6/rotation = Quaternion(0.7071069, -1.5203016e-16, -2.3418767e-17, 0.7071067)
+bones/8/position = Vector3(0.0049352613, 0.015037544, 0.01006476)
+bones/8/rotation = Quaternion(0.7071068, 0, 2.4663816e-11, 0.7071067)
+bones/10/rotation = Quaternion(0.7071069, 0, 0, 0.7071067)
+
+[node name="Olhos" parent="Armação/Skeleton3D" index="0" unique_id=1069397269]
 surface_material_override/0 = SubResource("StandardMaterial3D_qh2yv")
 surface_material_override/1 = SubResource("StandardMaterial3D_r7swc")
