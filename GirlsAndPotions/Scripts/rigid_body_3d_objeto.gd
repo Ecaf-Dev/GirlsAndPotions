@@ -8,6 +8,7 @@ var escala_base_modelo : Vector3 = Vector3.ONE
 var objeto_stackando: Objeto = null;
 
 var esta_congelado_manualmente: bool = false
+var estou_ocupado: bool = false
 
 func _ready():
 	_carregar_visual_automatico()
@@ -84,8 +85,9 @@ func _stackaritens(outro_item: Objeto):
 	self.objeto_stackando = outro_item;
 	outro_item.objeto_stackando = self;
 	self.quantidade_atual += outro_item.quantidade_atual
-	_carregar_visual_automatico()
 	outro_item.queue_free()
+	_carregar_visual_automatico()
+	print(self.quantidade_atual)
 	self.objeto_stackando = null;
 
 func _diminuirquantidade():
@@ -147,39 +149,40 @@ func _configurar_display_caixa(instancia_caixa):
 
 func _conectarcomglobalitem():
 	var item = Items.pegar_item(nome_item)
-	if !item:
-		return;
-	if item.eu_ando == false && item.eu_fujo == false:
+	if !item or (item.eu_ando == false and item.eu_fujo == false):
 		return
-		
-	if quantidade_atual == 1 && !freeze && !esta_congelado_manualmente:
-		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
-		print(quantidade_atual, freeze, esta_congelado_manualmente)
-		await get_tree().create_timer(0.01).timeout   
-		var res = item.eu_ando
-		print(res)
-		if res:
-			var restempo = item.tempo_eu_ando
-			print("possui tempo de andar:",restempo)
-			await get_tree().create_timer(restempo).timeout
-			if !freeze && !esta_congelado_manualmente:
+
+	# Se já houver um loop rodando, não comece outro
+	if estou_ocupado:
+		return
+	
+	estou_ocupado = true
+
+	# Loop contínuo enquanto o objeto existir
+	while is_inside_tree() and estou_ocupado:
+		# Se estiver congelado ou no freeze, esperamos um pouco e tentamos de novo
+		if freeze or esta_congelado_manualmente:
+			await get_tree().create_timer(2.0).timeout
+			continue
+
+		# Lógica para 1 unidade (Andar/Pular)
+		if quantidade_atual == 1 and item.eu_ando:
+			await get_tree().create_timer(item.tempo_eu_ando).timeout
+			# Checagem de segurança pós-espera
+			if is_inside_tree() and !freeze and !esta_congelado_manualmente and quantidade_atual == 1:
 				_saidinhaanoite()
-			_conectarcomglobalitem()
-	if(quantidade_atual >1 && !freeze && !esta_congelado_manualmente):
-		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
-		print(quantidade_atual, freeze, esta_congelado_manualmente)
-		var res = item.eu_fujo
-		if res:
-			var restempo = item.tempo_eu_fujo
-			print("possui tempo de fuga:",restempo)
-			await get_tree().create_timer(restempo).timeout
-			if !freeze && !esta_congelado_manualmente:
+		
+		# Lógica para Pilha (Fuga)
+		elif quantidade_atual > 1 and item.eu_fujo:
+			await get_tree().create_timer(item.tempo_eu_fujo).timeout
+			# Checagem de segurança pós-espera
+			if is_inside_tree() and !freeze and !esta_congelado_manualmente and quantidade_atual > 1:
 				_fugadaprisao(item)
-			_conectarcomglobalitem()
-	else:
-		await get_tree().create_timer(10.0).timeout 
-		_conectarcomglobalitem()
-	return	
+		
+		# Pequena pausa entre ciclos para não travar o jogo e evitar loops infinitos instantâneos
+		await get_tree().create_timer(1.0).timeout
+
+	estou_ocupado = false
 	
 func _saidinhaanoite():
 	var direcao_aleatoria = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
@@ -196,7 +199,7 @@ func _saidinhaanoite():
 	
 	if has_method("aplicar_elastico_externo"):
 		aplicar_elastico_externo()
-
+	return
 func _fugadaprisao(item: Items.Item):
 	_diminuirquantidade()
 	
@@ -209,12 +212,17 @@ func _fugadaprisao(item: Items.Item):
 	var mapa_principal = get_tree().current_scene
 	mapa_principal.add_child(novo_item)
 	
-	var vou_pular = randf_range(0, 1.0) < item.probabilidade_fuga;
+	var vou_pular = randf_range(0.5, 1.0) < item.probabilidade_fuga;
 	var soma = Vector3.UP * 2 if vou_pular else Vector3.UP * 1;
 	novo_item.global_position = self.global_position + soma;
 		
+	novo_item.congelar_objeto()
 	novo_item._saidinhaanoite()
-
+	await get_tree().create_timer(0.1).timeout  
+	novo_item.descongelar_objeto()
+	novo_item = null
+	return
+	
 func _ocuparespaco():
 	var item = Items.pegar_item(nome_item)
 	if !item:
