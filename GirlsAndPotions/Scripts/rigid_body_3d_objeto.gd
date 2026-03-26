@@ -149,27 +149,31 @@ func _conectarcomglobalitem():
 	var item = Items.pegar_item(nome_item)
 	if !item:
 		return;
+	if item.eu_ando == false && item.eu_fujo == false:
+		return
 		
 	if quantidade_atual == 1 && !freeze && !esta_congelado_manualmente:
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
+		print(quantidade_atual, freeze, esta_congelado_manualmente)
+		await get_tree().create_timer(0.01).timeout   
 		var res = item.eu_ando
 		print(res)
 		if res:
 			var restempo = item.tempo_eu_ando
-			print(restempo)
+			print("possui tempo de andar:",restempo)
 			await get_tree().create_timer(restempo).timeout
-			if !freeze || !esta_congelado_manualmente:
+			if !freeze && !esta_congelado_manualmente:
 				_saidinhaanoite()
 			_conectarcomglobalitem()
 	if(quantidade_atual >1 && !freeze && !esta_congelado_manualmente):
 		print("✅ Conectado com sucesso ao Global Items: ", nome_item)
-		print(quantidade_atual)
+		print(quantidade_atual, freeze, esta_congelado_manualmente)
 		var res = item.eu_fujo
 		if res:
 			var restempo = item.tempo_eu_fujo
-			print(restempo)
+			print("possui tempo de fuga:",restempo)
 			await get_tree().create_timer(restempo).timeout
-			if !freeze || !esta_congelado_manualmente:
+			if !freeze && !esta_congelado_manualmente:
 				_fugadaprisao(item)
 			_conectarcomglobalitem()
 	else:
@@ -187,7 +191,7 @@ func _saidinhaanoite():
 	look_at(global_position + direcao_aleatoria, Vector3.UP)
 	
 	#freeze = false
-	descongelar_objeto()
+	
 	apply_central_impulse(impulso_final)
 	
 	if has_method("aplicar_elastico_externo"):
