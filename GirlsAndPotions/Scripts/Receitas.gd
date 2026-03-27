@@ -73,7 +73,18 @@ var receitas = {
 		"modelo": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
 		"mobilia" : "TabuaDeCorte",
 		"objeto_necessario": null
+	},
+	"Pernas De El Sapon" : {
+		"prestigio_minimo" : 0,
+		"nome" : "Pernas De El Sapon",
+		"ingredientes": ["El Sapon"],
+		"pode_fabricar" : true,
+		"tempo_de_cozinha" : 7,
+		"modelo": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
+		"mobilia" : "TabuaDeCorte",
+		"objeto_necessario": null
 	}
+	
 }
 
 func pegar_receita(nome_receita) -> Receita:
