@@ -42,11 +42,11 @@ var itens = {
 		"icon": "res://GirlsAndPotions/Arts/Icones/flor_da_vida.png",
 		"compravel": true,
 		"escala_icone" : 0.7,
-		"eu_ando" : true,
+		"eu_ando" : false,
 		"tempo_eu_ando" : 5,
 		"eu_fujo" : false,
-		"tempo_eu_fujo": 0,
-		"probabilidade_fuga": 0,
+		"tempo_eu_fujo": 3,
+		"probabilidade_fuga": 1,
 		"ocupo_espaco": false
 		
 	},
@@ -135,10 +135,10 @@ var itens = {
 		"escala_icone" : 0.5,
 		"eu_ando" : false,
 		"tempo_eu_ando" : 0,
-		"eu_fujo" : true,
+		"eu_fujo" : false,
 		"tempo_eu_fujo": 7,
 		"probabilidade_fuga": 1,
-		"ocupo_espaco": true
+		"ocupo_espaco": false
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",
@@ -154,6 +154,21 @@ var itens = {
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
 		"ocupo_espaco": false
+	},
+	"El Sapon" :{
+		"nome": "El Sapon",
+		"descricao": "Um sapinho do balaco bacu",
+		"valor_compra": 3,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/el_sapon.png",
+		"compravel": true,
+		"escala_icone" : 0.5,
+		"eu_ando" : true,
+		"tempo_eu_ando" : 8,
+		"eu_fujo" : true,
+		"tempo_eu_fujo": 10,
+		"probabilidade_fuga": 0.9,
+		"ocupo_espaco": true
 	}
 }
 
