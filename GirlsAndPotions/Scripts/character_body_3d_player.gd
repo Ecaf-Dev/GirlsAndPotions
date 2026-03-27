@@ -127,9 +127,10 @@ func _levantaritem():
 		objeto_levantado = objeto_proximo
 		var corpo = objeto_levantado;
 		
+		print("congelando alvo!")
 		corpo.aplicar_elastico_externo()
-		if corpo.has_method("congelar_objeto"):
-			corpo.congelar_objeto()
+		#if corpo.has_method("congelar_objeto"):
+		corpo.congelar_objeto()
 		#else:
 			#corpo.freeze = true
 		#corpo.get_node("CollisionShape3D").disabled = true
@@ -147,8 +148,8 @@ func _soltaritem():
 	
 	#objeto_levantado.set_deferred("freeze", false)
 	objeto_levantado.descongelar_objeto()
-	objeto_levantado.set_deferred("sleeping", false)
-	objeto_levantado.get_node("CollisionShape3D").set_deferred("disabled", false)
+	#objeto_levantado.set_deferred("sleeping", false)
+	#objeto_levantado.get_node("CollisionShape3D").set_deferred("disabled", false)
 
 	get_tree().create_timer(0.05).timeout.connect(func(): 
 		if is_instance_valid(objeto_levantado): objeto_levantado.apply_central_impulse(Vector3.DOWN * 2.0)
@@ -166,7 +167,7 @@ func _jogaritem():
 	objeto_levantado.reparent(get_tree().root)
 	#objeto_levantado.freeze = false
 	objeto_levantado.descongelar_objeto()
-	objeto_levantado.get_node("CollisionShape3D").disabled = false
+	#objeto_levantado.get_node("CollisionShape3D").disabled = false
 	objeto_levantado.apply_central_impulse(impulso)
 	objeto_levantado.apply_torque_impulse(Vector3(randf(), randf(), randf()) * 2.0)
 	
@@ -197,8 +198,8 @@ func _instanciar_na_mao(nome):
 	#novo_item.freeze = true
 	novo_item.congelar_objeto()
 	
-	if novo_item.has_node("CollisionShape3D"):
-		novo_item.get_node("CollisionShape3D").disabled = true
+	#if novo_item.has_node("CollisionShape3D"):
+		#novo_item.get_node("CollisionShape3D").disabled = true
 	
 	objeto_levantado = novo_item
 

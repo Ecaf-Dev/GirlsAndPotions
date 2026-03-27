@@ -162,11 +162,11 @@ var itens = {
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/el_sapon.png",
 		"compravel": true,
-		"escala_icone" : 0.5,
+		"escala_icone" : 0.2,
 		"eu_ando" : true,
-		"tempo_eu_ando" : 8,
+		"tempo_eu_ando" : 4,
 		"eu_fujo" : true,
-		"tempo_eu_fujo": 10,
+		"tempo_eu_fujo": 12,
 		"probabilidade_fuga": 0.9,
 		"ocupo_espaco": true
 	}
