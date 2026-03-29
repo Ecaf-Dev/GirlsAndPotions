@@ -15,6 +15,7 @@ class Item:
 	var tempo_eu_fujo: float
 	var probabilidade_fuga: float
 	var ocupo_espaco: bool
+	var minha_scala: float
 
 	func _init(item_dictionary: Dictionary):
 		self.id = item_dictionary.get("nome", null)
@@ -31,6 +32,7 @@ class Item:
 		self.tempo_eu_fujo = item_dictionary.get("tempo_eu_fujo", 0)
 		self.probabilidade_fuga = item_dictionary.get("probabilidade_fuga", 0)
 		self.ocupo_espaco = item_dictionary.get("ocupo_espaco", false)
+		self.minha_scala = item_dictionary.get("minha_scala", 1)
 
 # Called when the node enters the scene tree for the first time.
 var itens = {
@@ -47,7 +49,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 3,
 		"probabilidade_fuga": 1,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 		
 	},
 	"Flor Magica": {
@@ -63,7 +66,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"Frasco Vazio": {
 		"nome": "Frasco Vazio",
@@ -78,7 +82,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"Poção De Cura": {
 		"nome": "Poção De Cura",
@@ -93,7 +98,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"Poção Da Determinação": {
 		"nome": "Poção Da Determinação",
@@ -108,7 +114,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"Poção De Mana": {
 		"nome": "Poção De Mana",
@@ -123,7 +130,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"Poção De Cura Maior": {
 		"nome": "Poção De Cura Maior",
@@ -138,7 +146,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 7,
 		"probabilidade_fuga": 1,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"Petalas Da Flor Da Vida" :{
 		"nome": "Petalas Da Flor Da Vida",
@@ -153,7 +162,8 @@ var itens = {
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 0,
 		"probabilidade_fuga": 0,
-		"ocupo_espaco": false
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	},
 	"El Sapon" :{
 		"nome": "El Sapon",
@@ -168,7 +178,24 @@ var itens = {
 		"eu_fujo" : true,
 		"tempo_eu_fujo": 12,
 		"probabilidade_fuga": 0.9,
-		"ocupo_espaco": true
+		"ocupo_espaco": true,
+		"minha_scala": 0.5
+	},
+	"Perna De El Sapon" :{
+		"nome": "Perna De El Sapon",
+		"descricao": "um par de pernas de sapo",
+		"valor_compra": 3,
+		"valor_venda": 0,
+		"icon": "res://GirlsAndPotions/Arts/Icones/pernas_de_el_sapon.png",
+		"compravel": false,
+		"escala_icone" : 1,
+		"eu_ando" : false,
+		"tempo_eu_ando" : 4,
+		"eu_fujo" : false,
+		"tempo_eu_fujo": 12,
+		"probabilidade_fuga": 0.9,
+		"ocupo_espaco": false,
+		"minha_scala": 1
 	}
 }
 
