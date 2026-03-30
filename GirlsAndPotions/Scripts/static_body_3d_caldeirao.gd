@@ -84,7 +84,7 @@ func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 		objeto_colidido.queue_free()
 	else:
 		objeto_colidido.nome_item = "Frasco Vazio"
-		objeto_colidido._carregar_visual_automatico()
+		objeto_colidido.carregar_visual_automatico()
 		_rejeitar_item(objeto_colidido)
 	_elastico()
 
@@ -154,6 +154,8 @@ func cozinhar():
 		_alternar_estado_pronto()
 
 	if sucesso and holograma_atual:
+		holograma_atual.nome_item = receita_compativel.nome
+		holograma_atual.carregar_visual_automatico()
 		var cor = await _pegar_cor_do_holograma(holograma_atual)
 		_disparar_puff_colorido(cor)
 		alterar_cor_liquido(cor)
@@ -169,7 +171,7 @@ func _mostrarHolograma(receita: Receitas.Receita):
 	if !cena_base_item or !marker_holograma: return
 
 	holograma_atual = cena_base_item.instantiate() as Objeto
-	holograma_atual.nome_item = receita.nome
+	holograma_atual.nome_item = receita.ingredientes[0] if receita.ingredientes.size() == 1 else receita.nome
 	holograma_atual.desativar_colisao()
 	if holograma_atual is RigidBody3D:
 		holograma_atual.freeze = true

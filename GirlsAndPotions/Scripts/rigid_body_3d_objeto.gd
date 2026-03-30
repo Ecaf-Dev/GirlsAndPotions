@@ -11,11 +11,11 @@ var esta_congelado_manualmente: bool = false
 var estou_ocupado: bool = false
 
 func _ready():
-	_carregar_visual_automatico()
+	carregar_visual_automatico()
 	_conectarcomglobalitem()
 	_ocuparespaco()
 
-func _carregar_visual_automatico():
+func carregar_visual_automatico():
 	# 1. Limpeza de modelos antigos
 	for child in get_children():
 		if child is MeshInstance3D or (child is Node3D and child.name != "CSGBox3D_ObjetoVisual" and child.name != "CollisionShape3D" and child.name != "Area3D_Monitor" and child.name != "Node"):
@@ -89,14 +89,14 @@ func _stackaritens(outro_item: Objeto):
 	outro_item.objeto_stackando = self;
 	self.quantidade_atual += outro_item.quantidade_atual
 	outro_item.queue_free()
-	_carregar_visual_automatico()
+	carregar_visual_automatico()
 	print(self.quantidade_atual)
 	self.objeto_stackando = null;
 
 func _diminuirquantidade():
 	if quantidade_atual > 1:
 		quantidade_atual -= 1
-		_carregar_visual_automatico() # O elástico vai rodar aqui também!
+		carregar_visual_automatico() # O elástico vai rodar aqui também!
 		return nome_item
 	elif quantidade_atual == 1:
 		return "LEVAR_INTEIRO"
