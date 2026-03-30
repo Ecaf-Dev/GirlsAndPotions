@@ -74,13 +74,13 @@ var receitas = {
 		"mobilia" : "TabuaDeCorte",
 		"objeto_necessario": null
 	},
-	"Perna De El Sapon" : {
+	"Pernas De El Sapon" : {
 		"prestigio_minimo" : 0,
-		"nome" : "Perna De El Sapon",
+		"nome" : "Pernas De El Sapon",
 		"ingredientes": ["El Sapon"],
 		"pode_fabricar" : true,
 		"tempo_de_cozinha" : 4,
-		"modelo": "res://GirlsAndPotions/Modelos/perna_de_el_sapon.tscn",
+		"modelo": "res://GirlsAndPotions/Modelos/pernas_de_el_sapon.tscn",
 		"mobilia" : "TabuaDeCorte",
 		"objeto_necessario": null
 	}
