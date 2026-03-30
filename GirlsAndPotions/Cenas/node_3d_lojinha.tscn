@@ -60,13 +60,13 @@ nome_item = "Flor Da Vida"
 quantidade_atual = 10
 
 [node name="StaticBody3D_Caldeirao" parent="." unique_id=744893990 instance=ExtResource("4_ahm42")]
-transform = Transform3D(1.59115, 0, 0, 0, 0.544508, 0, 0, 0, 1.59115, 6.2022066, 1.2, -5.023356)
+transform = Transform3D(1.515, 0, 0, 0, 1.515, 0, 0, 0, 1.515, 6.2022066, 1.2793871, -5.023356)
 
 [node name="StaticBody3D_Balcao" parent="." unique_id=1062721444 instance=ExtResource("5_2bddq")]
 transform = Transform3D(0.9999997, 0, 0, 0, 1, 0, 0, 0, 0.9999997, 1, 1, -5)
 
 [node name="StaticBody3D_TabuaDeCorte" parent="." unique_id=1720406554 instance=ExtResource("6_2fuaa")]
-transform = Transform3D(0.18233585, 0, -0.9559286, 0, 0.33302593, 0, 0.9559286, 0, 0.18233585, 10.789278, 1.0582578, -1.9701707)
+transform = Transform3D(0.2407629, 0, -1.2622433, 0, 1.285, 0, 1.2622433, 0, 0.2407629, 10.617818, 1.0582578, -1.9701707)
 MAX_SLOTS = 1
 mobilia_automatica = false
 
@@ -117,4 +117,9 @@ quantidade_atual = 5
 [node name="RigidBody3D_Objeto8" parent="." unique_id=435048967 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5126176, 1.92376, 2.8809454)
 nome_item = "Poção De Cura Maior"
+quantidade_atual = 5
+
+[node name="RigidBody3D_Objeto9" parent="." unique_id=1528075746 instance=ExtResource("2_t26us")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.025235, 1.7136717, 6.10252)
+nome_item = "El Sapon"
 quantidade_atual = 5
