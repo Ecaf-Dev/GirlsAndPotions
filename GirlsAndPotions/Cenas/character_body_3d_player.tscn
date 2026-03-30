@@ -33,10 +33,10 @@ height = 1.377
 material = SubResource("StandardMaterial3D_qa7kq")
 
 [node name="Area3D_monitor" type="Area3D" parent="." unique_id=1625255084]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.05809)
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1.05809)
 
 [node name="CollisionShape3D_ObjetoAlvejado" type="CollisionShape3D" parent="Area3D_monitor" unique_id=1079758978]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.99433, 0, 0, -0.175787)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.99433, 0, 0, -0.17578697)
 shape = SubResource("BoxShape3D_6n2qw")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Area3D_monitor" unique_id=1771143848]

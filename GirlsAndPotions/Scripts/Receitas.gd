@@ -79,8 +79,8 @@ var receitas = {
 		"nome" : "Pernas De El Sapon",
 		"ingredientes": ["El Sapon"],
 		"pode_fabricar" : true,
-		"tempo_de_cozinha" : 7,
-		"modelo": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
+		"tempo_de_cozinha" : 4,
+		"modelo": "res://GirlsAndPotions/Modelos/pernas_de_el_sapon.tscn",
 		"mobilia" : "TabuaDeCorte",
 		"objeto_necessario": null
 	}

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dvsvfw6dkklfy"]
+
+[ext_resource type="PackedScene" uid="uid://dl4vbb6jyxyr5" path="res://GirlsAndPotions/Modelos/Objetos/PernaDeElSapon.fbx" id="1_byu06"]
+
+[node name="pernas_de_el_sapon" type="Node3D" unique_id=1830351720]
+
+[node name="PernaDeElSapon" parent="." unique_id=1663874989 instance=ExtResource("1_byu06")]
