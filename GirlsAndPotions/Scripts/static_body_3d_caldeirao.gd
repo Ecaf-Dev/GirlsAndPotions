@@ -96,7 +96,7 @@ func _receita_compativel(itens: Array):
 	if receita_encontrada:
 		receita_validada = true
 		tempo_da_receita = receita_encontrada.tempo_de_cozinha
-		_mostrarHolograma(receita_encontrada.nome)
+		_mostrarHolograma(receita_encontrada)
 		if holograma_atual:
 			cor_da_pocao = await _pegar_cor_do_holograma(holograma_atual)
 			alterar_cor_liquido(cor_da_pocao)
@@ -164,13 +164,12 @@ func cozinhar():
 
 # --- VISUAL E FEEDBACK ---
 
-func _mostrarHolograma(nome_do_item):
+func _mostrarHolograma(receita: Receitas.Receita):
 	if holograma_atual: holograma_atual.queue_free()
 	if !cena_base_item or !marker_holograma: return
 
 	holograma_atual = cena_base_item.instantiate() as Objeto
-	holograma_atual.nome_item = nome_do_item
-	holograma_atual.scale = Vector3(0.6, 1.3, 0.6)
+	holograma_atual.nome_item = receita.nome
 	holograma_atual.desativar_colisao()
 	if holograma_atual is RigidBody3D:
 		holograma_atual.freeze = true
