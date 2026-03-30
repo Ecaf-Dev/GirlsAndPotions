@@ -5,3 +5,4 @@
 [node name="pernas_de_el_sapon" type="Node3D" unique_id=1830351720]
 
 [node name="PernaDeElSapon" parent="." unique_id=1663874989 instance=ExtResource("1_byu06")]
+transform = Transform3D(0.45802668, 0, 0, 0, 0.5491671, 0, 0, 0, 0.46162656, 0, 0, 0)
