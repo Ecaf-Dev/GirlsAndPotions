@@ -181,21 +181,21 @@ var itens = {
 		"ocupo_espaco": true,
 		"minha_scala": 0.5
 	},
-	"Perna De El Sapon" :{
-		"nome": "Perna De El Sapon",
+	"Pernas De El Sapon" :{
+		"nome": "Pernas De El Sapon",
 		"descricao": "um par de pernas de sapo",
-		"valor_compra": 3,
+		"valor_compra": 1,
 		"valor_venda": 0,
 		"icon": "res://GirlsAndPotions/Arts/Icones/pernas_de_el_sapon.png",
 		"compravel": false,
-		"escala_icone" : 1,
+		"escala_icone" : 0.1,
 		"eu_ando" : false,
 		"tempo_eu_ando" : 4,
 		"eu_fujo" : false,
 		"tempo_eu_fujo": 12,
 		"probabilidade_fuga": 0.9,
 		"ocupo_espaco": false,
-		"minha_scala": 1
+		"minha_scala": 0.4
 	}
 }
 
