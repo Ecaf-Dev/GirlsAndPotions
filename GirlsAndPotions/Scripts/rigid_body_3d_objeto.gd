@@ -30,10 +30,12 @@ func _carregar_visual_automatico():
 	if quantidade_atual == 1:
 		if FileAccess.file_exists(caminho_modelo):
 			cena_modelo = load(caminho_modelo)
+			ajustarescaladoobjeto(false)
 	else:
 		if FileAccess.file_exists(caminho_modelo_caixa):
 			_somvirarcaixa()
 			cena_modelo = load(caminho_modelo_caixa)
+			ajustarescaladoobjeto(true)
 			
 			
 	if cena_modelo:
@@ -57,6 +59,7 @@ func _carregar_visual_automatico():
 		if has_node("CSGBox3D_ObjetoVisual"):
 			$CSGBox3D_ObjetoVisual.visible = true
 		print("Aviso: Modelo não encontrado para ", nome_item)
+		
 func _physics_process(_delta):
 	_controlar_animacoes()
 	# Se o item estiver parado no ar (freeze falso) mas não estiver caindo (linear_velocity baixa)
@@ -317,3 +320,22 @@ func descongelar_objeto():
 		$Area3D_Monitor.set_deferred("monitorable", true)
 
 	print("🔥 Objeto '", nome_item, "' liberado para a física.")
+
+func ajustarescaladoobjeto(caixa: bool):
+	# 1. Pegamos os dados do item na Global
+	var item = Items.pegar_item(nome_item)
+	print("aminha escala é:", item.minha_scala)
+	
+	if !item:
+		return
+
+	if caixa:
+		# Se for caixa, a escala do RigidBody volta para o padrão (1, 1, 1)
+		self.scale = Vector3.ONE
+	else:
+		# Se não for caixa, aplicamos o multiplicador 'minha_scala'
+		# Como o valor original do nó na cena é (1,1,1), basta atribuir o novo Vector3
+		var fator = item.minha_scala
+		self.scale = Vector3(fator, fator, fator)
+	
+	print("📏 Escala do RigidBody ajustada. Caixa: ", caixa, " | Escala Final: ", self.scale)

@@ -73,6 +73,16 @@ var receitas = {
 		"modelo": "res://GirlsAndPotions/Modelos/pétalas_de_flor_magica.tscn",
 		"mobilia" : "TabuaDeCorte",
 		"objeto_necessario": null
+	},
+	"Perna De El Sapon" : {
+		"prestigio_minimo" : 0,
+		"nome" : "Perna De El Sapon",
+		"ingredientes": ["El Sapon"],
+		"pode_fabricar" : true,
+		"tempo_de_cozinha" : 4,
+		"modelo": "res://GirlsAndPotions/Modelos/perna_de_el_sapon.tscn",
+		"mobilia" : "TabuaDeCorte",
+		"objeto_necessario": null
 	}
 }
 
