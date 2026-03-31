@@ -55,7 +55,7 @@ class Fase:
 		while ouro_atual <= ranqueamento_maximo.ouro_minimo + Fases.fator_balanceamento_ouro:
 			var pedido = pedidos_viaveis.pick_random()
 			var item = Items.pegar_item(pedido.nome)
-			if !item:
+			if !item || item.valor_venda == 0:
 				continue;
 			pedidos_da_fase.append(pedido)
 			ouro_atual += item.valor_venda

@@ -215,7 +215,7 @@ func _saberoquelevo() -> bool:
 	
 	if objeto_levantado:
 		objeto_levantado.nome_item = nome_receita_coletada
-		objeto_levantado._carregar_visual_automatico()
+		objeto_levantado.carregar_visual_automatico()
 	else:
 		_instanciar_na_mao(nome_receita_coletada)
 	return true

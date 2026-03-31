@@ -84,6 +84,7 @@ var receitas = {
 		"mobilia" : "TabuaDeCorte",
 		"objeto_necessario": null
 	}
+	
 }
 
 func pegar_receita(nome_receita) -> Receita:

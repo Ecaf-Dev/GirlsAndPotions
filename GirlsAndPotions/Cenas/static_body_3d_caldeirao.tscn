@@ -131,7 +131,7 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_owdnq")
 
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
-transform = Transform3D(0.973163, 0, 0, 0, 0.333026, 0, 0, 0, 0.973163, 0, 0, 0)
+transform = Transform3D(1.078, 0, 0, 0, 1.068, 0, 0, 0, 1.068, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jbh2c")
@@ -157,16 +157,16 @@ transform = Transform3D(1.05734, 0, 0, 0, 1.2563, 0, 0, 0, 0.989831, 0, 0.127148
 shape = SubResource("CylinderShape3D_nnrc6")
 
 [node name="Caldeirão" type="MeshInstance3D" parent="." unique_id=1832336314]
-transform = Transform3D(0.8, 0, 0, 0, 2.921, 0, 0, 0, 0.88264, 0, 0, 0)
+transform = Transform3D(1.01, 0, 0, 0, 1.095, 0, 0, 0, 1.046, 0, 0, 0)
 mesh = ExtResource("3_nr5xr")
 surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
 surface_material_override/1 = SubResource("StandardMaterial3D_5mfi5")
 
 [node name="Marker3D_Holograma" type="Marker3D" parent="." unique_id=206447482]
-transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 1, 0)
+transform = Transform3D(0.575, 0, 0, 0, 0.575, 0, 0, 0, 0.575, 0, 1.003, 0)
 
 [node name="Marker3D_BarraDeProgresso" type="Marker3D" parent="." unique_id=1438511329]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.00277, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6378884, 0)
 
 [node name="GPUParticles3D_Bolhas" type="GPUParticles3D" parent="." unique_id=1352104686]
 transform = Transform3D(0.103006, 0, 0, 0, 0.103006, 0, 0, 0, 0.103006, 0, 0.67502, 0)
@@ -176,7 +176,7 @@ process_material = SubResource("ParticleProcessMaterial_jbp8p")
 draw_pass_1 = SubResource("SphereMesh_qut8x")
 
 [node name="GPUParticles3D_Fogareu" type="GPUParticles3D" parent="." unique_id=1689929271]
-transform = Transform3D(0.130803, 0, 0, 0, 0.130803, 0, 0, 0, 0.130803, 0.00565224, -1.07457, 0.00453556)
+transform = Transform3D(0.130803, 0, 0, 0, 0.13080297, 0, 0, 0, 0.13080297, 0.00565224, -0.4887313, 0.004535559)
 material_override = SubResource("StandardMaterial3D_7ud17")
 amount = 50
 explosiveness = 0.19
@@ -205,7 +205,7 @@ volume_db = -7.843
 stream = ExtResource("6_ugjhr")
 
 [node name="GPUParticles3D_Sucesso" type="GPUParticles3D" parent="." unique_id=1212984358]
-transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 3.6623683, 0)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 1.007, 0)
 visible = false
 process_material = SubResource("ParticleProcessMaterial_3y48j")
 draw_pass_1 = SubResource("QuadMesh_7l2jo")
