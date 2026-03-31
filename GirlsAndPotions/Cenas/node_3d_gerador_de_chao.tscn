@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://qjeaum63cmac"]
+
+[ext_resource type="Script" uid="uid://qp1ic4x45lnt" path="res://node_3d_gerador_de_chao.gd" id="1_hrqau"]
+[ext_resource type="PackedScene" uid="uid://db62rnfem0aqh" path="res://GirlsAndPotions/Modelos/tile_contornado.tscn" id="2_qrycw"]
+
+[node name="Node3D_GeradorDeChao" type="Node3D" unique_id=1704776184]
+script = ExtResource("1_hrqau")
+cena_tile = ExtResource("2_qrycw")
