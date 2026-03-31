@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bcwkg3g4bglte" path="res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn" id="7_knyeq"]
 [ext_resource type="AudioStream" uid="uid://cfqwygtkcs8w0" path="res://GirlsAndPotions/Arts/Novos Sons/CelticaMusicHappy.wav" id="8_kk8d3"]
 [ext_resource type="PackedScene" uid="uid://35f1vfdlegeq" path="res://GirlsAndPotions/Cenas/gpu_particles_3d_particulas_de_vento.tscn" id="9_7v7ex"]
+[ext_resource type="PackedScene" uid="uid://qjeaum63cmac" path="res://GirlsAndPotions/Cenas/node_3d_gerador_de_chao.tscn" id="11_xpuys"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_valfg"]
 albedo_color = Color(1, 0.8, 0.627451, 1)
@@ -31,9 +32,10 @@ ambient_light_color = Color(0.431373, 0.74902, 0, 1)
 
 [node name="CSGBox3D_Chao" type="CSGBox3D" parent="." unique_id=53243154]
 transform = Transform3D(1.0676485, 0, 0.24927399, 0, 1.5000008, 0, -0.21527569, 0, 1.2362612, 3.9033384, 0, 1.6987177)
+visible = false
 use_collision = true
-collision_layer = 3
-collision_mask = 3
+collision_layer = 0
+collision_mask = 0
 size = Vector3(17.428345, 0.5, 13.864319)
 material = SubResource("StandardMaterial3D_valfg")
 
@@ -119,6 +121,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5126176, 1.92376, 2.8809454
 nome_item = "Poção De Cura Maior"
 quantidade_atual = 5
 
+[node name="Node3D_GeradorDeChao" parent="." unique_id=1704776184 instance=ExtResource("11_xpuys")]
+tamanho_tile = 1.0
 [node name="RigidBody3D_Objeto9" parent="." unique_id=1528075746 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.025235, 1.7136717, 6.10252)
 nome_item = "El Sapon"

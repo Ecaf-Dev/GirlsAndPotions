@@ -2,6 +2,8 @@ extends Node
 
 # representa quanto de ouro a mais a gente coloca de margem em pedidos para conseguir o ranqueamento máximo
 var fator_balanceamento_ouro: float = 20;
+var fase_atual: Array = []
+var tamanho_do_mapa: Array = []
 
 class Ranqueamento:
 	var ouro_minimo: float
@@ -16,12 +18,17 @@ class Fase:
 	var nome: String
 	var ranqueamentos: Array[Ranqueamento] = []
 	var tempo_limite_de_jogo: int
+	var largura: int  # Novo
+	var profundidade: int # Novo
 
 	func _init(dictionary: Dictionary):
 		self.id = dictionary.get("nome", null)
 		self.nome = dictionary.get("nome", null)
 		self.ranqueamentos = _gerar_ranqueamentos(dictionary)
 		self.tempo_limite_de_jogo = dictionary.get("tempo_limite_de_jogo", 0)
+		var tamanho = dictionary.get("tamanhodafase", {"x": 2, "z": 2})
+		self.largura = tamanho.x
+		self.profundidade = tamanho.z
 
 	func pegar_numero_de_estrelas(ouro: float) -> int:
 		var ranqueamento_atual: Ranqueamento = null;
@@ -85,6 +92,10 @@ var fases = {
 				"estrelas": 3
 			}
 		],
+		"tamanhodafase": {
+			"x": 20,
+			"z": 20 # Usei Z porque em 3D o "chão" costuma ser X e Z
+		},
 		"tempo_limite_de_jogo": 120
 	}
 }
@@ -100,3 +111,5 @@ func pegar_todas_as_fases() -> Array[Fase]:
 	for id in Fases.fases:
 		todas.append(Fase.new(Fases.fases[id]))
 	return todas;
+
+	

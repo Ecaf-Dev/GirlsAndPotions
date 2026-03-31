@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://db62rnfem0aqh"]
+
+[ext_resource type="PackedScene" uid="uid://b62ineuy73i7s" path="res://GirlsAndPotions/Modelos/Tile/TileContornado.fbx" id="1_kf7om"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0f73r"]
+albedo_color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_butql"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kf7om"]
+
+[node name="TileContornado" unique_id=1850755482 instance=ExtResource("1_kf7om")]
+
+[node name="Cube" parent="." index="0" unique_id=1570058864]
+transform = Transform3D(50, 0, 0, 0, -2.1855694e-06, 50, 0, -50, -2.1855694e-06, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_0f73r")
+surface_material_override/1 = SubResource("StandardMaterial3D_butql")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1" unique_id=1170757757]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0" unique_id=1429872692]
+shape = SubResource("BoxShape3D_kf7om")
