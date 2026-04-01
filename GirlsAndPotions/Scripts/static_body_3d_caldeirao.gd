@@ -46,7 +46,7 @@ var interagindo: bool = false
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
 
-var escala_original_objeto_visual: Vector3 = Vector3(1,1,1)
+var escala_original_objeto_visual: Vector3
 
 # --- CICLO DE VIDA ---
 
@@ -300,7 +300,7 @@ func _falha_na_cozinha():
 func _elastico():
 	if !objeto_visual: return
 	var tween = create_tween()
-	var vetor_do_efeito = Vector3(escala_original_objeto_visual.x - 0.2, escala_original_objeto_visual.y - 0.3, escala_original_objeto_visual.z - 0.2)
+	var vetor_do_efeito = Vector3(escala_original_objeto_visual.x*0.8, escala_original_objeto_visual.y * 0.7, escala_original_objeto_visual.z * 0.8)
 
 	tween.tween_property(objeto_visual, "scale", vetor_do_efeito, 0.1).set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(objeto_visual, "scale", escala_original_objeto_visual, 0.3).set_trans(Tween.TRANS_ELASTIC)
