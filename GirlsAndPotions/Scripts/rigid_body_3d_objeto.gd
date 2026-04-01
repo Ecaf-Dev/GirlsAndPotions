@@ -4,13 +4,14 @@ extends RigidBody3D
 @export var nome_item : String = ""
 @export var quantidade_atual : int = 1
 # Variável para armazenar a escala original do modelo carregado
-var escala_base_modelo : Vector3 = Vector3.ONE
+var escala_base_modelo : Vector3
 var objeto_stackando: Objeto = null;
 
 var esta_congelado_manualmente: bool = false
 var estou_ocupado: bool = false
 
 func _ready():
+	escala_base_modelo = scale
 	carregar_visual_automatico()
 	_conectarcomglobalitem()
 	_ocuparespaco()
