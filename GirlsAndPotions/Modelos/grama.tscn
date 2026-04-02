@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cr0va1e8hatdh"]
+
+[ext_resource type="PackedScene" uid="uid://c07epxigllnnj" path="res://GirlsAndPotions/Modelos/Objetos/Grama.fbx" id="1_pmynt"]
+[ext_resource type="Texture2D" uid="uid://bwwaniewv03t8" path="res://GirlsAndPotions/Arts/Backgrounds/garmav1.png" id="2_vafpa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4g47a"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_vafpa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vjq7"]
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_vafpa")
+
+[node name="Grama" unique_id=1948717496 instance=ExtResource("1_pmynt")]
+
+[node name="Plano" parent="." index="0" unique_id=987959736]
+transform = Transform3D(100, 0, 0, 0, 100, -4.371139e-06, 0, 4.371139e-06, 100, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_4g47a")
+
+[node name="Plano_001" parent="." index="1" unique_id=1690310197]
+transform = Transform3D(5.9604645e-06, 4.3711398e-06, 100, 1.7763568e-13, 100, -4.3711398e-06, -100, 5.3290705e-13, 5.9604645e-06, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_6vjq7")
