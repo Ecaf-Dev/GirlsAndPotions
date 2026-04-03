@@ -2,17 +2,23 @@
 
 [ext_resource type="PackedScene" uid="uid://b62ineuy73i7s" path="res://GirlsAndPotions/Modelos/Tile/TileContornado.fbx" id="1_kf7om"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kf7om"]
+load_path = "res://.godot/imported/ChaoDeMadeira.png-b5861138af6f5cc914ca5195de99ceb7.s3tc.ctex"
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0f73r"]
+shading_mode = 0
 albedo_color = Color(0.3180198, 0.31801978, 0.31801975, 1)
+albedo_texture = SubResource("CompressedTexture2D_kf7om")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_butql"]
+transparency = 1
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kf7om"]
 
 [node name="TileContornado" unique_id=1850755482 instance=ExtResource("1_kf7om")]
 
-[node name="Cube" parent="." index="0" unique_id=1570058864]
+[node name="Cube" parent="." index="0" unique_id=1029713454]
 transform = Transform3D(50, 0, 0, 0, -2.1855694e-06, 50, 0, -50, -2.1855694e-06, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_0f73r")
 surface_material_override/1 = SubResource("StandardMaterial3D_butql")
