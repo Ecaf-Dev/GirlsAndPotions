@@ -1,8 +1,8 @@
 extends Node3D
 
 @export_group("Configurações do Grid")
-@export var colunas: int = 10      # Largura (X)
-@export var linhas: int = 10       # Profundidade (Z)
+@export var colunas: int = 5      # Largura (X)
+@export var linhas: int = 5       # Profundidade (Z)
 @export var tamanho_tile: float = 2.0 
 
 @export_group("Recursos")
