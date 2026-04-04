@@ -9,6 +9,7 @@ extends Node3D
 @export var cena_tile: PackedScene
 
 @export_group("Cenas de Mobília")
+@export var mobilia_automatica: bool = false
 #Observação, precisa-se ajustar a arquitetura de mobilias, indico criar uma variavel global que gerencie todas as mobilias, por hora não criei pois estou implementando a mecanica de instancia via configuração da fase
 @export var catalogo_mobilias: Dictionary = {
 	"caldeirao": preload("res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn"),
@@ -65,6 +66,8 @@ func mundo_para_grid(posicao_mundo: Vector3) -> Vector2i:
 	return Vector2i(x, z)
 
 func instanciar_mobilias_da_fase(fase: Fases.Fase):
+	if !mobilia_automatica:
+		return
 	# Precisamos do mesmo offset para que a mobília bata com o tile
 	var offset_x = (float(colunas - 1) * tamanho_tile) / 2.0
 	var offset_z = (float(linhas - 1) * tamanho_tile) / 2.0
