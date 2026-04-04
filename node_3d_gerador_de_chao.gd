@@ -8,6 +8,15 @@ extends Node3D
 @export_group("Recursos")
 @export var cena_tile: PackedScene
 
+@export_group("Cenas de Mobília")
+#Observação, precisa-se ajustar a arquitetura de mobilias, indico criar uma variavel global que gerencie todas as mobilias, por hora não criei pois estou implementando a mecanica de instancia via configuração da fase
+@export var catalogo_mobilias: Dictionary = {
+	"caldeirao": preload("res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn"),
+	"tabua_de_corte": preload("res://GirlsAndPotions/Cenas/static_body_3d_tabua_de_corte.tscn"), # ajuste o caminho
+	"balcao": preload("res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn"),
+	"caixa_ce_correio": preload("res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn")
+}
+
 func _ready():
 	var fase_ativa = Fases.pegar_fase("Fase 1")
 	
