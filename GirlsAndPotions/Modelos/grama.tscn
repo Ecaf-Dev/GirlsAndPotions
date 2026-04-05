@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bpnyug85demh1"]
+
+[ext_resource type="Texture2D" path="res://GirlsAndPotions/Arts/Backgrounds/garmav1.png" id="2_vafpa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pmynt"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+albedo_texture = ExtResource("2_vafpa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vafpa"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+albedo_texture = ExtResource("2_vafpa")
+
+[node name="Grama" unique_id=759980804]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="Plano" parent="." index="0" unique_id=1223066001]
+surface_material_override/0 = SubResource("StandardMaterial3D_pmynt")
+
+[node name="Plano_001" parent="." index="1" unique_id=1609455089]
+surface_material_override/0 = SubResource("StandardMaterial3D_vafpa")
