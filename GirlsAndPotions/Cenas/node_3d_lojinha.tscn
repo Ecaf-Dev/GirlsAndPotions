@@ -123,6 +123,7 @@ quantidade_atual = 5
 
 [node name="Node3D_GeradorDeChao" parent="." unique_id=1704776184 instance=ExtResource("11_xpuys")]
 tamanho_tile = 1.0
+mobilia_automatica = true
 
 [node name="RigidBody3D_Objeto9" parent="." unique_id=1528075746 instance=ExtResource("2_t26us")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.025235, 1.7136717, 6.10252)
