@@ -9,10 +9,13 @@
 albedo_color = Color(0.596078, 0.262745, 0.0745098, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wgfde"]
+cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kcq3f"]
+cull_mode = 2
 albedo_color = Color(1, 0, 0, 1)
+texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7c6hb"]
 
@@ -22,7 +25,7 @@ albedo_color = Color(1, 0, 0, 1)
 script = ExtResource("1_ickm8")
 
 [node name="CaixaDeCorreio" type="MeshInstance3D" parent="." unique_id=768790448]
-transform = Transform3D(0.49999934, 0.0004907283, -2.1340104e-05, -0.0008178286, 0.29999882, 0.0011636165, 2.3243416e-05, -0.0006981481, 0.49999866, 0, -0.45913807, 0)
+transform = Transform3D(0.38724032, 0.00053950853, -2.1345268e-05, -0.00063339324, 0.32981983, 0.0011638982, 1.80016e-05, -0.0007675467, 0.5001196, 0, -0.45913807, 0)
 mesh = ExtResource("1_lw8jh")
 surface_material_override/0 = SubResource("StandardMaterial3D_3pv0f")
 surface_material_override/1 = SubResource("StandardMaterial3D_sdu2g")
