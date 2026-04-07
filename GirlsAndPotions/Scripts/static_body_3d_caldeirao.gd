@@ -2,7 +2,7 @@ class_name Caldeirao
 extends StaticBody3D
 
 # --- CONFIGURAÇÕES ---
-@export var MAX_SLOTS = 2
+@export var max_slots = 2
 @export var objeto_visual : Node3D
 @export var cena_base_item: PackedScene
 @export var mobilia_automatica: bool = true
@@ -58,7 +58,7 @@ func _ready():
 
 func _on_area_3d_monitor_body_entered(objeto_colidido):
 	if objeto_colidido is Objeto:
-		var numero_de_items_excedido = items_processando.size() >= MAX_SLOTS;
+		var numero_de_items_excedido = items_processando.size() >= max_slots;
 		var devo_rejeitar_objeto = (cozinhando || 
 									pronto_para_coleta ||
 									objeto_colidido.quantidade_atual > 1 ||
@@ -90,7 +90,7 @@ func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 
 func _receita_compativel(itens: Array):
 	alterar_cor_liquido()
-	if itens.size() < MAX_SLOTS: return null
+	if itens.size() < max_slots: return null
 
 	var receita_encontrada = Receitas.pegar_receita_compativel(itens, meu_tipo_de_mobilia)
 	if receita_encontrada:

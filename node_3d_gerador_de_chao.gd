@@ -68,24 +68,41 @@ func mundo_para_grid(posicao_mundo: Vector3) -> Vector2i:
 func instanciar_mobilias_da_fase(fase: Fases.Fase):
 	if !mobilia_automatica:
 		return
-	# Precisamos do mesmo offset para que a mobília bata com o tile
+		
 	var offset_x = (float(colunas - 1) * tamanho_tile) / 2.0
 	var offset_z = (float(linhas - 1) * tamanho_tile) / 2.0
 
-	for nome_mobilia in fase.dados_mobilias:
-		if catalogo_mobilias.has(nome_mobilia):
-			var dados = fase.dados_mobilias[nome_mobilia]
-			var cena = catalogo_mobilias[nome_mobilia]
-			var objeto = cena.instantiate()
+	for id_mobilia in fase.dados_mobilias:
+		if catalogo_mobilias.has(id_mobilia):
+			var dados_posicao = fase.dados_mobilias[id_mobilia]
+			
+			# Busca na Global (ex: "Caldeirao")
+			var info_logica = Mobilias.pegar_mobilia(id_mobilia.capitalize())
+			if not info_logica: continue
+
+			var objeto = catalogo_mobilias[id_mobilia].instantiate()
 			add_child(objeto)
 			
-			# Cálculo da posição baseado nas coordenadas X e Y (que no 3D são X e Z) do seu dicionário
-			var pos_x = (dados.x * tamanho_tile) - offset_x
-			var pos_z = (dados.y * tamanho_tile) - offset_z # No seu dicionário você usou 'y' para a profundidade
+			# --- O CHEQUE SIMPLES QUE VOCÊ PEDIU ---
+			# Primeiro, passamos o básico que toda mobília deve ter
+			objeto.set("nome_display", info_logica.nome)
+			objeto.set("descricao", info_logica.descricao)
+
+			# Agora, varremos as particularidades do dicionário
+			for chave in info_logica.particularidades:
+				var valor = info_logica.particularidades[chave]
+				
+				# Verifica se a variável existe no script da mobília
+				if chave in objeto:
+					objeto.set(chave, valor)
+				else:
+					# Se não achar a variável, manda o print de aviso que você sugeriu
+					print("⚠️ AVISO: Procurei a variável '%s' no objeto '%s', mas ela não existe no script!" % [chave, id_mobilia])
+
+			# --- CONFIGURAÇÕES FÍSICAS ---
+			objeto.scale = Vector3.ONE * info_logica.minha_scala
+			var pos_x = (dados_posicao.x * tamanho_tile) - offset_x
+			var pos_z = (dados_posicao.y * tamanho_tile) - offset_z
+			objeto.position = Vector3(pos_x, 1.0, pos_z) 
 			
-			objeto.position = Vector3(pos_x, 1, pos_z) # 0.5 de altura para não ficar enterrado no chão
-			objeto.name = "Mobilia_" + nome_mobilia
-			
-			print("🪑 Mobília instanciada: ", nome_mobilia, " em ", objeto.position)
-		else:
-			print("⚠️ Erro: Mobília '", nome_mobilia, "' não encontrada no catálogo do Grid!")
+			objeto.name = "Mobilia_" + id_mobilia

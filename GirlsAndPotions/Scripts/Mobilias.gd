@@ -21,7 +21,7 @@ var mobilias_dados = {
 	"Balcao": {
 		"nome": "Balcão",
 		"descricao": "Balcão de uma loja, gera pedidos a cada dia",
-		"minha_scala": 1.0,
+		"minha_scala": 1.5,
 		"particularidades" : {
 			"nome_fase": "Fase 1",
 			"max_pedidos": 3,
@@ -30,7 +30,7 @@ var mobilias_dados = {
 	"Caldeirao": {
 		"nome": "Caldeirão",
 		"descricao": "Um caldeirão que todo iniciante da alquimia precisa, cuidado ele explode!",
-		"minha_scala": 1.0,
+		"minha_scala": 1.5,
 		"particularidades": {
 			"max_slots": 2,
 			"mobilia_automatica": true
@@ -39,7 +39,7 @@ var mobilias_dados = {
 	"Tabua De Corte": {
 		"nome": "Tábua De Corte",
 		"descricao": "Uma tábua para cortar diversas criaturas e plantas",
-		"minha_scala": 1.0,
+		"minha_scala": 1.5,
 		"particularidades": {
 			"max_slots": 1,
 			"mobilia_automatica": false
