@@ -178,10 +178,21 @@ func _rejeitar_item(item: Objeto):
 
 func _elastico():
 	if objeto_visual == null: return
+	
+	# 1. Salva a escala atual (o "tamanho original" do momento)
+	var escala_original = objeto_visual.scale
+	
+	# 2. Calcula 80% dessa escala
+	var escala_reduzida = escala_original * 0.8
+	
 	var tween = create_tween()
-	tween.tween_property(objeto_visual, "scale", Vector3(0.35, 0.7, 0.35), 0.1)\
+	
+	# Primeiro: Encolhe para 80% rapidamente
+	tween.tween_property(objeto_visual, "scale", escala_reduzida, 0.1)\
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(objeto_visual, "scale", Vector3(0.5, 0.5, 0.5), 0.3)\
+	
+	# Segundo: Volta para o tamanho original com o efeito elástico
+	tween.tween_property(objeto_visual, "scale", escala_original, 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 func _gerar_pedidos():
