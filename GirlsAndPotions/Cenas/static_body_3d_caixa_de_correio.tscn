@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcwkg3g4bglte"]
+[gd_scene format=3 uid="uid://bcwkg3g4bglte"]
 
-[ext_resource type="Script" path="res://GirlsAndPotions/Scripts/static_body_3d_caixa_de_correio.gd" id="1_ickm8"]
+[ext_resource type="Script" uid="uid://c4t0q4177r4u2" path="res://GirlsAndPotions/Scripts/static_body_3d_caixa_de_correio.gd" id="1_ickm8"]
 [ext_resource type="ArrayMesh" uid="uid://pp5uu54nt1jj" path="res://GirlsAndPotions/Modelos/Objetos/CaixaDeCorreio.obj" id="1_lw8jh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3pv0f"]
@@ -18,27 +18,25 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_du4fj"]
 
-[node name="StaticBody3D_CaixaDeCorreio" type="StaticBody3D"]
+[node name="StaticBody3D_CaixaDeCorreio" type="StaticBody3D" unique_id=2044490212]
 script = ExtResource("1_ickm8")
 
-[node name="CaixaDeCorreio" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.499999, 0.00081788, -2.13401e-05, -0.000817828, 0.499998, 0.00116362, 2.32434e-05, -0.00116358, 0.499999, 0, 0, 0)
+[node name="CaixaDeCorreio" type="MeshInstance3D" parent="." unique_id=768790448]
+transform = Transform3D(0.49999934, 0.0004907283, -2.1340104e-05, -0.0008178286, 0.29999882, 0.0011636165, 2.3243416e-05, -0.0006981481, 0.49999866, 0, -0.45913807, 0)
 mesh = ExtResource("1_lw8jh")
 surface_material_override/0 = SubResource("StandardMaterial3D_3pv0f")
 surface_material_override/1 = SubResource("StandardMaterial3D_sdu2g")
 surface_material_override/2 = SubResource("StandardMaterial3D_wgfde")
 surface_material_override/3 = SubResource("StandardMaterial3D_kcq3f")
 
-[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.68652, 0, 0, 0, 1, 0, 0.884422, 0)
+[node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=550484513]
 shape = SubResource("BoxShape3D_7c6hb")
 disabled = true
 
-[node name="Area3D_Monitor" type="Area3D" parent="."]
+[node name="Area3D_Monitor" type="Area3D" parent="." unique_id=755326437]
 
-[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor"]
-transform = Transform3D(1, 0, 0, 0, 1.51846, 0, 0, 0, 1, 0, 0.797861, 0)
+[node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor" unique_id=1664103976]
 shape = SubResource("BoxShape3D_du4fj")
 
-[node name="Marker3D_Spawner" type="Marker3D" parent="."]
+[node name="Marker3D_Spawner" type="Marker3D" parent="." unique_id=37179238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.81847, 0)

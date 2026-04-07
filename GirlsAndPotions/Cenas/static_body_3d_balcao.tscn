@@ -6,8 +6,10 @@
 [ext_resource type="AudioStream" uid="uid://cu7atr88tfsw3" path="res://GirlsAndPotions/Arts/Novos Sons/Novo Pedido.wav" id="4_al2d3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ltmu"]
+size = Vector3(1, 1, 0.954834)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jc4qw"]
+size = Vector3(1, 1, 0.8930664)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8sp1"]
 albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
@@ -16,20 +18,20 @@ albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
 albedo_color = Color(0.505882, 0.2, 0.0117647, 1)
 
 [node name="StaticBody3D_Balcao" type="StaticBody3D" unique_id=234715560 node_paths=PackedStringArray("objeto_visual")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("1_20lu7")
 objeto_visual = NodePath("Balcão")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=481617886]
-transform = Transform3D(2.35083, 0, 0, 0, 1, 0, 0, 0, 1.30518, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0023092497)
 shape = SubResource("BoxShape3D_6ltmu")
 
 [node name="Area3D_Monitor" type="Area3D" parent="." unique_id=1519854752]
-transform = Transform3D(1.975, 0, 0, 0, 0.755601, 0, 0, 0, 1.23202, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor" unique_id=1022539436]
-transform = Transform3D(1.23327, 0, 0, 0, 1.54159, 0, 0, 0, 1.07911, 0, 0, 0)
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0.006178642)
 shape = SubResource("BoxShape3D_jc4qw")
 
 [node name="CSGBox3D_Visual" type="CSGBox3D" parent="." unique_id=1799172022]
@@ -37,7 +39,7 @@ visible = false
 material = SubResource("StandardMaterial3D_l8sp1")
 
 [node name="Balcão" type="MeshInstance3D" parent="." unique_id=1921885362]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 mesh = ExtResource("2_wwvc4")
 surface_material_override/0 = SubResource("StandardMaterial3D_jd77c")
 

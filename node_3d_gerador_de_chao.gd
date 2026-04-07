@@ -83,7 +83,7 @@ func instanciar_mobilias_da_fase(fase: Fases.Fase):
 			var pos_x = (dados.x * tamanho_tile) - offset_x
 			var pos_z = (dados.y * tamanho_tile) - offset_z # No seu dicionário você usou 'y' para a profundidade
 			
-			objeto.position = Vector3(pos_x, 0.5, pos_z) # 0.5 de altura para não ficar enterrado no chão
+			objeto.position = Vector3(pos_x, 1, pos_z) # 0.5 de altura para não ficar enterrado no chão
 			objeto.name = "Mobilia_" + nome_mobilia
 			
 			print("🪑 Mobília instanciada: ", nome_mobilia, " em ", objeto.position)

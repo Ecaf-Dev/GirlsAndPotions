@@ -7,13 +7,12 @@
 [ext_resource type="AudioStream" uid="uid://bdjh3bx307euc" path="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav" id="5_0uoty"]
 [ext_resource type="AudioStream" uid="uid://cqbbt6njhste" path="res://GirlsAndPotions/Arts/Novos Sons/Puff.wav" id="6_wf05w"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_ilf4k"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajnkd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32uhq"]
 albedo_color = Color(0.521569, 0, 0.647059, 1)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_nnrc6"]
-height = 2.15791
+[sub_resource type="BoxShape3D" id="BoxShape3D_0x5eo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibihi"]
 albedo_color = Color(0.156863, 0.156863, 0.156863, 1)
@@ -127,7 +126,6 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_owdnq")
 
 [node name="StaticBody3D_TabuaDeCorte" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
-transform = Transform3D(1.076, 0, 0, 0, 1.018, 0, 0, 0, 1.011, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ajnkd")
@@ -137,7 +135,7 @@ marker_holograma = NodePath("Marker3D_Holograma")
 marker_barra = NodePath("Marker3D_BarraDeProgresso")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=158951603]
-shape = SubResource("CylinderShape3D_ilf4k")
+shape = SubResource("BoxShape3D_ajnkd")
 
 [node name="CSGCylinder3D_Caldeirao" type="CSGCylinder3D" parent="." unique_id=45977467]
 transform = Transform3D(1.01261, 0, 0, 0, 1.01261, 0, 0, 0, 1.01261, 0, 0, 0)
@@ -149,11 +147,11 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor" unique_id=1021824611]
-transform = Transform3D(1.05734, 0, 0, 0, 1.2563, 0, 0, 0, 0.989831, 0, 0.127148, 0)
-shape = SubResource("CylinderShape3D_nnrc6")
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+shape = SubResource("BoxShape3D_0x5eo")
 
 [node name="Objeto" type="MeshInstance3D" parent="." unique_id=1832336314]
-transform = Transform3D(0.362, 0, 0, 0, 0.39, 0, 0, 0, 0.366, 0, 0, 0)
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 mesh = ExtResource("3_ajnkd")
 surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
 

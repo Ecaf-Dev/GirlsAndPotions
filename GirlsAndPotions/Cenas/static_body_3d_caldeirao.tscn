@@ -131,7 +131,6 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_owdnq")
 
 [node name="StaticBody3D_Caldeirao" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
-transform = Transform3D(1.078, 0, 0, 0, 1.068, 0, 0, 0, 1.068, 0, 0, 0)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_jbh2c")
@@ -144,7 +143,6 @@ marker_barra = NodePath("Marker3D_BarraDeProgresso")
 shape = SubResource("CylinderShape3D_ilf4k")
 
 [node name="CSGCylinder3D_Caldeirao" type="CSGCylinder3D" parent="." unique_id=45977467]
-transform = Transform3D(1.01261, 0, 0, 0, 1.01261, 0, 0, 0, 1.01261, 0, 0, 0)
 visible = false
 material = SubResource("StandardMaterial3D_32uhq")
 
@@ -153,11 +151,9 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D_Interacao" type="CollisionShape3D" parent="Area3D_Monitor" unique_id=1021824611]
-transform = Transform3D(1.05734, 0, 0, 0, 1.2563, 0, 0, 0, 0.989831, 0, 0.127148, 0)
 shape = SubResource("CylinderShape3D_nnrc6")
 
 [node name="Caldeirão" type="MeshInstance3D" parent="." unique_id=1832336314]
-transform = Transform3D(1.01, 0, 0, 0, 1.095, 0, 0, 0, 1.046, 0, 0, 0)
 mesh = ExtResource("3_nr5xr")
 surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
 surface_material_override/1 = SubResource("StandardMaterial3D_5mfi5")
