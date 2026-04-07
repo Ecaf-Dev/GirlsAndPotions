@@ -11,12 +11,12 @@ extends Node3D
 @export_group("Cenas de Mobília")
 @export var mobilia_automatica: bool = false
 #Observação, precisa-se ajustar a arquitetura de mobilias, indico criar uma variavel global que gerencie todas as mobilias, por hora não criei pois estou implementando a mecanica de instancia via configuração da fase
-@export var catalogo_mobilias: Dictionary = {
-	"caldeirao": preload("res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn"),
-	"tabua_de_corte": preload("res://GirlsAndPotions/Cenas/static_body_3d_tabua_de_corte.tscn"), # ajuste o caminho
-	"balcao": preload("res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn"),
-	"caixa_ce_correio": preload("res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn")
-}
+#@export var catalogo_mobilias: Dictionary = {
+	#"caldeirao": preload("res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn"),
+	#"tabua_de_corte": preload("res://GirlsAndPotions/Cenas/static_body_3d_tabua_de_corte.tscn"), # ajuste o caminho
+	#"balcao": preload("res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn"),
+	#"caixa_de_correio": preload("res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn")
+#}
 
 func _ready():
 	var fase_ativa = Fases.pegar_fase("Fase 1")
@@ -73,36 +73,51 @@ func instanciar_mobilias_da_fase(fase: Fases.Fase):
 	var offset_z = (float(linhas - 1) * tamanho_tile) / 2.0
 
 	for id_mobilia in fase.dados_mobilias:
-		if catalogo_mobilias.has(id_mobilia):
-			var dados_posicao = fase.dados_mobilias[id_mobilia]
-			
-			# Busca na Global (ex: "Caldeirao")
-			var info_logica = Mobilias.pegar_mobilia(id_mobilia.capitalize())
-			if not info_logica: continue
+		# 1. Busca os dados lógicos e o CAMINHO da cena na Global
+		# Se você padronizou tudo para snake_case, remova o .capitalize()
+		var info_logica = Mobilias.pegar_mobilia(id_mobilia) 
+		
+		if not info_logica:
+			print("❌ ERRO: A mobília '%s' não existe na Global Mobilias.gd!" % id_mobilia)
+			continue
 
-			var objeto = catalogo_mobilias[id_mobilia].instantiate()
-			add_child(objeto)
-			
-			# --- O CHEQUE SIMPLES QUE VOCÊ PEDIU ---
-			# Primeiro, passamos o básico que toda mobília deve ter
-			objeto.set("nome_display", info_logica.nome)
-			objeto.set("descricao", info_logica.descricao)
+		# 2. Verifica se o caminho da cena foi definido
+		if info_logica.cena_path == "":
+			print("⚠️ AVISO: A mobília '%s' está na Global, mas o 'cena_path' está vazio!" % id_mobilia)
+			continue
 
-			# Agora, varremos as particularidades do dicionário
-			for chave in info_logica.particularidades:
-				var valor = info_logica.particularidades[chave]
-				
-				# Verifica se a variável existe no script da mobília
-				if chave in objeto:
-					objeto.set(chave, valor)
-				else:
-					# Se não achar a variável, manda o print de aviso que você sugeriu
-					print("⚠️ AVISO: Procurei a variável '%s' no objeto '%s', mas ela não existe no script!" % [chave, id_mobilia])
-
-			# --- CONFIGURAÇÕES FÍSICAS ---
-			objeto.scale = Vector3.ONE * info_logica.minha_scala
-			var pos_x = (dados_posicao.x * tamanho_tile) - offset_x
-			var pos_z = (dados_posicao.y * tamanho_tile) - offset_z
-			objeto.position = Vector3(pos_x, 1.0, pos_z) 
+		# 3. Carrega e Instancia a cena dinamicamente
+		var recurso_cena = load(info_logica.cena_path)
+		if not recurso_cena:
+			print("❌ ERRO: Não foi possível carregar o arquivo em: %s" % info_logica.cena_path)
+			continue
 			
-			objeto.name = "Mobilia_" + id_mobilia
+		var objeto = recurso_cena.instantiate()
+		add_child(objeto)
+		
+		# --- TRANSFERÊNCIA DE INFORMAÇÕES (O CHEQUE) ---
+		objeto.set("nome_display", info_logica.nome)
+		objeto.set("descricao", info_logica.descricao)
+
+		for chave in info_logica.particularidades:
+			var valor = info_logica.particularidades[chave]
+			if chave in objeto:
+				objeto.set(chave, valor)
+			else:
+				print("⚠️ AVISO: Variável '%s' não existe no script de '%s'!" % [chave, id_mobilia])
+
+		# --- CONFIGURAÇÕES FÍSICAS ---
+		var escala_final = info_logica.minha_scala
+		objeto.scale = Vector3.ONE * escala_final
+
+		# Posicionamento Grid
+		var dados_fase = fase.dados_mobilias[id_mobilia]
+		var pos_x = (dados_fase.x * tamanho_tile) - offset_x
+		var pos_z = (dados_fase.y * tamanho_tile) - offset_z
+
+		# Ajuste de altura baseado no seu divisor 1.5
+		var altura_y = escala_final / 1.5
+		objeto.position = Vector3(pos_x, altura_y, pos_z)
+
+		objeto.name = "Mobilia_" + id_mobilia
+		print("✅ %s (ID: %s) instanciado via Path!" % [info_logica.nome, id_mobilia])

@@ -154,6 +154,7 @@ collision_mask = 3
 shape = SubResource("CylinderShape3D_nnrc6")
 
 [node name="Caldeirão" type="MeshInstance3D" parent="." unique_id=1832336314]
+transform = Transform3D(0.9370973, 0, 0, 0, 0.8729681, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = ExtResource("3_nr5xr")
 surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
 surface_material_override/1 = SubResource("StandardMaterial3D_5mfi5")
@@ -172,7 +173,7 @@ process_material = SubResource("ParticleProcessMaterial_jbp8p")
 draw_pass_1 = SubResource("SphereMesh_qut8x")
 
 [node name="GPUParticles3D_Fogareu" type="GPUParticles3D" parent="." unique_id=1689929271]
-transform = Transform3D(0.130803, 0, 0, 0, 0.13080297, 0, 0, 0, 0.13080297, 0.00565224, -0.4887313, 0.004535559)
+transform = Transform3D(0.1830592, 0, 0, 0, 0.13080297, 0, 0, 0, 0.17197844, 0.00565224, -0.4887313, 0.004535559)
 material_override = SubResource("StandardMaterial3D_7ud17")
 amount = 50
 explosiveness = 0.19
