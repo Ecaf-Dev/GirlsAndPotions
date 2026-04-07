@@ -20,6 +20,7 @@ class Fase:
 	var tempo_limite_de_jogo: int
 	var largura: int  # Novo
 	var profundidade: int # Novo
+	var dados_mobilias: Dictionary
 
 	func _init(dictionary: Dictionary):
 		self.id = dictionary.get("nome", null)
@@ -29,6 +30,7 @@ class Fase:
 		var tamanho = dictionary.get("tamanhodafase", {"x": 2, "z": 2})
 		self.largura = tamanho.x
 		self.profundidade = tamanho.z
+		self.dados_mobilias = dictionary.get("mobilias", {})
 
 	func pegar_numero_de_estrelas(ouro: float) -> int:
 		var ranqueamento_atual: Ranqueamento = null;
@@ -96,6 +98,24 @@ var fases = {
 			"x": 20,
 			"z": 20 # Usei Z porque em 3D o "chão" costuma ser X e Z
 		},
+		"mobilias": {
+			"caldeirao" : {
+				"x":10,
+				"y": 10
+			},
+			"tabua_de_corte" : {
+				"x": 5,
+				"y": 5
+			},
+			"balcao": {
+				"x": 9,
+				"y": 5
+			},
+			"caixa_ce_correio": {
+				"x": 2,
+				"y": 6
+			}
+		}, 
 		"tempo_limite_de_jogo": 120
 	}
 }

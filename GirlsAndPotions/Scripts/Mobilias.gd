@@ -1,0 +1,74 @@
+extends Node
+
+# --- DEFINIÇÃO DA CLASSE (O MOLDE) ---
+class Mobilia:
+	var id: String
+	var nome: String
+	var descricao: String
+	var minha_scala: float
+	var particularidades: Dictionary
+
+	# O _init PRECISA estar dentro do bloco da classe 'class Mobilia'
+	func _init(mobilia_dictionary: Dictionary):
+		self.id = mobilia_dictionary.get("nome", "")
+		self.nome = mobilia_dictionary.get("nome", "")
+		self.descricao = mobilia_dictionary.get("descricao", "")
+		self.minha_scala = mobilia_dictionary.get("minha_scala", 1.0)
+		self.particularidades = mobilia_dictionary.get("particularidades", {})
+
+# --- DADOS DAS MOBÍLIAS (O DICIONÁRIO) ---
+var mobilias_dados = {
+	"Balcao": {
+		"nome": "Balcão",
+		"descricao": "Balcão de uma loja, gera pedidos a cada dia",
+		"minha_scala": 1.0,
+		"particularidades" : {
+			"nome_fase": "Fase 1",
+			"max_pedidos": 3,
+		}
+	},
+	"Caldeirao": {
+		"nome": "Caldeirão",
+		"descricao": "Um caldeirão que todo iniciante da alquimia precisa, cuidado ele explode!",
+		"minha_scala": 1.0,
+		"particularidades": {
+			"max_slots": 2,
+			"mobilia_automatica": true
+		}
+	},
+	"Tabua De Corte": {
+		"nome": "Tábua De Corte",
+		"descricao": "Uma tábua para cortar diversas criaturas e plantas",
+		"minha_scala": 1.0,
+		"particularidades": {
+			"max_slots": 1,
+			"mobilia_automatica": false
+		}
+	},
+	"Caixa De Correio": {
+		"nome": "Caixa De Correio",
+		"descricao": "Uma caixa de correio, onde você irá receber suas compras!",
+		"minha_scala": 1.0,
+		"particularidades": {}
+	}
+}
+
+# --- FUNÇÕES DE BUSCA ---
+func pegar_mobilia(nome_mobilia: String) -> Mobilia:
+	if !mobilias_dados.has(nome_mobilia):
+		print("MOBÍLIA NÃO CONFIGURADA NO MOBILIAS.GD -> ", nome_mobilia)
+		return null
+	
+	# Criamos uma nova instância da classe Mobilia usando os dados do dicionário
+	return Mobilia.new(mobilias_dados[nome_mobilia])
+
+func pegar_todos_as_mobilias() -> Array[Mobilia]:
+	var lista_de_objetos_mobilia: Array[Mobilia] = []
+	
+	# Percorremos as CHAVES do dicionário de dados (ex: "Balcao", "Caldeirao"...)
+	for chave in mobilias_dados:
+		# Criamos um objeto novo para cada entrada e colocamos na Array
+		var nova_mobilia = Mobilia.new(mobilias_dados[chave])
+		lista_de_objetos_mobilia.append(nova_mobilia)
+	
+	return lista_de_objetos_mobilia
