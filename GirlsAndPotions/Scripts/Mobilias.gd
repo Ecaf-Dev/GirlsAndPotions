@@ -5,6 +5,7 @@ class Mobilia:
 	var id: String
 	var nome: String
 	var descricao: String
+	var cena_path: String
 	var minha_scala: float
 	var particularidades: Dictionary
 
@@ -13,42 +14,47 @@ class Mobilia:
 		self.id = mobilia_dictionary.get("nome", "")
 		self.nome = mobilia_dictionary.get("nome", "")
 		self.descricao = mobilia_dictionary.get("descricao", "")
+		self.cena_path = mobilia_dictionary.get("cena_path", "")
 		self.minha_scala = mobilia_dictionary.get("minha_scala", 1.0)
 		self.particularidades = mobilia_dictionary.get("particularidades", {})
 
 # --- DADOS DAS MOBÍLIAS (O DICIONÁRIO) ---
 var mobilias_dados = {
-	"Balcao": {
+	"balcao": {
 		"nome": "Balcão",
 		"descricao": "Balcão de uma loja, gera pedidos a cada dia",
-		"minha_scala": 1.0,
+		"cena_path": "res://GirlsAndPotions/Cenas/static_body_3d_balcao.tscn",
+		"minha_scala": 1.5,
 		"particularidades" : {
 			"nome_fase": "Fase 1",
 			"max_pedidos": 3,
 		}
 	},
-	"Caldeirao": {
+	"caldeirao": {
 		"nome": "Caldeirão",
 		"descricao": "Um caldeirão que todo iniciante da alquimia precisa, cuidado ele explode!",
-		"minha_scala": 1.0,
+		"cena_path": "res://GirlsAndPotions/Cenas/static_body_3d_caldeirao.tscn",
+		"minha_scala": 1.7,
 		"particularidades": {
 			"max_slots": 2,
 			"mobilia_automatica": true
 		}
 	},
-	"Tabua De Corte": {
+	"tabua_de_corte": {
 		"nome": "Tábua De Corte",
 		"descricao": "Uma tábua para cortar diversas criaturas e plantas",
-		"minha_scala": 1.0,
+		"cena_path": "res://GirlsAndPotions/Cenas/static_body_3d_tabua_de_corte.tscn",
+		"minha_scala": 1.5,
 		"particularidades": {
 			"max_slots": 1,
 			"mobilia_automatica": false
 		}
 	},
-	"Caixa De Correio": {
+	"caixa_de_correio": {
 		"nome": "Caixa De Correio",
 		"descricao": "Uma caixa de correio, onde você irá receber suas compras!",
-		"minha_scala": 1.0,
+		"cena_path": "res://GirlsAndPotions/Cenas/static_body_3d_caixa_de_correio.tscn",
+		"minha_scala": 1.3,
 		"particularidades": {}
 	}
 }

@@ -111,7 +111,7 @@ var fases = {
 				"x": 9,
 				"y": 5
 			},
-			"caixa_ce_correio": {
+			"caixa_de_correio": {
 				"x": 2,
 				"y": 6
 			}

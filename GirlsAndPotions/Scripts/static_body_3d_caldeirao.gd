@@ -2,7 +2,7 @@ class_name Caldeirao
 extends StaticBody3D
 
 # --- CONFIGURAÇÕES ---
-@export var MAX_SLOTS = 2
+@export var max_slots = 2
 @export var objeto_visual : Node3D
 @export var cena_base_item: PackedScene
 @export var mobilia_automatica: bool = true
@@ -58,7 +58,7 @@ func _ready():
 
 func _on_area_3d_monitor_body_entered(objeto_colidido):
 	if objeto_colidido is Objeto:
-		var numero_de_items_excedido = items_processando.size() >= MAX_SLOTS;
+		var numero_de_items_excedido = items_processando.size() >= max_slots;
 		var devo_rejeitar_objeto = (cozinhando || 
 									pronto_para_coleta ||
 									objeto_colidido.quantidade_atual > 1 ||
@@ -90,7 +90,7 @@ func _adicionar_item_para_processamento(objeto_colidido: Objeto):
 
 func _receita_compativel(itens: Array):
 	alterar_cor_liquido()
-	if itens.size() < MAX_SLOTS: return null
+	if itens.size() < max_slots: return null
 
 	var receita_encontrada = Receitas.pegar_receita_compativel(itens, meu_tipo_de_mobilia)
 	if receita_encontrada:
@@ -298,13 +298,24 @@ func _falha_na_cozinha():
 	if holograma_atual: holograma_atual.queue_free(); holograma_atual = null
 
 func _elastico():
-	if !objeto_visual: return
+	if objeto_visual == null: return
+	
+	# 1. Salva a escala atual (o "tamanho original" do momento)
+	var escala_original = objeto_visual.scale
+	
+	# 2. Calcula 80% dessa escala
+	var escala_reduzida = escala_original * 0.8
+	
 	var tween = create_tween()
-	var vetor_do_efeito = Vector3(escala_original_objeto_visual.x*0.8, escala_original_objeto_visual.y * 0.7, escala_original_objeto_visual.z * 0.8)
-
-	tween.tween_property(objeto_visual, "scale", vetor_do_efeito, 0.1).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(objeto_visual, "scale", escala_original_objeto_visual, 0.3).set_trans(Tween.TRANS_ELASTIC)
-
+	
+	# Primeiro: Encolhe para 80% rapidamente
+	tween.tween_property(objeto_visual, "scale", escala_reduzida, 0.1)\
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	# Segundo: Volta para o tamanho original com o efeito elástico
+	tween.tween_property(objeto_visual, "scale", escala_original, 0.3)\
+		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+    
 func _rejeitar_item(item):
 	if item is Objeto:
 		item.apply_central_impulse(Vector3.BACK * 2.3 + Vector3.UP * 4.0)
