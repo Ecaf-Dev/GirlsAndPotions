@@ -46,7 +46,7 @@ var interagindo: bool = false
 var barra_fundo : MeshInstance3D = null
 var barra_progresso : MeshInstance3D = null
 
-var escala_original_objeto_visual: Vector3 = Vector3(1,1,1)
+var escala_original_objeto_visual: Vector3
 
 # --- CICLO DE VIDA ---
 
@@ -315,7 +315,7 @@ func _elastico():
 	# Segundo: Volta para o tamanho original com o efeito elástico
 	tween.tween_property(objeto_visual, "scale", escala_original, 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-		
+    
 func _rejeitar_item(item):
 	if item is Objeto:
 		item.apply_central_impulse(Vector3.BACK * 2.3 + Vector3.UP * 4.0)
