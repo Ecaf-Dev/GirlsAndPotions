@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://uiv1o26h6x1x" path="res://GirlsAndPotions/Arts/Novos Sons/Caldeirão borbulhando.wav" id="4_tsxko"]
 [ext_resource type="AudioStream" uid="uid://bdjh3bx307euc" path="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav" id="5_0uoty"]
 [ext_resource type="AudioStream" uid="uid://cqbbt6njhste" path="res://GirlsAndPotions/Arts/Novos Sons/Puff.wav" id="6_wf05w"]
+[ext_resource type="AudioStream" uid="uid://tpwfqydm1mp" path="res://GirlsAndPotions/Arts/Novos Sons/Cortando.wav" id="7_0x5eo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajnkd"]
 
@@ -198,6 +199,9 @@ volume_db = -7.843
 
 [node name="AudioStreamPlayer3D_Puff" type="AudioStreamPlayer3D" parent="Soms" unique_id=1146137322]
 stream = ExtResource("6_wf05w")
+
+[node name="AudioStreamPlayer3D_CortandoItem" type="AudioStreamPlayer3D" parent="Soms" unique_id=770906357]
+stream = ExtResource("7_0x5eo")
 
 [node name="GPUParticles3D_Sucesso" type="GPUParticles3D" parent="." unique_id=1212984358]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 0, 0.502, 0)

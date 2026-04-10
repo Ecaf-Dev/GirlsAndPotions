@@ -315,7 +315,7 @@ func _elastico():
 	# Segundo: Volta para o tamanho original com o efeito elástico
 	tween.tween_property(objeto_visual, "scale", escala_original, 0.3)\
 		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-    
+	
 func _rejeitar_item(item):
 	if item is Objeto:
 		item.apply_central_impulse(Vector3.BACK * 2.3 + Vector3.UP * 4.0)
@@ -332,6 +332,10 @@ func _alternar_estado_pronto():
 func _somitemadicionado():
 	if get_node_or_null("Soms/AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão"):
 		$"Soms/AudioStreamPlayer3D_ItemAdicionadoNoCaldeirão".play()
+
+func _somcortando():
+	if get_node_or_null("Soms/AudioStreamPlayer3D_CortandoItem"):
+		$Soms/AudioStreamPlayer3D_CortandoItem.play()
 
 func _sompuff():
 	if get_node_or_null("Soms/AudioStreamPlayer3D_Puff"):
