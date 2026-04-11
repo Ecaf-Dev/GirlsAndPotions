@@ -114,19 +114,35 @@ func cozinhando_pocao():
 		tempo_da_receita = 1 
 
 	cozinhando = true
-	querointeracao = true # Avisa o player para travar o movimento e monitorar o Z
+	querointeracao = true 
+	
+	# Pega a referência do player de som de corte
+	var som_corte = get_node_or_null("Soms/AudioStreamPlayer3D_CortandoItem")
 	
 	var progresso_atual = 0.0
 	while progresso_atual < tempo_da_receita:
-		# LÓGICA OTIMIZADA:
-		# Progride se for automático OU se o jogador estiver ativamente interagindo
 		if mobilia_automatica or interagindo:
+			# --- LÓGICA DO SOM ---
+			# Se não for automático e estiver interagindo, toca o som
+			if !mobilia_automatica and som_corte:
+				if !som_corte.playing:
+					som_corte.play()
+			# ---------------------
+			
 			progresso_atual += get_process_delta_time()
 			var porcentagem = clamp(progresso_atual / tempo_da_receita, 0.0, 1.0)
 			_gerenciar_barra_visual(porcentagem)
-		
+		else:
+			# Se parou de interagir e não é automático, pausa o som
+			if som_corte and som_corte.playing:
+				som_corte.stop() # Ou use .stream_paused = true
+				
 		await get_tree().process_frame 
 	
+	# Certifica que o som para ao terminar a receita
+	if som_corte:
+		som_corte.stop()
+		
 	_gerenciar_barra_visual(0)
 
 	# Finalização...
