@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://c4t0q4177r4u2" path="res://GirlsAndPotions/Scripts/static_body_3d_caixa_de_correio.gd" id="1_ickm8"]
 [ext_resource type="ArrayMesh" uid="uid://pp5uu54nt1jj" path="res://GirlsAndPotions/Modelos/Objetos/CaixaDeCorreio.obj" id="1_lw8jh"]
+[ext_resource type="ArrayMesh" uid="uid://bpal5paccno7p" path="res://GirlsAndPotions/Modelos/Objetos/CiaxaDeCorreio/Caixa_De_Correio/base.obj" id="3_tyjsy"]
+[ext_resource type="Texture2D" uid="uid://cqijus21y8cck" path="res://GirlsAndPotions/Modelos/Objetos/CiaxaDeCorreio/Caixa_De_Correio/shaded.png" id="4_wenqn"]
+[ext_resource type="Texture2D" uid="uid://bk7otei6k6uq6" path="res://GirlsAndPotions/Modelos/Objetos/CiaxaDeCorreio/Caixa_De_Correio/texture_metallic.png" id="5_te4wk"]
+[ext_resource type="Texture2D" uid="uid://ip38waeiix71" path="res://GirlsAndPotions/Modelos/Objetos/CiaxaDeCorreio/Caixa_De_Correio/texture_normal.png" id="6_8yam5"]
+[ext_resource type="Texture2D" uid="uid://5u8hfrcknq1k" path="res://GirlsAndPotions/Modelos/Objetos/CiaxaDeCorreio/Caixa_De_Correio/texture_roughness.png" id="7_5rbqx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3pv0f"]
 
@@ -21,11 +26,20 @@ texture_filter = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_du4fj"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ux2e"]
+albedo_texture = ExtResource("4_wenqn")
+metallic = 1.0
+metallic_texture = ExtResource("5_te4wk")
+roughness_texture = ExtResource("7_5rbqx")
+normal_enabled = true
+normal_texture = ExtResource("6_8yam5")
+
 [node name="StaticBody3D_CaixaDeCorreio" type="StaticBody3D" unique_id=2044490212]
 script = ExtResource("1_ickm8")
 
 [node name="CaixaDeCorreio" type="MeshInstance3D" parent="." unique_id=768790448]
 transform = Transform3D(0.38724032, 0.00053950853, -2.1345268e-05, -0.00063339324, 0.32981983, 0.0011638982, 1.80016e-05, -0.0007675467, 0.5001196, 0, -0.45913807, 0)
+visible = false
 mesh = ExtResource("1_lw8jh")
 surface_material_override/0 = SubResource("StandardMaterial3D_3pv0f")
 surface_material_override/1 = SubResource("StandardMaterial3D_sdu2g")
@@ -43,3 +57,8 @@ shape = SubResource("BoxShape3D_du4fj")
 
 [node name="Marker3D_Spawner" type="Marker3D" parent="." unique_id=37179238]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.81847, 0)
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=596381571]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15108776, -0.46814916, 0.03725195)
+mesh = ExtResource("3_tyjsy")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ux2e")
