@@ -4,6 +4,10 @@
 [ext_resource type="ArrayMesh" uid="uid://dfsfgbm6qxoac" path="res://GirlsAndPotions/Modelos/Objetos/Balcão.obj" id="2_wwvc4"]
 [ext_resource type="AudioStream" uid="uid://d15aoev1x70cm" path="res://GirlsAndPotions/Arts/Novos Sons/Venda.wav" id="3_h6w6p"]
 [ext_resource type="AudioStream" uid="uid://cu7atr88tfsw3" path="res://GirlsAndPotions/Arts/Novos Sons/Novo Pedido.wav" id="4_al2d3"]
+[ext_resource type="ArrayMesh" uid="uid://bl5emi66eiywb" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Balcao/base.obj" id="5_q32n5"]
+[ext_resource type="Texture2D" uid="uid://d4g36grkuyxqr" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Balcao/shaded.png" id="6_jl2h4"]
+[ext_resource type="Texture2D" uid="uid://cnlw2kfgx8ehn" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Balcao/texture_metallic.png" id="7_iekb0"]
+[ext_resource type="Texture2D" uid="uid://ddms5bmx71mxy" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Balcao/texture_roughness.png" id="8_xsbxk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6ltmu"]
 size = Vector3(1, 1, 0.954834)
@@ -17,10 +21,16 @@ albedo_color = Color(0.941176, 0.54902, 0.25098, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jd77c"]
 albedo_color = Color(0.505882, 0.2, 0.0117647, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ds8fq"]
+albedo_texture = ExtResource("6_jl2h4")
+metallic = 1.0
+metallic_texture = ExtResource("7_iekb0")
+roughness_texture = ExtResource("8_xsbxk")
+
 [node name="StaticBody3D_Balcao" type="StaticBody3D" unique_id=234715560 node_paths=PackedStringArray("objeto_visual")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("1_20lu7")
-objeto_visual = NodePath("Balcão")
+objeto_visual = NodePath("Base")
 
 [node name="CollisionShape3D_HurtBox" type="CollisionShape3D" parent="." unique_id=481617886]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0023092497)
@@ -40,6 +50,7 @@ material = SubResource("StandardMaterial3D_l8sp1")
 
 [node name="Balcão" type="MeshInstance3D" parent="." unique_id=1921885362]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
 mesh = ExtResource("2_wwvc4")
 surface_material_override/0 = SubResource("StandardMaterial3D_jd77c")
 
@@ -59,6 +70,11 @@ stream = ExtResource("3_h6w6p")
 
 [node name="AudioStreamPlayer3D_NovoPedido" type="AudioStreamPlayer3D" parent="Node" unique_id=1849388700]
 stream = ExtResource("4_al2d3")
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=251744975]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.29675162, 0)
+mesh = ExtResource("5_q32n5")
+surface_material_override/0 = SubResource("StandardMaterial3D_ds8fq")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
 [connection signal="body_exited" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_exited"]
