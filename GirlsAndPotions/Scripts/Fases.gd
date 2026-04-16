@@ -114,6 +114,10 @@ var fases = {
 			"caixa_de_correio": {
 				"x": 2,
 				"y": 6
+			},
+			"mesa": {
+				"x": 5,
+				"y": 1
 			}
 		}, 
 		"tempo_limite_de_jogo": 120

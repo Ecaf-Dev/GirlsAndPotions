@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cf10pjacup00s"]
+
+[ext_resource type="ArrayMesh" uid="uid://bcgouquvhg5o6" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/base.obj" id="1_2nlwf"]
+[ext_resource type="Texture2D" uid="uid://cui24ni6smdoh" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/shaded.png" id="2_xwkfg"]
+[ext_resource type="Texture2D" uid="uid://cl3kcx8d8e8kj" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/texture_metallic.png" id="3_8wxi2"]
+[ext_resource type="Texture2D" uid="uid://drjl42ntkvs1n" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/texture_roughness.png" id="4_x2and"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghjjf"]
+albedo_texture = ExtResource("2_xwkfg")
+metallic = 1.0
+metallic_texture = ExtResource("3_8wxi2")
+roughness_texture = ExtResource("4_x2and")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2nlwf"]
+
+[node name="Node3D_mesa" type="Node3D" unique_id=1840647987]
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=950433978]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = ExtResource("1_2nlwf")
+surface_material_override/0 = SubResource("StandardMaterial3D_ghjjf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1644768362]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1149146700]
+transform = Transform3D(1, 0, 0, 0, 0.75, 0, 0, 0, 1, 0, 0.37614048, 0)
+shape = SubResource("BoxShape3D_2nlwf")
