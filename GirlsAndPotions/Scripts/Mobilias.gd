@@ -61,7 +61,7 @@ var mobilias_dados = {
 		"nome": "mesa",
 		"descricao": "Uma mesa que apenas ocupa espaço.",
 		"cena_path": "res://GirlsAndPotions/Cenas/node_3d_mesa.tscn",
-		"minha_scala": 1.0,
+		"minha_scala": 1.5,
 		"particularidades": {}
 	}
 }
