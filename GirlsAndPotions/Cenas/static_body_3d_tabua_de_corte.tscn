@@ -6,6 +6,14 @@
 [ext_resource type="AudioStream" uid="uid://uiv1o26h6x1x" path="res://GirlsAndPotions/Arts/Novos Sons/Caldeirão borbulhando.wav" id="4_tsxko"]
 [ext_resource type="AudioStream" uid="uid://bdjh3bx307euc" path="res://GirlsAndPotions/Arts/Novos Sons/Item adicionado no caldeirão.wav" id="5_0uoty"]
 [ext_resource type="AudioStream" uid="uid://cqbbt6njhste" path="res://GirlsAndPotions/Arts/Novos Sons/Puff.wav" id="6_wf05w"]
+[ext_resource type="ArrayMesh" uid="uid://bcgouquvhg5o6" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/base.obj" id="7_iidjw"]
+[ext_resource type="Texture2D" uid="uid://cui24ni6smdoh" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/shaded.png" id="8_s4d3s"]
+[ext_resource type="Texture2D" uid="uid://cl3kcx8d8e8kj" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/texture_metallic.png" id="9_bwu80"]
+[ext_resource type="Texture2D" uid="uid://drjl42ntkvs1n" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Mesa/texture_roughness.png" id="10_36ww1"]
+[ext_resource type="ArrayMesh" uid="uid://doq2bu33rehwe" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Tabua/base.obj" id="11_3e5gv"]
+[ext_resource type="Texture2D" uid="uid://cob4jc3yxobqi" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Tabua/shaded.png" id="12_lxkce"]
+[ext_resource type="Texture2D" uid="uid://bhs62xrnthq38" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Tabua/texture_metallic.png" id="13_epji1"]
+[ext_resource type="Texture2D" uid="uid://bqsylnj8skmrn" path="res://GirlsAndPotions/Modelos/Objetos/Objetos/Tabua/texture_roughness.png" id="14_x8lp0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajnkd"]
 
@@ -125,11 +133,23 @@ billboard_mode = 1
 [sub_resource type="SphereMesh" id="SphereMesh_qs1cd"]
 material = SubResource("StandardMaterial3D_owdnq")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhr04"]
+albedo_texture = ExtResource("8_s4d3s")
+metallic = 1.0
+metallic_texture = ExtResource("9_bwu80")
+roughness_texture = ExtResource("10_36ww1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjysl"]
+albedo_texture = ExtResource("12_lxkce")
+metallic = 1.0
+metallic_texture = ExtResource("13_epji1")
+roughness_texture = ExtResource("14_x8lp0")
+
 [node name="StaticBody3D_TabuaDeCorte" type="StaticBody3D" unique_id=1720406554 node_paths=PackedStringArray("objeto_visual", "marker_holograma", "marker_barra")]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_ajnkd")
-objeto_visual = NodePath("Objeto")
+objeto_visual = NodePath("Base")
 cena_base_item = ExtResource("2_0x5eo")
 marker_holograma = NodePath("Marker3D_Holograma")
 marker_barra = NodePath("Marker3D_BarraDeProgresso")
@@ -152,6 +172,7 @@ shape = SubResource("BoxShape3D_0x5eo")
 
 [node name="Objeto" type="MeshInstance3D" parent="." unique_id=1832336314]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+visible = false
 mesh = ExtResource("3_ajnkd")
 surface_material_override/0 = SubResource("StandardMaterial3D_ibihi")
 
@@ -217,5 +238,15 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_7l2jo")
 draw_pass_1 = SubResource("SphereMesh_qs1cd")
+
+[node name="Base" type="MeshInstance3D" parent="." unique_id=2085399874]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.30330712, 0)
+mesh = ExtResource("7_iidjw")
+surface_material_override/0 = SubResource("StandardMaterial3D_lhr04")
+
+[node name="Base2" type="MeshInstance3D" parent="Base" unique_id=2102156212]
+transform = Transform3D(-3.496911e-08, 0, 0.8, 0, 0.8, 0, -0.79999995, 0, -3.4969112e-08, 0, 1.055962, -0.057169914)
+mesh = ExtResource("11_3e5gv")
+surface_material_override/0 = SubResource("StandardMaterial3D_fjysl")
 
 [connection signal="body_entered" from="Area3D_Monitor" to="." method="_on_area_3d_monitor_body_entered"]
